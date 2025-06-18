@@ -1,21 +1,89 @@
-create table user (
-  id int unsigned primary key auto_increment not null,
-  email varchar(255) not null unique,
-  password varchar(255) not null
+CREATE TABLE Role (
+id INT UNSIGNED PRIMARY KEY NOT NULL,
+name VARCHAR(150) NOT NULL
 );
 
-create table item (
-  id int unsigned primary key auto_increment not null,
-  title varchar(255) not null,
-  user_id int unsigned not null,
-  foreign key(user_id) references user(id)
+CREATE TABLE User (
+id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+pseudo VARCHAR(150) NOT NULL UNIQUE,
+email VARCHAR(200) NOT NULL UNIQUE,
+password VARCHAR(250) NOT NULL,
+registration_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+registration VARCHAR(250),
+avatar_url TEXT NULL,
+score_board INT NULL,
+credits INT NULL,
+historical_game TEXT NULL,
+deleted_at DATETIME DEFAULT NULL,
+id_role INT UNSIGNED NOT NULL DEFAULT 1,
+FOREIGN KEY (id_role) REFERENCES Role(id)
 );
 
-insert into user(id, email, password)
-values
-  (1, "jdoe@mail.com", "123456");
+CREATE TABLE Game (
+id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+name VARCHAR(150) NOT NULL,
+description TEXT NULL,
+category VARCHAR(100) NOT NULL,
+available_online BOOLEAN,
+available_maintenance BOOLEAN
+);
 
-insert into item(id, title, user_id)
-values
-  (1, "Stuff", 1),
-  (2, "Doodads", 1);
+CREATE TABLE Contact (
+id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+id_user INT UNSIGNED NOT NULL,
+sujet VARCHAR(200) NOT NULL,
+message TEXT NOT NULL,
+date_message DATE NOT NULL,
+status VARCHAR(100) NOT NULL DEFAULT 'non lu',
+FOREIGN KEY (id_user) REFERENCES User(id)
+);
+
+CREATE TABLE Price_lot (
+id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+name VARCHAR(150) NOT NULL,
+description TEXT NULL,
+Cost_point INT NOT NULL,
+stock INT NOT NULL,
+available_online BOOLEAN,
+available_in_arcade BOOLEAN
+);
+
+CREATE TABLE Favorite (
+id_user INT UNSIGNED NOT NULL,
+id_game INT UNSIGNED NOT NULL,
+PRIMARY KEY (id_user, id_game),
+FOREIGN KEY (id_user) REFERENCES User(id),
+FOREIGN KEY (id_game) REFERENCES Game(id)
+);
+
+CREATE TABLE Inventory (
+id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+id_user INT UNSIGNED NOT NULL,
+id_price_lot INT UNSIGNED NOT NULL,
+FOREIGN KEY (id_user) REFERENCES User(id),
+FOREIGN KEY (id_price_lot) REFERENCES Price_Lot(id)
+);
+
+CREATE TABLE Echange (
+id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+id_sender INT UNSIGNED NOT NULL,
+id_receiver INT UNSIGNED NOT NULL,
+exchange_date DATE NOT NULL,
+exchange_state VARCHAR(100) NOT NULL,
+quantity INT NOT NULL,
+id_price_lot INT UNSIGNED NOT NULL,
+FOREIGN KEY (id_sender) REFERENCES User(id),
+FOREIGN KEY (id_receiver) REFERENCES User(id),
+FOREIGN KEY (id_price_lot) REFERENCES Price_lot(id)
+);
+
+CREATE TABLE Ranking (
+id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+id_game INT UNSIGNED NOT NULL,
+score INT NOT NULL,
+date_enregistrement DATE NOT NULL,
+FOREIGN KEY (id_game) REFERENCES Game(id)
+);
+
+INSERT INTO Role(id, name)
+VALUES (1,"player"),(2,"admin");
