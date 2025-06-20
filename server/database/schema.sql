@@ -3,9 +3,10 @@ id INT UNSIGNED PRIMARY KEY NOT NULL,
 name VARCHAR(150) NOT NULL
 );
 
-
 CREATE TABLE User (
 id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+firstname VARCHAR(150) NOT NULL,
+name VARCHAR(150) NOT NULL,
 pseudo VARCHAR(150) NOT NULL UNIQUE,
 email VARCHAR(200) NOT NULL UNIQUE,
 password VARCHAR(250) NOT NULL,
@@ -20,7 +21,6 @@ id_role INT UNSIGNED NOT NULL DEFAULT 1,
 FOREIGN KEY (id_role) REFERENCES Role(id)
 );
 
-
 CREATE TABLE Game (
 id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
 name VARCHAR(150) NOT NULL,
@@ -29,7 +29,6 @@ category VARCHAR(100) NOT NULL,
 available_online BOOLEAN,
 available_maintenance BOOLEAN
 );
-
 
 CREATE TABLE Contact (
 id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -41,7 +40,6 @@ status VARCHAR(100) NOT NULL DEFAULT 'non lu',
 FOREIGN KEY (id_user) REFERENCES User(id)
 );
 
-
 CREATE TABLE Price_lot (
 id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
 name VARCHAR(150) NOT NULL,
@@ -52,7 +50,6 @@ available_online BOOLEAN,
 available_in_arcade BOOLEAN
 );
 
-
 CREATE TABLE Favorite (
 id_user INT UNSIGNED NOT NULL,
 id_game INT UNSIGNED NOT NULL,
@@ -61,7 +58,6 @@ FOREIGN KEY (id_user) REFERENCES User(id),
 FOREIGN KEY (id_game) REFERENCES Game(id)
 );
 
-
 CREATE TABLE Inventory (
 id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 id_user INT UNSIGNED NOT NULL,
@@ -69,7 +65,6 @@ id_price_lot INT UNSIGNED NOT NULL,
 FOREIGN KEY (id_user) REFERENCES User(id),
 FOREIGN KEY (id_price_lot) REFERENCES Price_Lot(id)
 );
-
 
 CREATE TABLE Echange (
 id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -84,7 +79,6 @@ FOREIGN KEY (id_receiver) REFERENCES User(id),
 FOREIGN KEY (id_price_lot) REFERENCES Price_lot(id)
 );
 
-
 CREATE TABLE Ranking (
 id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 id_game INT UNSIGNED NOT NULL,
@@ -93,9 +87,5 @@ date_enregistrement DATE NOT NULL,
 FOREIGN KEY (id_game) REFERENCES Game(id)
 );
 
-
 INSERT INTO Role(id, name)
 VALUES (1,"player"),(2,"admin");
-
-
-

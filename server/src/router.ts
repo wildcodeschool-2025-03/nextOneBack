@@ -13,6 +13,9 @@ router.get("/api/items", itemActions.browse);
 router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
+import connexionActions from "./modules/connexion/connexionActions";
+router.post("/api/connexion/register", connexionActions.add);
+router.post("/api/connexion/login", connexionActions.read);
 /* ************************************************************************* */
 
 export default router;
