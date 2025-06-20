@@ -7,6 +7,7 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 
 // Import the main app component
 import App from "./App";
+import Connexion from "./pages/Connexion";
 import HomePage from "./pages/HomePage.tsx";
 
 // Import additional components for new routes
@@ -21,8 +22,8 @@ import HomePage from "./pages/HomePage.tsx";
 // You can add more routes as you build out your app!
 const router = createBrowserRouter([
   {
-    path: "/", // The root path
     element: <App />, // Renders the App component for the home page
+    children: [{ path: "/", element: <Connexion /> }],
   },
   {
     path: "/HomePage", // The root path
