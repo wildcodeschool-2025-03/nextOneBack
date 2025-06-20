@@ -1,0 +1,76 @@
+.homepage {
+  min-height: 100vh;
+  width: 100%;
+  padding: 2rem 0;
+  background: url("/images/background_V2.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.home-section {
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 12px #00ffff55;
+  padding: 1.5rem;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+  .home-section {
+    width: auto;
+    padding: 1rem;
+    box-sizing: border-box;
+    margin-left: 1.2rem;
+    margin-right: 1.2rem;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1279px) {
+  .home-section {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+.hero-banner {
+  text-align: center;
+  color: #ffaa00;
+  font-family: "Press Start 2P", monospace;
+  padding: 2rem 1rem 0;
+  max-width: 50rem;
+  margin: 0 auto;
+  text-shadow: 0 0 0.1rem #000, 0 0 0.2rem #000, 0 0 0.5rem #ffaa00;
+}
+
+.hero-banner h1 {
+  font-size: 4rem;
+  margin-bottom: 0.3rem;
+}
+
+.hero-banner p {
+  font-size: 2rem;
+  line-height: 1.3;
+  margin-top: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .hero-banner {
+    padding: 1.5rem 1rem 0;
+  }
+
+  .hero-banner h1 {
+    font-size: 2rem;
+  }
+
+  .hero-banner p {
+    font-size: 1.2rem;
+    line-height: 1.3;
+  }
+}
