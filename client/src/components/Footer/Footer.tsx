@@ -1,20 +1,31 @@
-import "../../styles/footerMobile.css";
+import "../../styles/footer.css";
 import InstagramIcone from "../../assets/icones/icone_instagram.png";
 import NextOneLogo from "../../assets/images/next_one_logo.png";
 
-export default function FooterMobile() {
+export default function Footer() {
   return (
     <div className="footer-mobile">
+      <div className="logo-desktop">
+        <img
+          className="nextOneLogoDesktop"
+          src={NextOneLogo}
+          alt="Logo Next One, logo effet neon"
+        />
+      </div>{" "}
       <div className="top-footer">
-        <h1>Soyez informé des dernières actualités :</h1>
-        <input className="input-mail" type="Votre adresse mail" />
+        <h1 className="h1-footer">Soyez informé des dernières actualités :</h1>
+        <input
+          className="input-mail"
+          type="email"
+          placeholder=" Votre adresse email"
+        />
         <button className="registration" type="button">
           S'INSCIRE
         </button>
       </div>
       <div className="bottom-footer">
         <img
-          className="nextOneLogo"
+          className="nextOneLogoFooter"
           src={NextOneLogo}
           alt="Logo Next One, logo effet neon"
         />
