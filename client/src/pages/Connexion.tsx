@@ -1,5 +1,7 @@
-import axios from "axios";
 import { useState } from "react";
+import "../styles/connexion.css";
+import axios from "axios";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 
 function Connexion() {
   const [firstname, setFirstname] = useState(" ");
@@ -11,6 +13,7 @@ function Connexion() {
   const [passwordRegister, setPasswordRegister] = useState(" ");
   const [messageLogin, setMessageLogin] = useState(" ");
   const [messageRegister, setMessageRegister] = useState(" ");
+  const [type, setType] = useState("password");
 
   const login = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,45 +43,90 @@ function Connexion() {
       setMessageRegister("connexion échouée");
     }
   };
+
+  const handleMouse = () => {
+    setType("text");
+  };
+
+  const handleMouseLeave = () => {
+    setType("password");
+  };
+
   return (
     <>
-      <section>
-        <h2>Connexion</h2>
-        <form onSubmit={login}>
-          <label htmlFor="email">Email</label>
-          <input type="email" onChange={(e) => setEmailLogin(e.target.value)} />
-          <label htmlFor="password">Mot de passe</label>
-          <input
-            type="password"
-            onChange={(e) => setPasswordLogin(e.target.value)}
-          />
-          <button type="submit">Se connecter</button>
-        </form>
-        {messageLogin !== "" ? <p>{messageLogin}</p> : null}
-      </section>
-      <section>
-        <h2>Créer un compte</h2>
-        <form onSubmit={register}>
-          <label htmlFor="prénom">Prénom</label>
-          <input type="text" onChange={(e) => setFirstname(e.target.value)} />
-          <label htmlFor="nom">Nom</label>
-          <input type="text" onChange={(e) => setName(e.target.value)} />
-          <label htmlFor="pseudo">Pseudo</label>
-          <input type="text" onChange={(e) => setPseudo(e.target.value)} />
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            onChange={(e) => setEmailRegister(e.target.value)}
-          />
-          <label htmlFor="password">Mot de passe</label>
-          <input
-            type="password"
-            onChange={(e) => setPasswordRegister(e.target.value)}
-          />
-          <button type="submit">S'inscrire</button>
-          {messageRegister !== "" ? <p>{messageRegister}</p> : null}
-        </form>
-      </section>
+      <main className="connexion-page">
+        <section className="login-contener">
+          <h2 className="title-connexion">Se connecter</h2>
+          <form onSubmit={login} className="form-login-contener">
+            <label htmlFor="email" className="input-row">
+              Email
+              <input
+                type="email"
+                onChange={(e) => setEmailLogin(e.target.value)}
+              />
+            </label>
+            <span className="line-connexion" />
+            <label htmlFor="password" className="input-row">
+              Mot de passe
+              <input
+                type={type}
+                onChange={(e) => setPasswordLogin(e.target.value)}
+              />
+              <span onMouseEnter={handleMouse} onMouseLeave={handleMouseLeave}>
+                {type === "password" ? <LuEyeOff /> : <LuEye />}
+              </span>
+            </label>
+            <span className="line-connexion" />
+            <button type="submit" className="button-connexion">
+              Se connecter
+            </button>
+          </form>
+          {messageLogin !== "" ? <p>{messageLogin}</p> : null}
+        </section>
+        <section className="login-contener">
+          <h2 className="title-connexion">Créer un compte</h2>
+          <form onSubmit={register} className="form-register-contener">
+            <label htmlFor="prénom" className="input-row">
+              Prénom
+              <input
+                type="text"
+                onChange={(e) => setFirstname(e.target.value)}
+              />
+            </label>
+            <span className="line-connexion" />
+            <label htmlFor="nom" className="input-row">
+              Nom
+              <input type="text" onChange={(e) => setName(e.target.value)} />
+            </label>
+            <span className="line-connexion" />
+            <label htmlFor="pseudo" className="input-row">
+              Pseudo
+              <input type="text" onChange={(e) => setPseudo(e.target.value)} />
+            </label>
+            <span className="line-connexion" />
+            <label htmlFor="email" className="input-row">
+              Adresse email
+              <input
+                type="email"
+                onChange={(e) => setEmailRegister(e.target.value)}
+              />
+            </label>
+            <span className="line-connexion" />
+            <label htmlFor="password" className="input-row">
+              Mot de passe
+              <input
+                type="password"
+                onChange={(e) => setPasswordRegister(e.target.value)}
+              />
+            </label>
+            <span className="line-connexion" />
+            <button type="submit" className="button-connexion">
+              S'inscrire
+            </button>
+            {messageRegister !== "" ? <p>{messageRegister}</p> : null}
+          </form>
+        </section>
+      </main>
     </>
   );
 }
