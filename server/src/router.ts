@@ -14,8 +14,9 @@ router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
 import connexionActions from "./modules/connexion/connexionActions";
-router.post("/api/connexion/register", connexionActions.add);
-router.post("/api/connexion/login", connexionActions.read);
+import { hashPassword, verifPassword } from "./middlewares/argonMiddleware";
+router.post("/api/connexion/register", hashPassword, connexionActions.add);
+router.post("/api/connexion/login", verifPassword, connexionActions.read);
 /* ************************************************************************* */
 
 export default router;
