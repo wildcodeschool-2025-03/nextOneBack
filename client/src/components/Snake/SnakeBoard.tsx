@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import drawFood from "./Food";
 import GameOver from "./GameOver";
-import Paused from "./Paused"; // ✅ Ajouté ici
+import Paused from "./Paused";
 import ScoreBoard from "./ScoreBoard";
 import Snake from "./Snake";
 import "./styles/snakeBoard.css";
@@ -16,10 +16,13 @@ export default function SnakeBoard() {
   const [highScore, setHighScore] = useState(
     Number(localStorage.getItem("highScore")) || 0,
   );
+  const [speed, setSpeed] = useState(150);
+  const [appleCount, setAppleCount] = useState(0);
+
   const gridSize = 20;
   const snakeRef = useRef<Snake>(new Snake());
 
-  // Redimensionne le canvas en fonction de la fenêtre
+  // Redimensionne le canvas selon la fenêtre
   useEffect(() => {
     const resizeCanvas = () => {
       const size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
@@ -64,7 +67,7 @@ export default function SnakeBoard() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isGameOver]);
 
-  // Génère la première pomme une fois le canvas prêt
+  // Génère la première pomme
   useEffect(() => {
     if (!food && canvasSize > 0) {
       const newFood = getRandomCoord(gridSize, snakeRef.current.getBody());
@@ -72,7 +75,7 @@ export default function SnakeBoard() {
     }
   }, [food, canvasSize]);
 
-  // Boucle de jeu
+  // Boucle de jeu principale
   useEffect(() => {
     if (canvasSize === 0 || isPaused || isGameOver) return;
 
@@ -86,6 +89,7 @@ export default function SnakeBoard() {
         snake.grow(gridSize);
         const updatedScore = score + 10;
         setScore(updatedScore);
+        setAppleCount((count) => count + 1);
 
         if (updatedScore > highScore) {
           setHighScore(updatedScore);
@@ -104,12 +108,19 @@ export default function SnakeBoard() {
       }
 
       draw(food);
-    }, 130);
+    }, speed);
 
     return () => clearInterval(interval);
-  }, [canvasSize, isPaused, food, isGameOver, score, highScore]);
+  }, [canvasSize, isPaused, food, isGameOver, score, highScore, speed]);
 
-  // Fonction de dessin : fond, serpent, pomme
+  // Augmente la vitesse tous les 5 fruits mangés
+  useEffect(() => {
+    if (appleCount > 0 && appleCount % 5 === 0) {
+      setSpeed((prev) => Math.max(60, prev - 10));
+    }
+  }, [appleCount]);
+
+  // Fonction de dessin
   const draw = (currentFood = food) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -137,7 +148,7 @@ export default function SnakeBoard() {
     }
   };
 
-  // Redémarrage du jeu
+  // Redémarre le jeu
   const handleRestart = () => {
     const newSnake = new Snake();
     snakeRef.current = newSnake;
@@ -145,19 +156,21 @@ export default function SnakeBoard() {
     setIsGameOver(false);
     setIsPaused(false);
     setScore(0);
+    setAppleCount(0);
+    setSpeed(150);
   };
 
   return (
     <div className="snake-board-container">
       <ScoreBoard score={score} highScore={highScore} />
       <canvas id="snake-canvas" ref={canvasRef} />
-      {isPaused && !isGameOver && <Paused />} {/* ✅ Ajouté ici */}
+      {isPaused && !isGameOver && <Paused />}
       {isGameOver && <GameOver onRestart={handleRestart} />}
     </div>
   );
 }
 
-// Génère une position aléatoire libre
+// Fonction utilitaire : coordonnée aléatoire libre
 function getRandomCoord(
   gridSize: number,
   snakeCoords: { row: number; col: number }[],
