@@ -39,8 +39,8 @@ function Connexion() {
         password: data.password,
       });
       toast.success("connexion réussie !!");
-      setTimeout (() => {
-        navigate ("/HomePage");
+      setTimeout(() => {
+        navigate("/HomePage");
       }, 2000);
     } catch (error) {
       toast.error("connexion échouée, email ou mot de passe incorrect");
@@ -52,8 +52,8 @@ function Connexion() {
       data.confirm_password = undefined;
       await axios.post("http://localhost:3310/api/connexion/register", data);
       toast.success("inscription réussie !!");
-      setTimeout (() => {
-        navigate ("/HomePage");
+      setTimeout(() => {
+        navigate("/HomePage");
       }, 2000);
     } catch (error) {
       console.error("erreur inscription :", error);
@@ -65,7 +65,7 @@ function Connexion() {
     <>
       <ToastContainer
         position="bottom-right"
-        autoClose={5000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -73,7 +73,7 @@ function Connexion() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
+        theme="dark"
         transition={Slide}
       />
       {/* connexion */}

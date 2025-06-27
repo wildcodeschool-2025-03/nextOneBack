@@ -13,8 +13,8 @@ router.get("/api/items", itemActions.browse);
 router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
-import connexionActions from "./modules/connexion/connexionActions";
 import { hashPassword, verifPassword } from "./middlewares/argonMiddleware";
+import connexionActions from "./modules/connexion/connexionActions";
 router.post("/api/connexion/register", hashPassword, connexionActions.add);
 router.post("/api/connexion/login", verifPassword, connexionActions.read);
 /* ************************************************************************* */
