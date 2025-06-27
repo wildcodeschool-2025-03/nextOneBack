@@ -56,7 +56,6 @@ function Connexion() {
         navigate("/HomePage");
       }, 2000);
     } catch (error) {
-      console.error("erreur inscription :", error);
       toast.error("inscription échouée");
     }
   };
