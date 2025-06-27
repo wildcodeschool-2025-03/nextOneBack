@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import drawFood from "./Food";
 import GameOver from "./GameOver";
 import PausedModal from "./Paused";
+import ScoreBoard from "./ScoreBoard";
 import { drawSnake } from "./draw";
 import useDirection from "./useDirection";
 import "./styles/snakeBoard.css";
@@ -25,10 +26,15 @@ export default function SnakeBoard() {
   const [isGameOver, setIsGameOver] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
 
+  const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(
+    Number(localStorage.getItem("highScore")) || 0,
+  );
+
   const gridSize = 20;
   const direction = useDirection();
 
-  // Redimensionnement dynamique
+  // Redimensionne automatiquement le canvas
   useEffect(() => {
     const resizeCanvas = () => {
       const size = Math.min(window.innerWidth, window.innerHeight, 600) * 0.9;
@@ -46,7 +52,7 @@ export default function SnakeBoard() {
     }
   }, [food, canvasSize, snakeBody]);
 
-  // Déplacement du serpent
+  // déplacement du serpent
   useEffect(() => {
     if (canvasSize === 0 || isPaused || isGameOver) return;
 
@@ -75,9 +81,17 @@ export default function SnakeBoard() {
 
         const newBody = [...prevBody, newHead];
         if (!hasEaten) {
-          newBody.shift();
+          newBody.shift(); // retirer la queue si pas mangé
         } else {
           setFood(getRandomCoord(gridSize, newBody));
+          setScore((prev) => {
+            const newScore = prev + 10;
+            if (newScore > highScore) {
+              setHighScore(newScore);
+              localStorage.setItem("highScore", String(newScore));
+            }
+            return newScore;
+          });
         }
 
         const hasCollision = newBody
@@ -94,9 +108,9 @@ export default function SnakeBoard() {
     }, 150);
 
     return () => clearInterval(interval);
-  }, [canvasSize, direction, food, isPaused, isGameOver]);
+  }, [canvasSize, direction, food, isPaused, isGameOver, highScore]);
 
-  // Dessin du canvas
+  // Redessine le jeu à chaque changement
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -108,7 +122,7 @@ export default function SnakeBoard() {
     if (food) drawFood(ctx, canvasSize, gridSize, food);
   }, [canvasSize, snakeBody, food]);
 
-  // espace pour pause/reprise
+  // Touche espace pour pause
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.code === "Space" && !isGameOver) {
@@ -120,7 +134,7 @@ export default function SnakeBoard() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isGameOver]);
 
-  // Rejouer
+  // Redémarrage du jeu
   const handleRestart = () => {
     const initialSnake: Coordinate[] = [
       { row: 5, col: 3 },
@@ -131,10 +145,12 @@ export default function SnakeBoard() {
     setFood(getRandomCoord(gridSize, initialSnake));
     setIsGameOver(false);
     setIsPaused(false);
+    setScore(0);
   };
 
   return (
     <div className="snake-board-container">
+      <ScoreBoard score={score} highScore={highScore} />
       <canvas
         id="snake-canvas"
         ref={canvasRef}
@@ -149,7 +165,7 @@ export default function SnakeBoard() {
   );
 }
 
-// Coordonnée aléatoire pour la pomme
+// Génére une coordonnée aléatoire
 function getRandomCoord(gridSize: number, occupied: Coordinate[]): Coordinate {
   const allCoords = [];
   for (let row = 0; row < gridSize; row++) {
