@@ -1,14 +1,11 @@
-import type { Coordinate } from "./SnakeBoard";
+import type { Coordinate } from "./Snake";
 
-// Fonction pour dessiner la pomme dans le canvas
+// Dessine la pomme dans le canvas
 export default function drawFood(
   ctx: CanvasRenderingContext2D,
-  canvasSize: number,
-  gridSize: number,
+  cellSize: number,
   food: Coordinate,
 ) {
-  const cellSize = canvasSize / gridSize;
-
-  ctx.fillStyle = "#DB29CC"; // Couleur violette pour la pomme
+  ctx.fillStyle = "#DB29CC"; // Couleur de la pomme
   ctx.fillRect(food.col * cellSize, food.row * cellSize, cellSize, cellSize);
 }
