@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import drawFood from "./Food";
+import GameOver from "./GameOver";
+import PausedModal from "./Paused";
 import { drawSnake } from "./draw";
 import useDirection from "./useDirection";
 import "./styles/snakeBoard.css";
@@ -12,20 +14,24 @@ export type Coordinate = {
 export default function SnakeBoard() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [canvasSize, setCanvasSize] = useState(0);
+
   const [snakeBody, setSnakeBody] = useState<Coordinate[]>([
     { row: 5, col: 3 },
     { row: 5, col: 4 },
     { row: 5, col: 5 },
   ]);
+
   const [food, setFood] = useState<Coordinate | null>(null);
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   const gridSize = 20;
   const direction = useDirection();
 
-  //  Redimensionne automatiquement le canvas
+  // Redimensionnement dynamique
   useEffect(() => {
     const resizeCanvas = () => {
-      const size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
+      const size = Math.min(window.innerWidth, window.innerHeight, 600) * 0.9;
       setCanvasSize(size);
     };
     resizeCanvas();
@@ -33,16 +39,16 @@ export default function SnakeBoard() {
     return () => window.removeEventListener("resize", resizeCanvas);
   }, []);
 
-  // Génère une première pomme quand le canvas est prêt
+  // Génère une pomme si besoin
   useEffect(() => {
     if (!food && canvasSize > 0) {
       setFood(getRandomCoord(gridSize, snakeBody));
     }
   }, [food, canvasSize, snakeBody]);
 
-  //  Boucle de déplacement + gestion de la pomme
+  // Déplacement du serpent
   useEffect(() => {
-    if (canvasSize === 0) return;
+    if (canvasSize === 0 || isPaused || isGameOver) return;
 
     const interval = setInterval(() => {
       setSnakeBody((prevBody) => {
@@ -69,19 +75,28 @@ export default function SnakeBoard() {
 
         const newBody = [...prevBody, newHead];
         if (!hasEaten) {
-          newBody.shift(); // si pas mangé, on enlève la queue
+          newBody.shift();
         } else {
-          setFood(getRandomCoord(gridSize, newBody)); // nouvelle pomme
+          setFood(getRandomCoord(gridSize, newBody));
+        }
+
+        const hasCollision = newBody
+          .slice(0, -1)
+          .some((s) => s.row === newHead.row && s.col === newHead.col);
+
+        if (hasCollision) {
+          setIsGameOver(true);
+          return prevBody;
         }
 
         return newBody;
       });
-    }, 300);
+    }, 150);
 
     return () => clearInterval(interval);
-  }, [canvasSize, direction, food]);
+  }, [canvasSize, direction, food, isPaused, isGameOver]);
 
-  // Dessin du serpent + pomme
+  // Dessin du canvas
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -93,6 +108,31 @@ export default function SnakeBoard() {
     if (food) drawFood(ctx, canvasSize, gridSize, food);
   }, [canvasSize, snakeBody, food]);
 
+  // espace pour pause/reprise
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === "Space" && !isGameOver) {
+        e.preventDefault();
+        setIsPaused((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isGameOver]);
+
+  // Rejouer
+  const handleRestart = () => {
+    const initialSnake: Coordinate[] = [
+      { row: 5, col: 3 },
+      { row: 5, col: 4 },
+      { row: 5, col: 5 },
+    ];
+    setSnakeBody(initialSnake);
+    setFood(getRandomCoord(gridSize, initialSnake));
+    setIsGameOver(false);
+    setIsPaused(false);
+  };
+
   return (
     <div className="snake-board-container">
       <canvas
@@ -101,11 +141,15 @@ export default function SnakeBoard() {
         width={canvasSize}
         height={canvasSize}
       />
+      {isPaused && !isGameOver && (
+        <PausedModal onResume={() => setIsPaused(false)} />
+      )}
+      {isGameOver && <GameOver onRestart={handleRestart} />}
     </div>
   );
 }
 
-// Génère une coordonnée libre aléatoire pour la pomme
+// Coordonnée aléatoire pour la pomme
 function getRandomCoord(gridSize: number, occupied: Coordinate[]): Coordinate {
   const allCoords = [];
   for (let row = 0; row < gridSize; row++) {
