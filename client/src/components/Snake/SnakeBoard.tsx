@@ -1,45 +1,81 @@
 import { useEffect, useRef, useState } from "react";
-import drawSnakeHead from "./DrawSnakeHead";
+import { drawSnake } from "./draw";
+import useDirection from "./useDirection";
 import "./styles/snakeBoard.css";
+export type Coordinate = {
+  row: number;
+  col: number;
+};
 
 export default function SnakeBoard() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [canvasSize, setCanvasSize] = useState(0);
-  const [tick, setTick] = useState(0); // nombre de déplacements
+  const [snakeBody, setSnakeBody] = useState<Coordinate[]>([
+    { row: 5, col: 3 },
+    { row: 5, col: 4 },
+    { row: 5, col: 5 },
+  ]);
   const gridSize = 20;
 
-  // Redimensionnement du canvas à la taille de la fenêtre
+  // Direction actuelle
+  const direction = useDirection();
+
+  //  Redimensionne automatiquement le canvas en fonction de l'écran
   useEffect(() => {
     const resizeCanvas = () => {
       const size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
       setCanvasSize(size);
     };
-
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
     return () => window.removeEventListener("resize", resizeCanvas);
   }, []);
 
-  // Boucle de jeu : augmente le tick toutes les 300 ms
+  // avance le serpent dans la bonne direction
   useEffect(() => {
     if (canvasSize === 0) return;
 
     const interval = setInterval(() => {
-      setTick((prev) => prev + 1);
+      setSnakeBody((prevBody) => {
+        const head = prevBody[prevBody.length - 1];
+        const newHead: Coordinate = { ...head };
+
+        // Appliquer la direction du moment
+        switch (direction) {
+          case "up":
+            newHead.row = (head.row - 1 + gridSize) % gridSize;
+            break;
+          case "down":
+            newHead.row = (head.row + 1) % gridSize;
+            break;
+          case "left":
+            newHead.col = (head.col - 1 + gridSize) % gridSize;
+            break;
+          case "right":
+            newHead.col = (head.col + 1) % gridSize;
+            break;
+        }
+
+        const newBody = [...prevBody, newHead];
+        newBody.shift(); // on enlève la queue
+
+        return newBody;
+      });
     }, 300);
 
     return () => clearInterval(interval);
-  }, [canvasSize]);
+  }, [canvasSize, direction]);
 
-  // Dessin à chaque tick
+  //  Dessin du serpent sur le canvas
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    drawSnakeHead(ctx, canvasSize, gridSize, tick);
-  }, [canvasSize, tick]);
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
+    drawSnake(ctx, canvasSize, gridSize, snakeBody);
+  }, [canvasSize, snakeBody]);
 
   return (
     <div className="snake-board-container">
