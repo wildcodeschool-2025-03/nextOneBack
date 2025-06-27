@@ -15,13 +15,19 @@
 
 .line-connexion {
   height: 0.1rem;
-  width: 17vw;
+  width: auto;
   background: #00ffff;
-  margin: 0.8rem 0 2rem 0;
 }
 
 .input-row {
   display: flex;
+  margin-top: 1rem;
+  border: solid 1px transparent;
+}
+
+.error-message {
+  color: red;
+  font-size: 1rem;
 }
 
 /* login  */
@@ -32,6 +38,7 @@
   border: solid 3px #00ffff;
   border-radius: 30px;
   height: fit-content;
+  width: 27vw;
 }
 
 .form-login-contener {

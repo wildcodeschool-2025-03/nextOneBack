@@ -1,129 +1,254 @@
-import { useState } from "react";
-import "../styles/connexion.css";
 import axios from "axios";
-import { LuEye, LuEyeOff } from "react-icons/lu";
+import "../styles/connexion.css";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { Slide, ToastContainer, toast } from "react-toastify";
+
+type LoginForm = {
+  email: string;
+  password: string;
+};
+
+type RegisterForm = {
+  firstname: string;
+  name: string;
+  pseudo: string;
+  email: string;
+  password: string;
+  confirm_password?: string;
+};
 
 function Connexion() {
-  const [firstname, setFirstname] = useState(" ");
-  const [name, setName] = useState(" ");
-  const [pseudo, setPseudo] = useState(" ");
-  const [emailLogin, setEmailLogin] = useState(" ");
-  const [emailRegister, setEmailRegister] = useState(" ");
-  const [passwordLogin, setPasswordLogin] = useState(" ");
-  const [passwordRegister, setPasswordRegister] = useState(" ");
-  const [messageLogin, setMessageLogin] = useState(" ");
-  const [messageRegister, setMessageRegister] = useState(" ");
-  const [type, setType] = useState("password");
+  const {
+    register: registerLogin,
+    handleSubmit: handleSubmitLogin,
+    formState: { errors: errorsLogin },
+  } = useForm<LoginForm>();
 
-  const login = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    register: registerRegister,
+    handleSubmit: handleSubmitRegister,
+    watch,
+    formState: { errors: errorsRegister },
+  } = useForm<RegisterForm>();
+
+  const navigate = useNavigate();
+  const login = async (data: LoginForm) => {
     try {
       await axios.post("http://localhost:3310/api/connexion/login", {
-        email: emailLogin,
-        password: passwordLogin,
+        email: data.email,
+        password: data.password,
       });
-      setMessageLogin("connexion réussie !!");
+      toast.success("connexion réussie !!");
+      setTimeout(() => {
+        navigate("/HomePage");
+      }, 2000);
     } catch (error) {
-      setMessageLogin("connexion échouée, email ou mot de passe incorrect");
+      toast.error("connexion échouée, email ou mot de passe incorrect");
     }
   };
 
-  const register = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onRegister = async (data: RegisterForm) => {
     try {
-      await axios.post("http://localhost:3310/api/connexion/register", {
-        firstname,
-        name,
-        pseudo,
-        email: emailRegister,
-        password: passwordRegister,
-      });
-      setMessageRegister("connexion réussie !!");
+      data.confirm_password = undefined;
+      await axios.post("http://localhost:3310/api/connexion/register", data);
+      toast.success("inscription réussie !!");
+      setTimeout(() => {
+        navigate("/HomePage");
+      }, 2000);
     } catch (error) {
-      setMessageRegister("connexion échouée");
+      toast.error("inscription échouée");
     }
-  };
-
-  const handleMouse = () => {
-    setType("text");
-  };
-
-  const handleMouseLeave = () => {
-    setType("password");
   };
 
   return (
     <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Slide}
+      />
       <main className="connexion-page">
+        {/* connexion */}
         <section className="login-contener">
-          <h2 className="title-connexion">Se connecter</h2>
-          <form onSubmit={login} className="form-login-contener">
-            <label htmlFor="email" className="input-row">
-              Email
+          <h2 className="title-connexion">Connexion</h2>
+          <form
+            onSubmit={handleSubmitLogin(login)}
+            className="form-login-contener"
+          >
+            <div className="input-row">
+              <label htmlFor="email-login">Email</label>
               <input
                 type="email"
-                onChange={(e) => setEmailLogin(e.target.value)}
+                id="email-login"
+                {...registerLogin("email", {
+                  required: "email requis",
+                  pattern: {
+                    value: /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/,
+                    message: "L'email saisi n'a pas un format valide",
+                  },
+                })}
               />
-            </label>
+            </div>
             <span className="line-connexion" />
-            <label htmlFor="password" className="input-row">
-              Mot de passe
+            {errorsLogin.email && (
+              <p className="error-message">{errorsLogin.email.message}</p>
+            )}
+            <div className="input-row">
+              <label htmlFor="password-login">Mot de passe</label>
               <input
-                type={type}
-                onChange={(e) => setPasswordLogin(e.target.value)}
+                type="password"
+                id="password-login"
+                {...registerLogin("password", {
+                  required: "Mot de passe requis",
+                })}
               />
-              <span onMouseEnter={handleMouse} onMouseLeave={handleMouseLeave}>
-                {type === "password" ? <LuEyeOff /> : <LuEye />}
-              </span>
-            </label>
+            </div>
+
             <span className="line-connexion" />
+            {errorsLogin.password && (
+              <p className="error-message">{errorsLogin.password.message}</p>
+            )}
             <button type="submit" className="button-connexion">
               Se connecter
             </button>
+
+            {/* inscription */}
           </form>
-          {messageLogin !== "" ? <p>{messageLogin}</p> : null}
         </section>
         <section className="login-contener">
           <h2 className="title-connexion">Créer un compte</h2>
-          <form onSubmit={register} className="form-register-contener">
-            <label htmlFor="prénom" className="input-row">
-              Prénom
+          <form
+            onSubmit={handleSubmitRegister(onRegister)}
+            className="form-register-contener"
+          >
+            <div className="input-row">
+              <label htmlFor="firstname">Prénom</label>
               <input
                 type="text"
-                onChange={(e) => setFirstname(e.target.value)}
+                {...registerRegister("firstname", {
+                  required: "Prénom requis",
+                  pattern: {
+                    value:
+                      /^((?:(?:[a-zA-Z]+)(?:-(?:[a-zA-Z]+))+)|(?:[a-zA-Z]+))$/,
+                    message: "Le prénom saisi n'a pas un format valide",
+                  },
+                })}
               />
-            </label>
+            </div>
             <span className="line-connexion" />
-            <label htmlFor="nom" className="input-row">
-              Nom
-              <input type="text" onChange={(e) => setName(e.target.value)} />
-            </label>
+            {errorsRegister.firstname && (
+              <p className="error-message">
+                {errorsRegister.firstname.message}
+              </p>
+            )}
+            <div className="input-row">
+              <label htmlFor="name">Nom</label>
+              <input
+                type="text"
+                {...registerRegister("name", {
+                  required: "Nom requis",
+                  pattern: {
+                    value:
+                      /^((?:(?:[a-zA-Z]+)(?:-(?:[a-zA-Z]+))+)|(?:[a-zA-Z]+))$/,
+                    message: "Le nom saisi n'a pas un format valide",
+                  },
+                })}
+              />
+            </div>
             <span className="line-connexion" />
-            <label htmlFor="pseudo" className="input-row">
-              Pseudo
-              <input type="text" onChange={(e) => setPseudo(e.target.value)} />
-            </label>
+            {errorsRegister.name && (
+              <p className="error-message">{errorsRegister.name.message}</p>
+            )}
+            <div className="input-row">
+              <label htmlFor="pseudo">Pseudo</label>
+              <input
+                type="text"
+                {...registerRegister("pseudo", {
+                  required: "Pseudo requis",
+                  pattern: {
+                    value: /^[A-Za-z0-9]+([A-Za-z0-9]*|[._-]?[A-Za-z0-9]+)*$/,
+                    message: "Le pseudo saisi n'a pas un format valide",
+                  },
+                })}
+              />
+            </div>
             <span className="line-connexion" />
-            <label htmlFor="email" className="input-row">
-              Adresse email
+            {errorsRegister.pseudo && (
+              <p className="error-message">{errorsRegister.pseudo.message}</p>
+            )}
+            <div className="input-row">
+              <label htmlFor="email-register">Email</label>
               <input
                 type="email"
-                onChange={(e) => setEmailRegister(e.target.value)}
+                id="email-register"
+                {...registerRegister("email", {
+                  required: "email requis",
+                  pattern: {
+                    value: /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/,
+                    message: "L'email saisi n'a pas un format valide",
+                  },
+                })}
               />
-            </label>
+            </div>
             <span className="line-connexion" />
-            <label htmlFor="password" className="input-row">
-              Mot de passe
+            {errorsRegister.email && (
+              <p className="error-message">{errorsRegister.email.message}</p>
+            )}
+            <div className="input-row">
+              <label htmlFor="password-register">Mot de passe</label>
               <input
                 type="password"
-                onChange={(e) => setPasswordRegister(e.target.value)}
+                id="password-register"
+                {...registerRegister("password", {
+                  required: "Mot de passe requis",
+                  pattern: {
+                    value:
+                      /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){5,16}$/,
+                    message: "Le mot de passe saisi n'a pas un format valide",
+                  },
+                })}
               />
-            </label>
+            </div>
             <span className="line-connexion" />
+            {errorsRegister.password && (
+              <p className="error-message">{errorsRegister.password.message}</p>
+            )}
+
+            <div className="input-row">
+              <label htmlFor="confirm-password">
+                Confirmation du mot de passe
+              </label>
+              <input
+                type="password"
+                id="confirm-password"
+                {...registerRegister("confirm_password", {
+                  validate: (value) => {
+                    if (value !== watch("password")) {
+                      return "Veuillez vérifier : les mots de passe ne sont pas identiques";
+                    }
+                  },
+                })}
+              />
+            </div>
+            <span className="line-connexion" />
+            {errorsRegister.confirm_password && (
+              <p className="error-message">
+                {errorsRegister.confirm_password.message}
+              </p>
+            )}
+
             <button type="submit" className="button-connexion">
               S'inscrire
             </button>
-            {messageRegister !== "" ? <p>{messageRegister}</p> : null}
           </form>
         </section>
       </main>
