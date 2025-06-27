@@ -1,82 +1,193 @@
 import axios from "axios";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { Slide, ToastContainer, toast } from "react-toastify";
+
+type LoginForm = {
+  email: string;
+  password: string;
+};
+
+type RegisterForm = {
+  firstname: string;
+  name: string;
+  pseudo: string;
+  email: string;
+  password: string;
+  confirm_password?: string;
+};
 
 function Connexion() {
-  const [firstname, setFirstname] = useState(" ");
-  const [name, setName] = useState(" ");
-  const [pseudo, setPseudo] = useState(" ");
-  const [emailLogin, setEmailLogin] = useState(" ");
-  const [emailRegister, setEmailRegister] = useState(" ");
-  const [passwordLogin, setPasswordLogin] = useState(" ");
-  const [passwordRegister, setPasswordRegister] = useState(" ");
-  const [messageLogin, setMessageLogin] = useState(" ");
-  const [messageRegister, setMessageRegister] = useState(" ");
+  const {
+    register: registerLogin,
+    handleSubmit: handleSubmitLogin,
+    formState: { errors: errorsLogin },
+  } = useForm<LoginForm>();
 
-  const login = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    register: registerRegister,
+    handleSubmit: handleSubmitRegister,
+    watch,
+    formState: { errors: errorsRegister },
+  } = useForm<RegisterForm>();
+
+  const navigate = useNavigate();
+  const login = async (data: LoginForm) => {
     try {
       await axios.post("http://localhost:3310/api/connexion/login", {
-        email: emailLogin,
-        password: passwordLogin,
+        email: data.email,
+        password: data.password,
       });
-      setMessageLogin("connexion réussie !!");
+      toast.success("connexion réussie !!");
+      setTimeout(() => {
+        navigate("/HomePage");
+      }, 2000);
     } catch (error) {
-      setMessageLogin("connexion échouée, email ou mot de passe incorrect");
+      toast.error("connexion échouée, email ou mot de passe incorrect");
     }
   };
 
-  const register = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onRegister = async (data: RegisterForm) => {
     try {
-      await axios.post("http://localhost:3310/api/connexion/register", {
-        firstname,
-        name,
-        pseudo,
-        email: emailRegister,
-        password: passwordRegister,
-      });
-      setMessageRegister("connexion réussie !!");
+      data.confirm_password = undefined;
+      await axios.post("http://localhost:3310/api/connexion/register", data);
+      toast.success("inscription réussie !!");
+      setTimeout(() => {
+        navigate("/HomePage");
+      }, 2000);
     } catch (error) {
-      setMessageRegister("connexion échouée");
+      toast.error("inscription échouée");
     }
   };
+
   return (
     <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Slide}
+      />
+      {/* connexion */}
       <section>
         <h2>Connexion</h2>
-        <form onSubmit={login}>
-          <label htmlFor="email">Email</label>
-          <input type="email" onChange={(e) => setEmailLogin(e.target.value)} />
-          <label htmlFor="password">Mot de passe</label>
-          <input
-            type="password"
-            onChange={(e) => setPasswordLogin(e.target.value)}
-          />
-          <button type="submit">Se connecter</button>
-        </form>
-        {messageLogin !== "" ? <p>{messageLogin}</p> : null}
-      </section>
-      <section>
-        <h2>Créer un compte</h2>
-        <form onSubmit={register}>
-          <label htmlFor="prénom">Prénom</label>
-          <input type="text" onChange={(e) => setFirstname(e.target.value)} />
-          <label htmlFor="nom">Nom</label>
-          <input type="text" onChange={(e) => setName(e.target.value)} />
-          <label htmlFor="pseudo">Pseudo</label>
-          <input type="text" onChange={(e) => setPseudo(e.target.value)} />
+        <form onSubmit={handleSubmitLogin(login)}>
           <label htmlFor="email">Email</label>
           <input
             type="email"
-            onChange={(e) => setEmailRegister(e.target.value)}
+            {...registerLogin("email", {
+              required: "email requis",
+              pattern: {
+                value: /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/,
+                message: "L'email saisi n'a pas un format valide",
+              },
+            })}
           />
+          {errorsLogin.email && <p>{errorsLogin.email.message}</p>}
+
           <label htmlFor="password">Mot de passe</label>
           <input
             type="password"
-            onChange={(e) => setPasswordRegister(e.target.value)}
+            {...registerLogin("password", {
+              required: "Mot de passe requis",
+            })}
           />
+          {errorsLogin.password && <p>{errorsLogin.password.message}</p>}
+          <button type="submit">Se connecter</button>
+
+          {/* inscription */}
+        </form>
+      </section>
+      <section>
+        <h2>Créer un compte</h2>
+        <form onSubmit={handleSubmitRegister(onRegister)}>
+          <label htmlFor="prénom">Prénom</label>
+          <input
+            type="text"
+            {...registerRegister("firstname", {
+              required: "Prénom requis",
+              pattern: {
+                value: /^((?:(?:[a-zA-Z]+)(?:-(?:[a-zA-Z]+))+)|(?:[a-zA-Z]+))$/,
+                message: "Le prénom saisi n'a pas un format valide",
+              },
+            })}
+          />
+          {errorsRegister.firstname && (
+            <p>{errorsRegister.firstname.message}</p>
+          )}
+          <label htmlFor="nom">Nom</label>
+          <input
+            type="text"
+            {...registerRegister("name", {
+              required: "Nom requis",
+              pattern: {
+                value: /^((?:(?:[a-zA-Z]+)(?:-(?:[a-zA-Z]+))+)|(?:[a-zA-Z]+))$/,
+                message: "Le nom saisi n'a pas un format valide",
+              },
+            })}
+          />
+          {errorsRegister.name && <p>{errorsRegister.name.message}</p>}
+          <label htmlFor="pseudo">Pseudo</label>
+          <input
+            type="text"
+            {...registerRegister("pseudo", {
+              required: "Pseudo requis",
+              pattern: {
+                value: /^[A-Za-z0-9]+([A-Za-z0-9]*|[._-]?[A-Za-z0-9]+)*$/,
+                message: "Le pseudo saisi n'a pas un format valide",
+              },
+            })}
+          />
+          {errorsRegister.pseudo && <p>{errorsRegister.pseudo.message}</p>}
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            {...registerRegister("email", {
+              required: "email requis",
+              pattern: {
+                value: /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/,
+                message: "L'email saisi n'a pas un format valide",
+              },
+            })}
+          />
+          {errorsRegister.email && <p>{errorsRegister.email.message}</p>}
+
+          <label htmlFor="password">Mot de passe</label>
+          <input
+            type="password"
+            {...registerRegister("password", {
+              required: "Mot de passe requis",
+              pattern: {
+                value:
+                  /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){5,16}$/,
+                message: "Le mot de passe saisi n'a pas un format valide",
+              },
+            })}
+          />
+          {errorsRegister.password && <p>{errorsRegister.password.message}</p>}
+
+          <label htmlFor="password">Confirmation du mot de passe</label>
+          <input
+            type="password"
+            {...registerRegister("confirm_password", {
+              validate: (value) => {
+                if (value !== watch("password")) {
+                  return "Veuillez vérifier : les mots de passe ne sont pas identiques";
+                }
+              },
+            })}
+          />
+          {errorsRegister.confirm_password && (
+            <p>{errorsRegister.confirm_password.message}</p>
+          )}
           <button type="submit">S'inscrire</button>
-          {messageRegister !== "" ? <p>{messageRegister}</p> : null}
         </form>
       </section>
     </>
