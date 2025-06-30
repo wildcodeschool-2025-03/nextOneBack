@@ -1,8 +1,8 @@
 import "../styles/adminPage.css";
-import CoinIcone from "../assets/icones/coin.png";
-import GameIcone from "../assets/icones/icone_game.png";
 import Bigboss from "../assets/icones/big boss pixel.png";
+import CoinIcone from "../assets/icones/coin.png";
 import disconnected from "../assets/icones/disconnected.png";
+import GameIcone from "../assets/icones/icone_game.png";
 import dragon from "../assets/images/red-dragon.png";
 export default function AdminPage() {
   return (

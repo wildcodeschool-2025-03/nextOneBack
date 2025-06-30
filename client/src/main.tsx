@@ -7,9 +7,9 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 
 // Import the main app component
 import App from "./App";
+import AdminPage from "./pages/AdminPage.tsx";
 import Connexion from "./pages/Connexion";
 import HomePage from "./pages/HomePage.tsx";
-import AdminPage from "./pages/AdminPage.tsx";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
