@@ -130,44 +130,45 @@ function Connexion() {
             onSubmit={handleSubmitRegister(onRegister)}
             className="form-register-contener"
           >
-            <div className="input-row">
-              <label htmlFor="firstname">Prénom</label>
-              <input
-                type="text"
-                {...registerRegister("firstname", {
-                  required: "Prénom requis",
-                  pattern: {
-                    value:
-                      /^((?:(?:[a-zA-Z]+)(?:-(?:[a-zA-Z]+))+)|(?:[a-zA-Z]+))$/,
-                    message: "Le prénom saisi n'a pas un format valide",
-                  },
-                })}
-              />
+            <div className="firstname-name">
+              <div className="input-row">
+                <label htmlFor="firstname">Prénom</label>
+                <input
+                  type="text"
+                  {...registerRegister("firstname", {
+                    required: "Prénom requis",
+                    pattern: {
+                      value:
+                        /^((?:(?:[a-zA-Z]+)(?:-(?:[a-zA-Z]+))+)|(?:[a-zA-Z]+))$/,
+                      message: "Le prénom saisi n'a pas un format valide",
+                    },
+                  })}
+                />
+              </div>
+              <div className="input-row">
+                <label htmlFor="name">Nom</label>
+                <input
+                  type="text"
+                  {...registerRegister("name", {
+                    required: "Nom requis",
+                    pattern: {
+                      value:
+                        /^((?:(?:[a-zA-Z]+)(?:-(?:[a-zA-Z]+))+)|(?:[a-zA-Z]+))$/,
+                      message: "Le nom saisi n'a pas un format valide",
+                    },
+                  })}
+                />
+              </div>
             </div>
-            <span className="line-connexion" />
             {errorsRegister.firstname && (
               <p className="error-message">
                 {errorsRegister.firstname.message}
               </p>
             )}
-            <div className="input-row">
-              <label htmlFor="name">Nom</label>
-              <input
-                type="text"
-                {...registerRegister("name", {
-                  required: "Nom requis",
-                  pattern: {
-                    value:
-                      /^((?:(?:[a-zA-Z]+)(?:-(?:[a-zA-Z]+))+)|(?:[a-zA-Z]+))$/,
-                    message: "Le nom saisi n'a pas un format valide",
-                  },
-                })}
-              />
-            </div>
-            <span className="line-connexion" />
             {errorsRegister.name && (
               <p className="error-message">{errorsRegister.name.message}</p>
             )}
+            <span className="line-connexion" />
             <div className="input-row">
               <label htmlFor="pseudo">Pseudo</label>
               <input
