@@ -9,6 +9,7 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 import App from "./App";
 import Connexion from "./pages/Connexion";
 import HomePage from "./pages/HomePage.tsx";
+import AdminPage from "./pages/AdminPage.tsx";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -23,12 +24,19 @@ import HomePage from "./pages/HomePage.tsx";
 const router = createBrowserRouter([
   {
     element: <App />, // Renders the App component for the home page
-    children: [{ path: "/", element: <Connexion /> }],
+    children: [
+      { path: "/", element: <Connexion /> },
+      {
+        path: "/HomePage", // The root path
+        element: <HomePage />, // Renders the App component for the home page
+      },
+      {
+        path: "/adminpage", // The root path
+        element: <AdminPage />, // Renders the App component for the home page
+      },
+    ],
   },
-  {
-    path: "/HomePage", // The root path
-    element: <HomePage />, // Renders the App component for the home page
-  },
+
   // Try adding a new route! For example, "/about" with an About component
 ]);
 
