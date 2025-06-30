@@ -1,5 +1,4 @@
 import type { RequestHandler } from "express";
-
 import { userCreate, userEmail } from "./connexionRepository";
 import type { Connexion } from "./connexionRepository";
 
@@ -17,14 +16,8 @@ const add: RequestHandler = async (req, res, next) => {
 // connexion/login
 const read: RequestHandler = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
-    const user = await userEmail(email);
-    if (!user || user.password !== password) {
-      res.status(404).json({ message: "email ou mot de passe incorrect" });
-      return;
-    }
-    const { password: _, ...userData } = user;
-    const userWithoutPassword = userData as Omit<Connexion, "password">;
+    const { user } = req.body;
+    const { password, ...userWithoutPassword } = user;
     res.json(userWithoutPassword);
   } catch (err) {
     next(err);
