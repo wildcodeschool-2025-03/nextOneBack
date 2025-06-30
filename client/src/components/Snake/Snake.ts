@@ -63,7 +63,7 @@ export default class Snake {
         break;
     }
 
-    // Téléportation aux bords (wrap-around)
+    // Téléportation aux bords
     newHead.row = (newHead.row + gridSize) % gridSize;
     newHead.col = (newHead.col + gridSize) % gridSize;
 
