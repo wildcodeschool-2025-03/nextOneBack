@@ -22,14 +22,15 @@ import HomePage from "./pages/HomePage.tsx";
 // You can add more routes as you build out your app!
 const router = createBrowserRouter([
   {
-    element: <App />, // Renders the App component for the home page
-    children: [{ path: "/", element: <Connexion /> }],
+    element: <App />,
+    children: [
+      { path: "/", element: <Connexion /> },
+      {
+        path: "/HomePage", // The root path
+        element: <HomePage />, // Renders the App component for the home page
+      },
+    ],
   },
-  {
-    path: "/HomePage", // The root path
-    element: <HomePage />, // Renders the App component for the home page
-  },
-  // Try adding a new route! For example, "/about" with an About component
 ]);
 
 /* ************************************************************************* */
