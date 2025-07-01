@@ -7,6 +7,7 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 
 // Import the main app component
 import App from "./App";
+import AdminPage from "./pages/AdminPage.tsx";
 import Connexion from "./pages/Connexion";
 import HomePage from "./pages/HomePage.tsx";
 
@@ -25,7 +26,14 @@ const router = createBrowserRouter([
     element: <App />, // Renders the App component for the home page
     children: [
       { path: "/", element: <Connexion /> },
-      { path: "/HomePage", element: <HomePage /> },
+      {
+        path: "/HomePage", // The root path
+        element: <HomePage />, // Renders the App component for the home page
+      },
+      {
+        path: "/adminpage", // The root path
+        element: <AdminPage />, // Renders the App component for the home page
+      },
     ],
   },
 
