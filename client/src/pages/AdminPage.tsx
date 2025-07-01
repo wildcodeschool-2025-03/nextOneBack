@@ -60,7 +60,6 @@ export default function AdminPage() {
           </div>
         </section>
       </section>
-      <img className="red-dragon" src={dragon} alt="red dragon" />
     </main>
   );
 }
