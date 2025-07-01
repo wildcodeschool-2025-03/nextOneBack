@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../../styles/navbar.css";
+import { NavLink } from "react-router";
 
 export default function BurgerMenu() {
   const [burgerClass, setBurgerClass] = useState("burger-bar unclicked");
@@ -28,15 +29,20 @@ export default function BurgerMenu() {
         </div>
       </div>
       <div className={menuClass}>
-        <button className="linkButton" type="button">
-          Ma salle !
-        </button>
-        <button className="linkButton" type="button">
-          Les arcades
-        </button>
-        <button className="linkButton" type="button">
-          Tarifs
-        </button>
+        <span className="barre" />
+        <NavLink to="/HomePage" className="linkButton">
+          <span>Ma Salle !</span>
+        </NavLink>
+        <span className="barre" />
+        <NavLink to="/arcades" className="linkButton">
+          <span>Les arcades</span>
+        </NavLink>
+
+        <span className="barre" />
+        <NavLink to="/tarifs" className="linkButton">
+          <span>Tarifs</span>
+        </NavLink>
+        <span className="barre" />
       </div>
     </div>
   );
