@@ -10,6 +10,7 @@ import App from "./App";
 import AdminPage from "./pages/AdminPage.tsx";
 import Connexion from "./pages/Connexion";
 import HomePage from "./pages/HomePage.tsx";
+import TicTacToePage from "./pages/TicTacToePage.tsx";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/adminpage", // The root path
         element: <AdminPage />, // Renders the App component for the home page
+      },
+      {
+        path: "/TicTacToePage",
+        element: <TicTacToePage />,
       },
     ],
   },

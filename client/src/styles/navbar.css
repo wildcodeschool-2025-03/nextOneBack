@@ -130,6 +130,7 @@
     height: 10em;
     border-radius: 50% 50% 49% 51% / 65% 65% 35% 35%;
     background-color: #0b0433;
+    z-index: 9999;
   }
   .userGamerIcone {
     width: 5em;
