@@ -17,6 +17,7 @@
     height: 10em;
     background-color: #0b0433;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    z-index: 11;
   }
   .userGamerIcone {
     width: 5em;
@@ -24,11 +25,15 @@
     margin: 1em;
     margin-top: 1.5em;
   }
+  .UserIcone {
+    z-index: 11;
+  }
 
   /* Burger Menu */
   .menuBurger {
     height: 5em;
     padding: 1em;
+    z-index: 11;
   }
   button {
     border-style: none;
@@ -66,12 +71,13 @@
   .hidden {
     display: none;
   }
+
   .visible {
-    display: inherit;
     display: flex;
     flex-direction: column;
     padding-top: 10em;
     justify-content: space-around;
+    z-index: 9;
   }
   .linkButton {
     font-size: 2em;
