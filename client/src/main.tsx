@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Connexion /> },
       {
-        path: "/HomePage", // The root path
+        path: "/homePage", // The root path
         element: <HomePage />, // Renders the App component for the home page
       },
       {
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         element: <AdminPage />, // Renders the App component for the home page
       },
       {
-        path: "/TicTacToePage",
+        path: "/tictactoepage",
         element: <TicTacToePage />,
       },
     ],
