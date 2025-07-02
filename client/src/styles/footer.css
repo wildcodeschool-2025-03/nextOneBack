@@ -1,3 +1,27 @@
+.registration {
+  color: white;
+  font-weight: 600;
+  height: 2em;
+  width: 8em;
+  font-size: 1.2em;
+  border: 2px solid;
+  border-color: #db29cc;
+  border-radius: 15px;
+  background-color: rgba(219, 41, 204, 0.36);
+  transition: 0.2s;
+}
+
+.registration:hover {
+  box-shadow: 0px 0px 10px #db29cc;
+}
+
+.input-mail {
+  border: 1px solid;
+  border-color: #00ccff;
+  width: 85%;
+  height: 2em;
+}
+
 @media screen and (max-width: 768px) {
   .footer-mobile {
     display: flex;
@@ -12,23 +36,7 @@
   .logo-desktop {
     display: none;
   }
-  .registration {
-    color: white;
-    font-weight: 600;
-    height: 2em;
-    width: 8em;
-    font-size: 1.2em;
-    border: 2px solid;
-    border-color: #db29cc;
-    border-radius: 15px;
-    background-color: rgba(219, 41, 204, 0.36);
-  }
-  .input-mail {
-    border: 1px solid;
-    border-color: #00ccff;
-    width: 85%;
-    height: 2em;
-  }
+
   .nextOneLogoFooter {
     width: 7em;
     height: 7em;
@@ -117,22 +125,5 @@
     width: 4em;
     height: 4em;
     margin-left: -0.5em;
-  }
-  .registration {
-    color: white;
-    font-weight: 600;
-    height: 2em;
-    width: 8em;
-    font-size: 1.2em;
-    border: 2px solid;
-    border-color: #db29cc;
-    border-radius: 15px;
-    background-color: rgba(219, 41, 204, 0.36);
-  }
-  .input-mail {
-    border: 1px solid;
-    border-color: #00ccff;
-    width: 85%;
-    height: 2em;
   }
 }

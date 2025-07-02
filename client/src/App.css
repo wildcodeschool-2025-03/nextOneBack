@@ -24,3 +24,8 @@ body {
   font-family: "inter";
   src: url("./assets/fonts/inter/Inter_18pt-Regular.ttf");
 }
+
+@font-face {
+  font-family: "russo";
+  src: url("./assets/fonts/Russo/RussoOne-Regular.ttf");
+}
