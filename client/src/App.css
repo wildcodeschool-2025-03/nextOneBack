@@ -1,26 +1,30 @@
 html,
 body,
 #root {
-  height: 100%;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 body {
-  background: url("/images/background_V2.png");
-  background-size: cover;
-  background-repeat: repeat;
-  background-position: center;
   font-family: "inter", sans-serif;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-@font-face {
-  font-family: "inter";
-  src: url("./assets/fonts/inter/Inter_18pt-Regular.ttf");
+.app-container > main {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url("/images/background_V2.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center center;
 }
