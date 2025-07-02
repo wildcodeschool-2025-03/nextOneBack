@@ -20,15 +20,25 @@
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
+  z-index: 1;
 }
 
 .cloud-home1 {
   height: auto;
-  width: 60vw;
+  width: 40vw;
   animation: float 7s ease-in-out infinite;
   position: absolute;
-  top: 2rem;
-  left: 0;
+  top: 5rem;
+  left: 2rem;
+  z-index: 0;
+}
+.cloud-home2 {
+  height: auto;
+  width: 40vw;
+  animation: float 8s ease-in-out infinite;
+  position: absolute;
+  top: 7rem;
+  right: 2rem;
   z-index: 0;
 }
 

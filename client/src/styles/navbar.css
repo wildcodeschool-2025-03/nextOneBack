@@ -146,12 +146,14 @@
   }
   .linkDesktop {
     width: 15vw;
-    font-size: 1.3em;
+    font-size: 1.4em;
     font-weight: 600;
     color: white;
     background-color: #0b0433;
+    transition: 0.2s;
   }
   .linkDesktop:hover {
     color: #00ccff;
+    text-shadow: 0 0 5px #f7f7f7, 0 0 10px #ffffff, 0 0 20px, #00ccff;
   }
 }
