@@ -1,8 +1,9 @@
 import axios from "axios";
 import "../styles/connexion.css";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 import { Slide, ToastContainer, toast } from "react-toastify";
+import type { Auth } from "../types/auth";
 
 type LoginForm = {
   email: string;
@@ -32,13 +33,21 @@ function Connexion() {
     formState: { errors: errorsRegister },
   } = useForm<RegisterForm>();
 
+  const { setAuth } = useOutletContext() as {
+    setAuth: (auth: Auth | null) => void;
+  };
+
   const navigate = useNavigate();
   const login = async (data: LoginForm) => {
     try {
-      await axios.post("http://localhost:3310/api/connexion/login", {
-        email: data.email,
-        password: data.password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/connexion/login`,
+        data,
+      );
+      const { token, user }: Auth = response.data;
+      localStorage.setItem("token", token);
+      setAuth({ token, user });
+
       toast.success("connexion réussie !!");
       setTimeout(() => {
         navigate("/HomePage");
@@ -51,7 +60,10 @@ function Connexion() {
   const onRegister = async (data: RegisterForm) => {
     try {
       data.confirm_password = undefined;
-      await axios.post("http://localhost:3310/api/connexion/register", data);
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/connexion/register`,
+        data,
+      );
       toast.success("inscription réussie !!");
       setTimeout(() => {
         navigate("/HomePage");
