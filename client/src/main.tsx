@@ -29,7 +29,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Connexion /> },
       {
-        path: "/HomePage", // The root path
+        path: "/homepage", // The root path
         element: <HomePage />, // Renders the App component for the home page
       },
       {
