@@ -46,18 +46,22 @@ export default function SnakeBoard() {
           break;
         case "ArrowUp":
         case "z":
+          e.preventDefault(); //permet de ne pas scroller la page
           snake.setDirection("up");
           break;
         case "ArrowDown":
         case "s":
+          e.preventDefault();
           snake.setDirection("down");
           break;
         case "ArrowLeft":
         case "q":
+          e.preventDefault();
           snake.setDirection("left");
           break;
         case "ArrowRight":
         case "d":
+          e.preventDefault();
           snake.setDirection("right");
           break;
       }

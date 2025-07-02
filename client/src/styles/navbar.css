@@ -17,18 +17,22 @@
     height: 10em;
     background-color: #0b0433;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    z-index: 11;
   }
   .userGamerIcone {
     width: 5em;
     height: 5em;
-    margin: 1em;
-    margin-top: 1.5em;
+    margin: 1em 1em 0em 0em;
+  }
+  .UserIcone {
+    z-index: 11;
   }
 
   /* Burger Menu */
   .menuBurger {
     height: 5em;
     padding: 1em;
+    z-index: 11;
   }
   button {
     border-style: none;
@@ -60,23 +64,32 @@
     position: absolute;
     top: 0;
     z-index: -1;
-    margin-left: -1.5em;
+    margin-left: -2.5em;
   }
   /* menu deroulant */
   .hidden {
     display: none;
   }
+  .barre {
+    height: 0.1rem;
+    width: 100%;
+    background-color: #00ffff;
+  }
+
   .visible {
-    display: inherit;
     display: flex;
     flex-direction: column;
     padding-top: 10em;
     justify-content: space-around;
+    align-items: center;
+    z-index: 9;
+    gap: 1em;
   }
   .linkButton {
     font-size: 2em;
     color: white;
     background-color: #0b0433;
+    text-decoration: none;
   }
   .burger-bar.clicked:nth-child(1) {
     transform: rotate(45deg) translate(0.75em, 1.25em);
@@ -112,6 +125,7 @@
   nav {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     background-color: #0b0433;
     height: 7em;
     width: 100%;
@@ -124,6 +138,7 @@
     height: 10em;
     border-radius: 50% 50% 49% 51% / 65% 65% 35% 35%;
     background-color: #0b0433;
+    z-index: 9999;
   }
   .userGamerIcone {
     width: 5em;
@@ -141,6 +156,8 @@
     font-weight: 600;
     color: white;
     background-color: #0b0433;
+    font-family: "inter", sans-serif;
+    text-decoration: none;
   }
   .linkDesktop:hover {
     color: #00ccff;
