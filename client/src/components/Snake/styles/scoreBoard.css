@@ -1,0 +1,19 @@
+.score-board {
+  font-family: monospace;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1rem 0;
+  color: white;
+}
+
+.score,
+.high-score {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 0.2rem 1rem;
+  border-radius: 0.5rem;
+}
+.game-status {
+  margin: 0;
+  padding: 0;
+}

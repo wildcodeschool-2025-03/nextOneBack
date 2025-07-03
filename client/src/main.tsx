@@ -11,6 +11,7 @@ import AdminPage from "./pages/AdminPage.tsx";
 import Connexion from "./pages/Connexion";
 import HomePage from "./pages/HomePage.tsx";
 import LesArcadesPage from "./pages/LesArcadesPage.tsx";
+import SnakePage from "./pages/SnakePage.tsx";
 import TarifsPage from "./pages/TarifsPage.tsx";
 import TicTacToePage from "./pages/TicTacToePage.tsx";
 
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
   // The root path
   // Renders the App component for the home page
 
+  {
+    path: "/snake", // The root path
+    element: <SnakePage />, // Renders the App component for the home page
+  },
   // Try adding a new route! For example, "/about" with an About component
 ]);
 
