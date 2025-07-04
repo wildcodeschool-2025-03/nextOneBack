@@ -50,18 +50,17 @@ const router = createBrowserRouter([
         path: "/tictactoepage",
         element: <TicTacToePage />,
       },
+      {
+        path: "/snake", // The root path
+        element: <SnakePage />, // Renders the App component for the home page
+      },
     ],
   },
-
-  // The root path
-  // Renders the App component for the home page
-
-  {
-    path: "/snake", // The root path
-    element: <SnakePage />, // Renders the App component for the home page
-  },
-  // Try adding a new route! For example, "/about" with an About component
 ]);
+// The root path
+// Renders the App component for the home page
+
+// Try adding a new route! For example, "/about" with an About component
 
 /* ************************************************************************* */
 
