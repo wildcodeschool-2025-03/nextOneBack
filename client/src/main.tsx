@@ -10,6 +10,10 @@ import App from "./App";
 import AdminPage from "./pages/AdminPage.tsx";
 import Connexion from "./pages/Connexion";
 import HomePage from "./pages/HomePage.tsx";
+import LesArcadesPage from "./pages/LesArcadesPage.tsx";
+import SnakePage from "./pages/SnakePage.tsx";
+import TarifsPage from "./pages/TarifsPage.tsx";
+import TicTacToePage from "./pages/TicTacToePage.tsx";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -27,12 +31,28 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Connexion /> },
       {
-        path: "/HomePage", // The root path
+        path: "/homePage", // The root path
         element: <HomePage />, // Renders the App component for the home page
       },
       {
         path: "/adminpage", // The root path
         element: <AdminPage />, // Renders the App component for the home page
+      },
+      {
+        path: "/arcades",
+        element: <LesArcadesPage />,
+      },
+      {
+        path: "/tarifs",
+        element: <TarifsPage />,
+      },
+      {
+        path: "/tictactoepage",
+        element: <TicTacToePage />,
+      },
+      {
+        path: "/snake", // The root path
+        element: <SnakePage />, // Renders the App component for the home page
       },
     ],
   },

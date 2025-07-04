@@ -9,11 +9,13 @@ function App() {
   const [auth, setAuth] = useState(null as Auth | null);
 
   return (
-    <>
+    <div className="app-container">
       <Navbar auth={auth} setAuth={setAuth} />
-      <Outlet context={{ auth, setAuth }} />
+      <main>
+        <Outlet context={{ auth, setAuth }} />
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }
 

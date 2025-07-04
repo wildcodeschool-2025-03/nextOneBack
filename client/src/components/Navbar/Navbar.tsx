@@ -1,5 +1,6 @@
 import "../../styles/navbar.css";
 import { useNavigate } from "react-router";
+import { NavLink } from "react-router";
 import UserGamerIcone from "../../assets/icones/usergamer_icone.png";
 import NextOneLogo from "../../assets/images/next_one_logo.png";
 import type { Auth } from "../../types/auth";
@@ -28,14 +29,14 @@ export default function Navbar({ auth, setAuth }: NavbarProps) {
       <article className="burgermenumobile">
         <BurgerMenu />
       </article>
-      <button className="linkDesktop" type="button">
-        {" "}
-        Ma Salle !
-      </button>
-      <button className="linkDesktop" type="button">
-        {" "}
-        Les arcades
-      </button>
+
+      <NavLink to="/homepage" className="linkDesktop">
+        <span>Ma Salle !</span>
+      </NavLink>
+
+      <NavLink to="/arcades" className="linkDesktop">
+        <span>Les arcades</span>
+      </NavLink>
       <img
         className="nextOneLogo"
         src={NextOneLogo}
@@ -45,6 +46,11 @@ export default function Navbar({ auth, setAuth }: NavbarProps) {
         {" "}
         Tarifs
       </button>
+
+      <NavLink to="/tarifs" className="linkDesktop">
+        <span>Tarifs</span>
+      </NavLink>
+
       <div className="button-icon">
         <button
           type="button"
@@ -53,13 +59,15 @@ export default function Navbar({ auth, setAuth }: NavbarProps) {
         >
           {auth ? "Déconnexion" : "Connexion"}
         </button>
-        <article className="UserIcone">
-          <img
-            className="userGamerIcone"
-            src={UserGamerIcone}
-            alt="icone representant un utilisateur avec une casque de  gamer et une manette"
-          />
-        </article>
+        <NavLink to="/adminpage" className="UserIcone">
+          <article className="UserIcone">
+            <img
+              className="userGamerIcone"
+              src={UserGamerIcone}
+              alt="icone representant un utilisateur avec une casque de  gamer et une manette"
+            />
+          </article>
+        </NavLink>
       </div>
     </nav>
   );

@@ -1,8 +1,11 @@
 .connexion-page {
+  height: auto;
+  width: 100%;
   display: flex;
   justify-content: center;
   padding: 4.5rem;
   color: #00ffff;
+  margin-bottom: 6rem;
 }
 
 .title-connexion {
@@ -13,7 +16,7 @@
 
 .line-connexion {
   margin-top: 0.5rem;
-  height: 0.1rem;
+  height: 0.2rem;
   width: auto;
   background: #00ffff;
 }
