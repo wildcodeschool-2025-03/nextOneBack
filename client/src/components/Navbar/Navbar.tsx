@@ -42,11 +42,6 @@ export default function Navbar({ auth, setAuth }: NavbarProps) {
         src={NextOneLogo}
         alt="Logo Next One, logo effet neon"
       />
-      <button className="linkDesktop" type="button">
-        {" "}
-        Tarifs
-      </button>
-
       <NavLink to="/tarifs" className="linkDesktop">
         <span>Tarifs</span>
       </NavLink>
