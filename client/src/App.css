@@ -26,6 +26,6 @@ body {
 }
 
 @font-face {
-  font-family: "russo";
-  src: url("./assets/fonts/Russo/RussoOne-Regular.ttf");
+  font-family: "pixelify";
+  src: url(./assets/fonts/pixelify/PixelifySans-SemiBold.ttf);
 }

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./EventsBlock.css";
-import { RiDeleteBin5Fill } from "react-icons/ri";
 
 export default function EventsBlock() {
   const saveEvent = localStorage.getItem("event");
@@ -43,7 +42,7 @@ export default function EventsBlock() {
                 onClick={() => deleteEvent(e)}
                 className="delete-button"
               >
-                <RiDeleteBin5Fill />
+                ❯ supprimer
               </button>
             </li>
           ))}

@@ -42,12 +42,18 @@
   z-index: 0;
 }
 
-.perso-retro {
-  position: absolute;
+.dragon {
+  position: fixed;
   top: 10rem;
-  left: 30rem;
+  left: 5rem;
   width: 15rem;
   animation: floatY 2s ease-in-out infinite;
+}
+.perso-retro {
+  position: absolute;
+  top: 80rem;
+  right: 5rem;
+  width: 10rem;
 }
 
 @keyframes float {
@@ -64,13 +70,13 @@
 
 @keyframes floatY {
   0% {
-    transform: translateY(0px) translateX(0px);
+    transform: translateY(0) translateX(0);
   }
   50% {
     transform: translateY(-20px) translateX(-20px);
   }
   100% {
-    transform: translateY(0px) translateX(0px);
+    transform: translateY(0) translateX(0);
   }
 }
 
@@ -93,8 +99,9 @@
 
 .hero-banner {
   text-align: center;
-  color: #ffaa00;
-  font-family: "Press Start 2P", monospace;
+  color: #ebba35;
+  font-family: "pixelify", sans-serif;
+  letter-spacing: 2px;
   padding: 2rem 1rem 0;
   max-width: 50rem;
   margin: 0 auto;
@@ -102,7 +109,7 @@
 }
 
 .hero-banner h1 {
-  font-size: 4rem;
+  font-size: 5rem;
   margin-bottom: 0.3rem;
   z-index: 1;
   position: relative;
@@ -128,5 +135,17 @@
   .hero-banner p {
     font-size: 1.2rem;
     line-height: 1.3;
+  }
+
+  .dragon {
+    display: none;
+  }
+
+  .cloud-home1 {
+    display: none;
+  }
+
+  .cloud-home2 {
+    display: none;
   }
 }
