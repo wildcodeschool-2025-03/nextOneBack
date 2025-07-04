@@ -18,9 +18,9 @@
 
 .block-title h2 {
   color: #00ffff;
-  font-family: "Press Start 2P", monospace;
+  font-family: "inter", monospace;
   font-size: 1.5rem;
-  text-shadow: 0 0 0.3em #00ffff, 0 0 0.6em #00ffff;
+  text-shadow: 0 0 1.4em #00ffff, 0 0 0.6em #00ffff;
   margin: 0 3rem;
   white-space: nowrap;
 }
@@ -30,7 +30,7 @@
   height: 0.2rem;
   background: #00ffff;
   border-radius: 0.1rem;
-  box-shadow: 0 0 0.5rem #00ffff88, 0 0 1rem #00ffff55;
+  box-shadow: 0 0 0.8rem #00ffff, 0 0 1rem #00ffff;
   min-width: 2rem;
   max-width: 10rem;
 }
