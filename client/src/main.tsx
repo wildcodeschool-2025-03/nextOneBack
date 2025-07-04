@@ -11,7 +11,9 @@ import AdminPage from "./pages/AdminPage.tsx";
 import Connexion from "./pages/Connexion";
 import HomePage from "./pages/HomePage.tsx";
 import LesArcadesPage from "./pages/LesArcadesPage.tsx";
+import SnakePage from "./pages/SnakePage.tsx";
 import TarifsPage from "./pages/TarifsPage.tsx";
+import TicTacToePage from "./pages/TicTacToePage.tsx";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -25,16 +27,16 @@ import TarifsPage from "./pages/TarifsPage.tsx";
 // You can add more routes as you build out your app!
 const router = createBrowserRouter([
   {
-    element: <App />,
+    element: <App />, // Renders the App component for the home page
     children: [
       { path: "/", element: <Connexion /> },
       {
-        path: "/homepage", // The root path
+        path: "/homePage", // The root path
         element: <HomePage />, // Renders the App component for the home page
       },
       {
-        path: "/adminpage",
-        element: <AdminPage />,
+        path: "/adminpage", // The root path
+        element: <AdminPage />, // Renders the App component for the home page
       },
       {
         path: "/arcades",
@@ -44,12 +46,20 @@ const router = createBrowserRouter([
         path: "/tarifs",
         element: <TarifsPage />,
       },
+      {
+        path: "/tictactoepage",
+        element: <TicTacToePage />,
+      },
     ],
   },
 
   // The root path
   // Renders the App component for the home page
 
+  {
+    path: "/snake", // The root path
+    element: <SnakePage />, // Renders the App component for the home page
+  },
   // Try adding a new route! For example, "/about" with an About component
 ]);
 

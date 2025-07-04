@@ -142,6 +142,7 @@
     margin-top: 2rem;
     padding: 0 2rem;
     background-color: #0b0433;
+    z-index: 9999;
   }
   .userGamerIcone {
     width: 5em;

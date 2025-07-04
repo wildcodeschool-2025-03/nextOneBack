@@ -26,15 +26,32 @@
   .footer-mobile {
     display: flex;
     background-color: #0b0433;
-    height: 20em;
+    min-height: 20em;
     width: 100%;
-    display: flex;
     flex-direction: column;
     justify-content: space-around;
     position: relative;
   }
+
   .logo-desktop {
     display: none;
+  }
+
+  .registration {
+    color: white;
+    font-weight: 600;
+    height: 2em;
+    width: 8em;
+    font-size: 1.2em;
+    border: 2px solid #db29cc;
+    border-radius: 15px;
+    background-color: rgba(219, 41, 204, 0.36);
+  }
+
+  .input-mail {
+    border: 1px solid #00ccff;
+    width: 85%;
+    height: 2em;
   }
 
   .nextOneLogoFooter {
@@ -42,10 +59,12 @@
     height: 7em;
     margin-top: 1.5em;
   }
+
   .h1-footer {
     color: white;
     font-size: 1.5em;
   }
+
   .top-footer {
     display: flex;
     flex-direction: column;
@@ -54,26 +73,31 @@
     gap: 1em;
     margin-top: 1em;
   }
+
   .bottom-footer {
     display: flex;
     justify-content: space-around;
     margin-bottom: 1em;
   }
+
   .three-span {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-end;
   }
+
   .link-footer {
     color: white;
     font-size: 1.3em;
   }
+
   .icone_instagram {
     width: 4em;
     height: 4em;
   }
 }
+
 @media screen and (min-width: 768px) {
   .footer-mobile {
     display: grid;
@@ -81,8 +105,9 @@
     grid-template-columns: 1fr 1fr 1fr;
     background-color: #0b0433;
     width: 100%;
-    height: 12em;
+    min-height: 12em;
   }
+
   .top-footer {
     grid-column: 2;
     display: flex;
@@ -90,6 +115,7 @@
     gap: 1em;
     margin-top: 1.5em;
   }
+
   .h1-footer {
     color: white;
     font-size: 1.5em;
@@ -110,20 +136,41 @@
     justify-content: center;
     margin-top: 0.8em;
   }
+
   .nextOneLogoFooter {
     display: none;
   }
+
   .nextOneLogoDesktop {
     width: 9em;
     height: 9em;
   }
+
   .link-footer {
     color: white;
     font-size: 1.3em;
   }
+
   .icone_instagram {
     width: 4em;
     height: 4em;
     margin-left: -0.5em;
+  }
+
+  .registration {
+    color: white;
+    font-weight: 600;
+    height: 2em;
+    width: 8em;
+    font-size: 1.2em;
+    border: 2px solid #db29cc;
+    border-radius: 15px;
+    background-color: rgba(219, 41, 204, 0.36);
+  }
+
+  .input-mail {
+    border: 1px solid #00ccff;
+    width: 85%;
+    height: 2em;
   }
 }
