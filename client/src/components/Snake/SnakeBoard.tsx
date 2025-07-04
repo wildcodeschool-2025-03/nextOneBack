@@ -46,7 +46,7 @@ export default function SnakeBoard() {
           break;
         case "ArrowUp":
         case "z":
-          e.preventDefault();
+          e.preventDefault(); //permet de ne pas scroller la page
           snake.setDirection("up");
           break;
         case "ArrowDown":
@@ -128,13 +128,13 @@ export default function SnakeBoard() {
         .catch(() => toast.error("Erreur lors de l'envoi du score 🚫"));
     }
   }, [isGameOver, score]);
-
+  // Augmente la vitesse tous les 5 fruits mangés
   useEffect(() => {
     if (appleCount > 0 && appleCount % 5 === 0) {
       setSpeed((prev) => Math.max(60, prev - 10));
     }
   }, [appleCount]);
-
+  // Fonction de dessin
   const draw = (currentFood = food) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -160,7 +160,7 @@ export default function SnakeBoard() {
       drawFood(ctx, cellSize, currentFood);
     }
   };
-
+  // Redémarre le jeu
   const handleRestart = () => {
     const newSnake = new Snake();
     snakeRef.current = newSnake;
@@ -181,7 +181,7 @@ export default function SnakeBoard() {
     </div>
   );
 }
-
+// Fonction utilitaire : coordonnée aléatoire libre
 function getRandomCoord(
   gridSize: number,
   snakeCoords: { row: number; col: number }[],
