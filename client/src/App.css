@@ -34,3 +34,8 @@ body {
   background-repeat: repeat;
   background-position: center;
 }
+
+@font-face {
+  font-family: "pixelify";
+  src: url(./assets/fonts/pixelify/PixelifySans-SemiBold.ttf);
+}
