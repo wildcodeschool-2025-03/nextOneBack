@@ -5,6 +5,11 @@ const router = express.Router();
 /* ************************************************************************* */
 // Define Your API Routes Here
 /* ************************************************************************* */
+import partyAction from "./modules/party/partyAction";
+
+router.get("/api/partys", partyAction.browse);
+router.get("/api/partys/:id", partyAction.read);
+router.post("/api/partys", verifyToken, partyAction.add);
 
 // Define item-related routes
 import itemActions from "./modules/item/itemActions";

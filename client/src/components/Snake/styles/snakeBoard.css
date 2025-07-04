@@ -9,7 +9,7 @@
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
-  max-width: 50vmin; /* limite max en fonction de l'écran */
+  max-width: 55vmin; /* limite max en fonction de l'écran */
   background-image: url("../../../assets/images/background-snake.png");
   background-size: cover;
   background-position: center;

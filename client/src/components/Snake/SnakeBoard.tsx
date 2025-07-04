@@ -5,6 +5,8 @@ import Paused from "./Paused";
 import ScoreBoard from "./ScoreBoard";
 import Snake from "./Snake";
 import "./styles/snakeBoard.css";
+import { toast } from "react-toastify";
+import { postScore } from "../../services/postScore";
 
 export default function SnakeBoard() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -22,7 +24,6 @@ export default function SnakeBoard() {
   const gridSize = 20;
   const snakeRef = useRef<Snake>(new Snake());
 
-  // Redimensionne le canvas selon la fenêtre
   useEffect(() => {
     const resizeCanvas = () => {
       const size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
@@ -33,7 +34,6 @@ export default function SnakeBoard() {
     return () => window.removeEventListener("resize", resizeCanvas);
   }, []);
 
-  // Gère les touches clavier
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const snake = snakeRef.current;
@@ -71,7 +71,6 @@ export default function SnakeBoard() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isGameOver]);
 
-  // Génère la première pomme
   useEffect(() => {
     if (!food && canvasSize > 0) {
       const newFood = getRandomCoord(gridSize, snakeRef.current.getBody());
@@ -79,7 +78,6 @@ export default function SnakeBoard() {
     }
   }, [food, canvasSize]);
 
-  // Boucle de jeu principale
   useEffect(() => {
     if (canvasSize === 0 || isPaused || isGameOver) return;
 
@@ -108,7 +106,6 @@ export default function SnakeBoard() {
 
       if (snake.hasCollision()) {
         setIsGameOver(true);
-        return;
       }
 
       draw(food);
@@ -117,13 +114,26 @@ export default function SnakeBoard() {
     return () => clearInterval(interval);
   }, [canvasSize, isPaused, food, isGameOver, score, highScore, speed]);
 
+  useEffect(() => {
+    // Going to the back
+    if (isGameOver && score > 0) {
+      const partyData = {
+        id_game: 1,
+        score: score,
+        date_game: new Date().toISOString().split("T")[0],
+      };
+
+      postScore(partyData)
+        .then(() => toast.success("Score envoyé 🛸"))
+        .catch(() => toast.error("Erreur lors de l'envoi du score 🚫"));
+    }
+  }, [isGameOver, score]);
   // Augmente la vitesse tous les 5 fruits mangés
   useEffect(() => {
     if (appleCount > 0 && appleCount % 5 === 0) {
       setSpeed((prev) => Math.max(60, prev - 10));
     }
   }, [appleCount]);
-
   // Fonction de dessin
   const draw = (currentFood = food) => {
     const canvas = canvasRef.current;
@@ -134,7 +144,6 @@ export default function SnakeBoard() {
     const cellSize = canvasSize / gridSize;
     canvas.width = canvasSize;
     canvas.height = canvasSize;
-
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const snakeColor = getComputedStyle(document.documentElement)
@@ -151,7 +160,6 @@ export default function SnakeBoard() {
       drawFood(ctx, cellSize, currentFood);
     }
   };
-
   // Redémarre le jeu
   const handleRestart = () => {
     const newSnake = new Snake();
@@ -173,7 +181,6 @@ export default function SnakeBoard() {
     </div>
   );
 }
-
 // Fonction utilitaire : coordonnée aléatoire libre
 function getRandomCoord(
   gridSize: number,
