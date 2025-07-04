@@ -11,7 +11,7 @@ export default function Navbar() {
         <BurgerMenu />
       </article>
 
-      <NavLink to="/HomePage" className="linkDesktop">
+      <NavLink to="/homepage" className="linkDesktop">
         <span>Ma Salle !</span>
       </NavLink>
 

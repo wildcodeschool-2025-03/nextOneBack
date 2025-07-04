@@ -30,7 +30,7 @@ export default function BurgerMenu() {
       </div>
       <div className={menuClass}>
         <span className="barre" />
-        <NavLink to="/HomePage" className="linkButton">
+        <NavLink to="/homepage" className="linkButton">
           <span>Ma Salle !</span>
         </NavLink>
         <span className="barre" />
