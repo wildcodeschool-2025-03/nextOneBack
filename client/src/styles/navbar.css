@@ -2,6 +2,41 @@
   margin: 0;
   box-sizing: border-box;
 }
+.button-icon {
+  display: flex;
+  align-items: center;
+}
+
+.button-login-logout {
+  background-color: transparent;
+  border-radius: 20px;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.button-login-logout.login {
+  border: solid 2px white;
+  color: white;
+}
+
+.button-login-logout.login:hover {
+  box-shadow: 0 0 25px #00ccff;
+  border: solid 2px #00ccff;
+  color: #00ccff;
+}
+
+.button-login-logout.logout {
+  border: solid 2px red;
+  color: red;
+}
+
+.button-login-logout.logout:hover {
+  box-shadow: 0 0 25px red;
+}
+
 @media screen and (max-width: 768px) {
   /* NavBAR */
   nav {

@@ -50,6 +50,7 @@ function Connexion() {
 
       toast.success("connexion réussie !!");
       setTimeout(() => {
+        setAuth({ token, user });
         navigate("/HomePage");
       }, 2000);
     } catch (error) {
