@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <Navbar />
+      <Navbar auth={auth} setAuth={setAuth} />
       <main>
         <Outlet context={{ auth, setAuth }} />
       </main>
