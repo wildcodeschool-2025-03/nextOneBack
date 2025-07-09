@@ -34,9 +34,14 @@ export async function userCreate(
   pseudo: string,
   email: string,
   password: string,
-): Promise<void> {
-  await client.query<Result>(
+): Promise<Connexion> {
+  const [result] = await client.query<Result>(
     "INSERT INTO User (firstname, name, pseudo, email, password, id_role) VALUES (?, ?, ?, ?, ?, 1)",
     [firstname, name, pseudo, email, password],
   );
+
+  const [rows] = await client.query("SELECT * from User WHERE id = ?", [
+    result.insertId,
+  ]);
+  return (rows as Connexion[])[0];
 }

@@ -1,9 +1,11 @@
 import axios from "axios";
 import "../styles/connexion.css";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useOutletContext } from "react-router";
+import { useNavigate } from "react-router";
 import { Slide, ToastContainer, toast } from "react-toastify";
-import type { Auth } from "../types/auth";
+import { loginContext } from "../Auth/LoginContext";
+import type { User } from "../types/auth";
 
 type LoginForm = {
   email: string;
@@ -33,9 +35,11 @@ function Connexion() {
     formState: { errors: errorsRegister },
   } = useForm<RegisterForm>();
 
-  const { setAuth } = useOutletContext() as {
-    setAuth: (auth: Auth | null) => void;
-  };
+  const context = useContext(loginContext);
+  if (!context) {
+    return null;
+  }
+  const { setUser } = context;
 
   const navigate = useNavigate();
   const login = async (data: LoginForm) => {
@@ -44,13 +48,12 @@ function Connexion() {
         `${import.meta.env.VITE_API_URL}/api/connexion/login`,
         data,
       );
-      const { token, user }: Auth = response.data;
+      const { token, user }: { token: string; user: User } = response.data;
       localStorage.setItem("token", token);
-      setAuth({ token, user });
+      setUser(user);
 
       toast.success("connexion réussie !!");
       setTimeout(() => {
-        setAuth({ token, user });
         navigate("/HomePage");
       }, 2000);
     } catch (error) {
@@ -60,11 +63,14 @@ function Connexion() {
 
   const onRegister = async (data: RegisterForm) => {
     try {
-      data.confirm_password = undefined;
-      await axios.post(
+      const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/connexion/register`,
         data,
       );
+      const { token, user }: { token: string; user: User } = response.data;
+      localStorage.setItem("token", token);
+      setUser(user);
+
       toast.success("inscription réussie !!");
       setTimeout(() => {
         navigate("/HomePage");

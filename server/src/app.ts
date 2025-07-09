@@ -1,8 +1,15 @@
 // Load the express module to create a web application
 
+import cookieParser from "cookie-parser";
 import express from "express";
 
 const app = express();
+
+app.use(cookieParser());
+app.get("/test-cookie", (req, res) => {
+  const token = req.cookies.auth_token;
+  res.json({ token });
+});
 
 // Configure it
 
