@@ -128,18 +128,14 @@ export default function SnakeBoard() {
           toast.success("Score envoyé 🛸", {
             position: "top-center",
             autoClose: 3000,
-            hideProgressBar: false,
             pauseOnHover: true,
-            theme: "dark",
           }),
         )
         .catch(() =>
           toast.error("Erreur lors de l'envoi du score 🚫", {
             position: "top-center",
             autoClose: 3000,
-            hideProgressBar: false,
             pauseOnHover: true,
-            theme: "dark",
           }),
         );
     }
