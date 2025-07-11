@@ -6,10 +6,6 @@ import express from "express";
 const app = express();
 
 app.use(cookieParser());
-app.get("/test-cookie", (req, res) => {
-  const token = req.cookies.auth_token;
-  res.json({ token });
-});
 
 // Configure it
 
@@ -28,9 +24,8 @@ app.get("/test-cookie", (req, res) => {
 import cors from "cors";
 
 if (process.env.CLIENT_URL != null) {
-  app.use(cors({ origin: [process.env.CLIENT_URL] }));
+  app.use(cors({ origin: [process.env.CLIENT_URL], credentials: true }));
 }
-
 // If you need to allow extra origins, you can add something like this:
 
 /*

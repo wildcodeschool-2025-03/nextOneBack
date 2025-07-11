@@ -124,8 +124,20 @@ export default function SnakeBoard() {
       };
 
       postScore(partyData)
-        .then(() => toast.success("Score envoyé 🛸"))
-        .catch(() => toast.error("Erreur lors de l'envoi du score 🚫"));
+        .then(() =>
+          toast.success("Score envoyé 🛸", {
+            position: "top-center",
+            autoClose: 3000,
+            pauseOnHover: true,
+          }),
+        )
+        .catch(() =>
+          toast.error("Erreur lors de l'envoi du score 🚫", {
+            position: "top-center",
+            autoClose: 3000,
+            pauseOnHover: true,
+          }),
+        );
     }
   }, [isGameOver, score]);
   // Augmente la vitesse tous les 5 fruits mangés

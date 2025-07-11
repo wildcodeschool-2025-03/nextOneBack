@@ -9,6 +9,7 @@
   border-radius: 15px;
   background-color: rgba(219, 41, 204, 0.36);
   transition: 0.2s;
+  margin-top: 0.5em;
 }
 
 .registration:hover {
@@ -173,4 +174,19 @@
     width: 85%;
     height: 2em;
   }
+}
+
+.success-message {
+  color: #00ff88;
+  font-size: 0.9rem;
+}
+
+.error-message {
+  color: #ff4c4c;
+  font-size: 0.9rem;
+}
+
+.registration[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

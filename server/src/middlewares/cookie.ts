@@ -32,6 +32,6 @@ export const deleteCookie: RequestHandler = (req, res) => {
     });
     res.json({ message: "cookie supprimé" });
   } catch (err) {
-    res.status(500).json({ message: "error pour supprimer le cookie" });
+    res.status(500).json({ message: "erreur pour supprimer le cookie" });
   }
 };

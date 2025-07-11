@@ -12,6 +12,7 @@ export type Connexion = {
   id_role: number;
 };
 
+// recupére l'utilisateur par l'email
 export async function userEmail(email: string): Promise<Connexion | null> {
   const [rows] = await client.query("SELECT * FROM User WHERE email = ?", [
     email,
@@ -20,6 +21,7 @@ export async function userEmail(email: string): Promise<Connexion | null> {
   return user.length ? user[0] : null;
 }
 
+// recupére l'utilisateur par le pseudo
 export async function userPseudo(pseudo: string): Promise<Connexion | null> {
   const [rows] = await client.query("SELECT * FROM User WHERE pseudo = ?", [
     pseudo,
@@ -28,6 +30,16 @@ export async function userPseudo(pseudo: string): Promise<Connexion | null> {
   return user.length ? user[0] : null;
 }
 
+// recupére l'utilisateur par l'id
+export async function userById(userId: number): Promise<Connexion | null> {
+  const [rows] = await client.query("SELECT * FROM User WHERE id = ?", [
+    userId,
+  ]);
+  const user = rows as Connexion[];
+  return user.length ? user[0] : null;
+}
+
+// creation de l'utilisateur
 export async function userCreate(
   firstname: string,
   name: string,

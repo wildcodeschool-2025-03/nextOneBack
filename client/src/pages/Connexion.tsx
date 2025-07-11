@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { Slide, ToastContainer, toast } from "react-toastify";
-import { loginContext } from "../Auth/LoginContext";
+import { LoginContext } from "../Auth/LoginContext";
 import type { User } from "../types/auth";
 
 type LoginForm = {
@@ -35,7 +35,7 @@ function Connexion() {
     formState: { errors: errorsRegister },
   } = useForm<RegisterForm>();
 
-  const context = useContext(loginContext);
+  const context = useContext(LoginContext);
   if (!context) {
     return null;
   }
@@ -47,14 +47,17 @@ function Connexion() {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/connexion/login`,
         data,
+        {
+          withCredentials: true,
+        },
       );
-      const { token, user }: { token: string; user: User } = response.data;
-      localStorage.setItem("token", token);
+      const { user }: { user: User } = response.data;
+
       setUser(user);
 
       toast.success("connexion réussie !!");
       setTimeout(() => {
-        navigate("/HomePage");
+        navigate("/homePage");
       }, 2000);
     } catch (error) {
       toast.error("connexion échouée, email ou mot de passe incorrect");
@@ -66,14 +69,16 @@ function Connexion() {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/connexion/register`,
         data,
+        {
+          withCredentials: true,
+        },
       );
-      const { token, user }: { token: string; user: User } = response.data;
-      localStorage.setItem("token", token);
+      const { user }: { user: User } = response.data;
       setUser(user);
 
       toast.success("inscription réussie !!");
       setTimeout(() => {
-        navigate("/HomePage");
+        navigate("/homePage");
       }, 2000);
     } catch (error) {
       toast.error("inscription échouée");
