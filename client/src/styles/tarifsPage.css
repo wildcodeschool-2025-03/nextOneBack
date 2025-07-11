@@ -1,0 +1,106 @@
+.tarifs-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 4rem 0;
+}
+
+.tarifs-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tarifs-title {
+  color: #00ccff;
+  font-size: 1.8rem;
+  position: relative;
+}
+
+.line {
+  flex: 1;
+  height: 0.2rem;
+  background: #00ffff;
+  border-radius: 0.1rem;
+  box-shadow: 0 0 0.5rem #00ffff88, 0 0 1rem #00ffff55;
+  min-width: 15rem;
+  max-width: 10rem;
+}
+
+.tarifs-grid {
+  background: rgba(0, 0, 0, 0.534);
+  border-radius: 20px;
+  border: solid 1px #00ccff;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  gap: 5rem 8rem;
+  padding: 3rem 4rem;
+}
+
+.tarif-block {
+  background: rgba(0, 0, 0, 0.534);
+  border-radius: 20px;
+  border: solid 3px #ffffff;
+  box-shadow: 0 0 20px #00ccff;
+  text-align: center;
+  max-width: 200px;
+}
+
+.tarif-input {
+  width: 10vw;
+  padding: 0rem;
+  text-align: center;
+  border: none;
+  font-size: 3.5rem;
+  background-color: transparent;
+  color: #00ccff;
+  font-weight: bold;
+  padding: 1rem;
+}
+
+.title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-align: center;
+  padding-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: white;
+  margin-bottom: 1.5rem;
+  word-break: break-word;
+  white-space: normal;
+  text-align: center;
+}
+
+.tarifs-description {
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.534);
+  border-radius: 20px;
+  border: solid 1px #00ccff;
+  justify-content: center;
+  padding: 3rem 4rem;
+  margin-bottom: 4rem;
+  max-width: 900px;
+}
+
+.description-tarifs {
+  text-align: center;
+  color: #00ccff;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.price-description {
+  text-align: left;
+  color: white;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
