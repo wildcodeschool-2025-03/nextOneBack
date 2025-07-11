@@ -15,10 +15,6 @@ export default function Navbar() {
     return null;
   }
   const { user, logout } = context;
-  // if (user === undefined) {
-  //   return null;
-  // }
-  console.log(user);
 
   return (
     <nav>
