@@ -7,36 +7,57 @@ type ChildrenType = {
 };
 
 type LoginContextType = {
-  user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  auth: () => void;
+  user: User | null | undefined;
+  setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
   logout: () => void;
+  isAdmin: boolean;
 };
 
-export const loginContext = createContext<LoginContextType | null>(null);
+export const LoginContext = createContext<LoginContextType | null>(null);
 
 export function LoginProvider({ children }: ChildrenType) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | undefined>(null);
 
-  const auth = useCallback(() => {
+  const isAdmin = user?.id_role === 2;
+
+  const login = useCallback(() => {
     axios
-      .get("/api/me", { withCredentials: true })
-      .then((response) => setUser(response.data.user))
-      .catch(() => setUser(null));
+      .get(`${import.meta.env.VITE_API_URL}/api/connexion/profile`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUser({
+          id: res.data.userId,
+          email: res.data.email,
+          pseudo: res.data.pseudo,
+          firstname: res.data.firstname,
+          name: res.data.name,
+          id_role: res.data.id_role,
+        });
+      })
+      .catch(() => {
+        setUser(null);
+      });
   }, []);
 
   useEffect(() => {
-    auth();
-  }, [auth]);
+    login();
+  }, [login]);
 
   const logout = useCallback(() => {
     axios
-      .post("/api/logout", {}, { withCredentials: true })
-      .then(() => setUser(null));
+      .post(
+        `${import.meta.env.VITE_API_URL}/api/connexion/logout`,
+        {},
+        { withCredentials: true },
+      )
+      .then(() => setUser(null))
+      .catch(() => console.error("erreur de déconnexion"));
   }, []);
+
   return (
-    <loginContext.Provider value={{ user, setUser, auth, logout }}>
+    <LoginContext.Provider value={{ user, setUser, logout, isAdmin }}>
       {children}
-    </loginContext.Provider>
+    </LoginContext.Provider>
   );
 }

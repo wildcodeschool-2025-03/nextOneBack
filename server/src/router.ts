@@ -27,11 +27,7 @@ router.post("/api/connexion/register", hashPassword, connexionActions.add);
 router.post("/api/connexion/login", verifPassword, connexionActions.read);
 router.post("/api/connexion/logout", deleteCookie);
 router.use(verifyToken);
-router.get("/api/connexion/profile", (req, res) => {
-  res.json({
-    message: `bienvenue utilisateur ${req.auth?.sub}`,
-  });
-});
+router.get("/api/connexion/profile", connexionActions.profile);
 
 /* ************************************************************************* */
 

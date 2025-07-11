@@ -2,36 +2,23 @@ import "../../styles/navbar.css";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { NavLink } from "react-router";
-import { loginContext } from "../../Auth/LoginContext";
+import { LoginContext } from "../../Auth/LoginContext";
 import UserGamerIcone from "../../assets/icones/usergamer_icone.png";
 import NextOneLogo from "../../assets/images/next_one_logo.png";
 import BurgerMenu from "./BurgerMenu";
 
 export default function Navbar() {
-  const context = useContext(loginContext);
+  const context = useContext(LoginContext);
+  const navigate = useNavigate();
+
   if (!context) {
     return null;
   }
-  const { user, setUser } = context;
-  const navigate = useNavigate();
-
-  const logOut = async () => {
-    try {
-      await fetch("/api/connexion/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-      localStorage.removeItem("token");
-      setUser(null);
-      navigate("/");
-    } catch (err) {
-      console.error("erreur lors de la deconnexion");
-    }
-  };
-
-  const login = () => {
-    navigate("/");
-  };
+  const { user, logout } = context;
+  // if (user === undefined) {
+  //   return null;
+  // }
+  console.log(user);
 
   return (
     <nav>
@@ -58,7 +45,14 @@ export default function Navbar() {
       <div className="button-icon">
         <button
           type="button"
-          onClick={user ? logOut : login}
+          onClick={() => {
+            if (user) {
+              logout();
+              navigate("/");
+            } else {
+              navigate("/");
+            }
+          }}
           className={`button-login-logout ${user ? "logout" : "login"}`}
         >
           {user ? "Déconnexion" : "Connexion"}
