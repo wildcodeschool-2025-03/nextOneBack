@@ -1,14 +1,18 @@
 import "./MiniGamesBlock.css";
-import useAuth from "../../hooks/useAuth";
-import Carousel from "../Carousel/MiniGameCarousel.tsx";
-
+import { useContext } from "react";
+import { LoginContext } from "../../Auth/LoginContext.tsx";
 import breakoutImg from "../../assets/images/breakout.png";
 import dinoImg from "../../assets/images/dinosaure.png";
 import snakeImg from "../../assets/images/snake.png";
 import tttImg from "../../assets/images/tic-tac-toe.png";
+import Carousel from "../Carousel/MiniGameCarousel.tsx";
 
 export default function MiniGamesBlock() {
-  const { isAuthenticated } = useAuth();
+  const context = useContext(LoginContext);
+  if (!context) {
+    return null;
+  }
+  const { user } = context;
 
   const games = [
     {
@@ -45,7 +49,7 @@ export default function MiniGamesBlock() {
         <span className="line" />
       </div>
       <div className="mini-games-content">
-        <Carousel data={games} isAuthenticated={isAuthenticated} />
+        <Carousel data={games} isAuthenticated={!!user} />
       </div>
     </div>
   );

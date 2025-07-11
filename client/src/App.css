@@ -39,3 +39,13 @@ body {
   font-family: "pixelify";
   src: url(./assets/fonts/pixelify/PixelifySans-SemiBold.ttf);
 }
+
+.Toastify__toast-container {
+  z-index: 9999 !important;
+}
+.Toastify__toast-container--bottom-center {
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  position: fixed;
+}

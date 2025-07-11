@@ -1,9 +1,11 @@
 import axios from "axios";
 import "../styles/connexion.css";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useOutletContext } from "react-router";
+import { useNavigate } from "react-router";
 import { Slide, ToastContainer, toast } from "react-toastify";
-import type { Auth } from "../types/auth";
+import { LoginContext } from "../Auth/LoginContext";
+import type { User } from "../types/auth";
 
 type LoginForm = {
   email: string;
@@ -33,9 +35,11 @@ function Connexion() {
     formState: { errors: errorsRegister },
   } = useForm<RegisterForm>();
 
-  const { setAuth } = useOutletContext() as {
-    setAuth: (auth: Auth | null) => void;
-  };
+  const context = useContext(LoginContext);
+  if (!context) {
+    return null;
+  }
+  const { setUser } = context;
 
   const navigate = useNavigate();
   const login = async (data: LoginForm) => {
@@ -43,14 +47,17 @@ function Connexion() {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/connexion/login`,
         data,
+        {
+          withCredentials: true,
+        },
       );
-      const { token, user }: Auth = response.data;
-      localStorage.setItem("token", token);
-      setAuth({ token, user });
+      const { user }: { user: User } = response.data;
+
+      setUser(user);
 
       toast.success("connexion réussie !!");
       setTimeout(() => {
-        navigate("/HomePage");
+        navigate("/homePage");
       }, 2000);
     } catch (error) {
       toast.error("connexion échouée, email ou mot de passe incorrect");
@@ -59,14 +66,19 @@ function Connexion() {
 
   const onRegister = async (data: RegisterForm) => {
     try {
-      data.confirm_password = undefined;
-      await axios.post(
+      const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/connexion/register`,
         data,
+        {
+          withCredentials: true,
+        },
       );
+      const { user }: { user: User } = response.data;
+      setUser(user);
+
       toast.success("inscription réussie !!");
       setTimeout(() => {
-        navigate("/HomePage");
+        navigate("/homePage");
       }, 2000);
     } catch (error) {
       toast.error("inscription échouée");
