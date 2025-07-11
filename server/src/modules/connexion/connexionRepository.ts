@@ -12,6 +12,7 @@ export type Connexion = {
   id_role: number;
 };
 
+// recupére l'utilisateur par l'email
 export async function userEmail(email: string): Promise<Connexion | null> {
   const [rows] = await client.query("SELECT * FROM User WHERE email = ?", [
     email,
@@ -20,6 +21,7 @@ export async function userEmail(email: string): Promise<Connexion | null> {
   return user.length ? user[0] : null;
 }
 
+// recupére l'utilisateur par le pseudo
 export async function userPseudo(pseudo: string): Promise<Connexion | null> {
   const [rows] = await client.query("SELECT * FROM User WHERE pseudo = ?", [
     pseudo,
@@ -28,15 +30,30 @@ export async function userPseudo(pseudo: string): Promise<Connexion | null> {
   return user.length ? user[0] : null;
 }
 
+// recupére l'utilisateur par l'id
+export async function userById(userId: number): Promise<Connexion | null> {
+  const [rows] = await client.query("SELECT * FROM User WHERE id = ?", [
+    userId,
+  ]);
+  const user = rows as Connexion[];
+  return user.length ? user[0] : null;
+}
+
+// creation de l'utilisateur
 export async function userCreate(
   firstname: string,
   name: string,
   pseudo: string,
   email: string,
   password: string,
-): Promise<void> {
-  await client.query<Result>(
+): Promise<Connexion> {
+  const [result] = await client.query<Result>(
     "INSERT INTO User (firstname, name, pseudo, email, password, id_role) VALUES (?, ?, ?, ?, ?, 1)",
     [firstname, name, pseudo, email, password],
   );
+
+  const [rows] = await client.query("SELECT * from User WHERE id = ?", [
+    result.insertId,
+  ]);
+  return (rows as Connexion[])[0];
 }

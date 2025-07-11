@@ -19,18 +19,15 @@ router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
 import { hashPassword, verifPassword } from "./middlewares/argonMiddleware";
+import { deleteCookie } from "./middlewares/cookie";
 import verifyToken from "./middlewares/verifyToken";
 import connexionActions from "./modules/connexion/connexionActions";
 
 router.post("/api/connexion/register", hashPassword, connexionActions.add);
 router.post("/api/connexion/login", verifPassword, connexionActions.read);
+router.post("/api/connexion/logout", deleteCookie);
 router.use(verifyToken);
-router.get("/api/connexion/profile", (req, res) => {
-  res.json({
-    message: `bienvenue utilisateur ${req.auth?.sub}`,
-  });
-});
-router.post("/api/items", itemActions.add);
+router.get("/api/connexion/profile", connexionActions.profile);
 
 /* ************************************************************************* */
 
