@@ -97,6 +97,3 @@ score INT NOT NULL,
 date_enregistrement DATE NOT NULL,
 FOREIGN KEY (id_game) REFERENCES Game(id)
 );
-
-INSERT INTO Role(id, name)
-VALUES (1,"player"),(2,"admin");
