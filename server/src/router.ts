@@ -29,6 +29,13 @@ router.post("/api/connexion/logout", deleteCookie);
 router.use(verifyToken);
 router.get("/api/connexion/profile", connexionActions.profile);
 
+import gameActions from "./modules/game/gameAction";
+
+router.get("/api/games", gameActions.browse);
+router.get("/api/games/:id/ranking", gameActions.readRanking);
+
+
+
 /* ************************************************************************* */
 
 export default router;
