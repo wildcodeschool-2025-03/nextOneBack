@@ -53,7 +53,7 @@ export default function Navbar() {
         >
           {user ? "Déconnexion" : "Connexion"}
         </button>
-        <NavLink to="/adminpage" className="UserIcone">
+        <NavLink to="/admin" className="UserIcone">
           <article className="UserIcone">
             <img
               className="userGamerIcone"
