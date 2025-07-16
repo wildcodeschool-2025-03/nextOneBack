@@ -1,9 +1,8 @@
-import type { AxiosRequestConfig } from "axios";
 import client from "../../services/client";
 
-const UserCount = async (data?: AxiosRequestConfig): Promise<number> => {
+const UserCount = async () => {
   try {
-    const response = await client.get("/users?type=user&format=count", data);
+    const response = await client.get("/users?type=user&format=count");
     return response.data.count;
   } catch (error) {
     return 0;
