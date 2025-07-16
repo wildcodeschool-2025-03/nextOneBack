@@ -15,7 +15,6 @@ interface Props {
   game: Game;
   isFavorite: boolean;
   onToggleFavorite: (gameId: number) => void;
-  userId?: number;
 }
 
 interface RankingEntry {
@@ -29,12 +28,17 @@ export default function ArcadeGameCard({
   onToggleFavorite,
 }: Props) {
   const [ranking, setRanking] = useState<RankingEntry[]>([]);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    fetch(`/api/games/${game.id}/ranking`)
+    fetch(`${apiUrl}/api/games/${game.id}/ranking`, {
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((data) => setRanking(data))
-      .catch((err) => console.error("Erreur récupération classement:", err));
+      .catch((err) =>
+        console.error(`Erreur récupération classement du jeu ${game.id}:`, err),
+      );
   }, [game.id]);
 
   const getStatusColor = () => {
@@ -58,6 +62,7 @@ export default function ArcadeGameCard({
       <div className="card-body">
         <h3 className="game-title">{game.name}</h3>
         <p className="game-desc">{game.description}</p>
+
         <button
           type="button"
           className={`favorite-btn ${isFavorite ? "remove" : "add"}`}
@@ -68,15 +73,20 @@ export default function ArcadeGameCard({
         >
           {isFavorite ? "✩ Supprimer aux favoris" : "✩ Ajouter aux favoris"}
         </button>
+
         <div className="ranking">
           <strong>Classement</strong>
-          <ul>
+          <ul aria-label={`Classement du jeu ${game.name}`}>
             {ranking.length > 0 ? (
-              ranking.map((entry, idx) => (
-                <li key={`${entry.username}-${idx}`}>
-                  {idx + 1}. {entry.username} – {entry.score} pts
-                </li>
-              ))
+              ranking.map((entry, idx) => {
+                const placeIcons = ["🥇", "🥈", "🥉"];
+                return (
+                  <li key={`${entry.username}-${idx}`}>
+                    {placeIcons[idx] ?? `${idx + 1}.`} {entry.username} –{" "}
+                    {entry.score} pts
+                  </li>
+                );
+              })
             ) : (
               <li>Aucun score enregistré</li>
             )}

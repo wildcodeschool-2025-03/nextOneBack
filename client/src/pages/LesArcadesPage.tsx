@@ -18,6 +18,7 @@ interface Game {
 export default function LesArcadesPage() {
   const context = useContext(LoginContext);
   const user = context?.user;
+
   const [games, setGames] = useState<Game[]>([]);
   const [favorites, setFavorites] = useState<number[]>([]);
   const [filterSolo, setFilterSolo] = useState(false);
@@ -27,9 +28,11 @@ export default function LesArcadesPage() {
 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     axios
-      .get("/api/games")
+      .get(`${apiUrl}/api/games`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setGames(res.data);
@@ -37,13 +40,17 @@ export default function LesArcadesPage() {
           console.error("Réponse inattendue pour /api/games", res.data);
         }
       })
-      .catch((err) => console.error("Erreur fetch jeux:", err));
+      .catch((err) => {
+        console.error("Erreur fetch jeux:", err);
+      });
 
     if (user?.id) {
       axios
-        .get(`/api/favorites/${user.id}`)
+        .get(`${apiUrl}/api/favorites/${user.id}`, { withCredentials: true })
         .then((res) => setFavorites(res.data))
         .catch((err) => console.error("Erreur fetch favoris:", err));
+    } else {
+      setFavorites([]); // Important pour éviter incohérences si user se déconnecte
     }
   }, [user?.id]);
 
@@ -52,16 +59,20 @@ export default function LesArcadesPage() {
       alert("Vous devez être connecté pour gérer vos favoris.");
       return;
     }
+
     const isFav = favorites.includes(gameId);
     try {
       if (isFav) {
-        await axios.delete(`/api/favorites/${user.id}/${gameId}`);
+        await axios.delete(`${apiUrl}/api/favorites/${user.id}/${gameId}`, {
+          withCredentials: true,
+        });
         setFavorites(favorites.filter((id) => id !== gameId));
       } else {
-        await axios.post("/api/favorites", {
-          id_user: user.id,
-          id_game: gameId,
-        });
+        await axios.post(
+          `${apiUrl}/api/favorites`,
+          { id_user: user.id, id_game: gameId },
+          { withCredentials: true },
+        );
         setFavorites([...favorites, gameId]);
       }
     } catch (err) {
@@ -143,15 +154,18 @@ export default function LesArcadesPage() {
       </section>
 
       <section className="games-grid" aria-label="Liste des jeux disponibles">
-        {visibleGames.map((game) => (
-          <ArcadeGameCard
-            key={game.id}
-            game={game}
-            isFavorite={user ? favorites.includes(game.id) : false}
-            onToggleFavorite={onToggleFavorite}
-            userId={0}
-          />
-        ))}
+        {visibleGames.length === 0 ? (
+          <p className="no-games">Aucun jeu trouvé.</p>
+        ) : (
+          visibleGames.map((game) => (
+            <ArcadeGameCard
+              key={game.id}
+              game={game}
+              isFavorite={user ? favorites.includes(game.id) : false}
+              onToggleFavorite={onToggleFavorite}
+            />
+          ))
+        )}
       </section>
 
       <div ref={observerRef} style={{ height: "1px" }} aria-hidden="true" />
