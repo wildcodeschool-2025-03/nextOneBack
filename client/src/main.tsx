@@ -15,6 +15,7 @@ import LesArcadesPage from "./pages/LesArcadesPage.tsx";
 import SnakePage from "./pages/SnakePage.tsx";
 import TarifsPage from "./pages/TarifsPage.tsx";
 import TicTacToePage from "./pages/TicTacToePage.tsx";
+import AdminProtected from "./pages/layout/AdminProtected.tsx";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -36,8 +37,14 @@ const router = createBrowserRouter([
         element: <HomePage />, // Renders the App component for the home page
       },
       {
-        path: "/adminpage", // The root path
-        element: <AdminPage />, // Renders the App component for the home page
+        path: "/admin/", // The root path
+        element: <AdminProtected />,
+        children: [
+          {
+            path: "",
+            element: <AdminPage />,
+          },
+        ], // Renders the App component for the home page
       },
       {
         path: "/arcades",
