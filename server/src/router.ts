@@ -22,10 +22,13 @@ import { hashPassword, verifPassword } from "./middlewares/argonMiddleware";
 import { deleteCookie } from "./middlewares/cookie";
 import verifyToken from "./middlewares/verifyToken";
 import connexionActions from "./modules/connexion/connexionActions";
+import { tarifsActions } from "./modules/tarifs/tarifsActions";
 
 router.post("/api/connexion/register", hashPassword, connexionActions.add);
 router.post("/api/connexion/login", verifPassword, connexionActions.read);
 router.post("/api/connexion/logout", deleteCookie);
+router.get("/api/tarifs", tarifsActions.browse);
+router.put("/api/tarifs/:id", tarifsActions.update);
 router.use(verifyToken);
 router.get("/api/connexion/profile", connexionActions.profile);
 

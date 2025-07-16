@@ -46,19 +46,31 @@
   border: solid 3px #ffffff;
   box-shadow: 0 0 20px #00ccff;
   text-align: center;
-  max-width: 200px;
+  max-width: 230px;
+}
+
+.tarif-block > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0 0.5rem;
+}
+.euro-symbole {
+  color: #00ccff;
+  font-size: 3rem;
+  flex-shrink: 0;
 }
 
 .tarif-input {
-  width: 10vw;
-  padding: 0rem;
+  max-width: 95px;
+  padding: 1rem;
   text-align: center;
   border: none;
   font-size: 3.5rem;
   background-color: transparent;
   color: #00ccff;
   font-weight: bold;
-  padding: 1rem;
 }
 
 .title {
@@ -103,4 +115,10 @@
   color: white;
   margin-bottom: 1rem;
   font-size: 1.2rem;
+}
+
+.price-decoration {
+  border-bottom: 2px solid white;
+  padding-bottom: 2px;
+  font-weight: bold;
 }
