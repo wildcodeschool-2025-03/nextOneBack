@@ -1,5 +1,5 @@
-import axios from "axios";
 import { createContext, useCallback, useEffect, useState } from "react";
+import client from "../services/client";
 import type { User } from "../types/auth";
 
 type ChildrenType = {
@@ -21,10 +21,8 @@ export function LoginProvider({ children }: ChildrenType) {
   const isAdmin = user?.id_role === 2;
 
   const login = useCallback(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/api/connexion/profile`, {
-        withCredentials: true,
-      })
+    client
+      .get("/connexion/profile")
       .then((res) => {
         setUser({
           id: res.data.userId,
@@ -45,12 +43,8 @@ export function LoginProvider({ children }: ChildrenType) {
   }, [login]);
 
   const logout = useCallback(() => {
-    axios
-      .post(
-        `${import.meta.env.VITE_API_URL}/api/connexion/logout`,
-        {},
-        { withCredentials: true },
-      )
+    client
+      .post("/connexion/logout")
       .then(() => setUser(null))
       .catch(() => console.error("erreur de déconnexion"));
   }, []);

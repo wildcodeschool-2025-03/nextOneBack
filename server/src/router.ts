@@ -1,7 +1,6 @@
 import express from "express";
 const router = express.Router();
 
-import verifyToken from "./middlewares/verifyToken";
 // Import des modules.
 import gameActions from "./modules/game/gameAction";
 
@@ -10,7 +9,8 @@ router.get("/api/games", gameActions.browse);
 router.get("/api/games/:id/ranking", gameActions.readRanking);
 
 import { hashPassword, verifPassword } from "./middlewares/argonMiddleware";
-import { deleteCookie } from "./middlewares/cookie";
+
+import verifyToken from "./middlewares/verifyToken";
 import connexionActions from "./modules/connexion/connexionActions";
 import itemActions from "./modules/item/itemActions";
 // Autres modules protégés.
@@ -20,11 +20,9 @@ import userActions from "./modules/user/userActions";
 // Auth des routes.
 router.post("/api/connexion/register", hashPassword, connexionActions.add);
 router.post("/api/connexion/login", verifPassword, connexionActions.read);
-router.post("/api/connexion/logout", deleteCookie);
 
-// À partir d'ici : seulement si connecté.
 router.use(verifyToken);
-
+router.post("/api/connexion/logout", connexionActions.disconnected);
 router.get("/api/connexion/profile", connexionActions.profile);
 
 // Routes protégées (favoris, parties, items, etc.)

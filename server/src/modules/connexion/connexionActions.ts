@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import type { MyPayload } from "../../middlewares/verifyToken";
 import {
   type Connexion,
+  connectedUser,
+  disconnectedUser,
   userById,
   userCreate,
   userEmail,
@@ -29,6 +31,8 @@ const add: RequestHandler = async (req, res, next) => {
       expiresIn: "7d",
     });
 
+    await connectedUser(user.email);
+
     res
       .cookie("auth_token", token, {
         secure: false,
@@ -53,6 +57,8 @@ const read: RequestHandler = async (req, res, next) => {
       return;
     }
     const { password, ...userWithoutPassword } = user;
+
+    await connectedUser(user.email);
 
     const myPayload: MyPayload = {
       sub: user.id.toString(),
@@ -99,4 +105,28 @@ const profile: RequestHandler = async (req, res, next) => {
     next(err);
   }
 };
-export default { add, read, profile };
+// Déconnexion"
+const disconnected: RequestHandler = async (req, res) => {
+  try {
+    if (!req.auth?.sub) {
+      res.status(401).json({ message: "Non authentifié" });
+      return;
+    }
+    const user = await userById(Number(req.auth.sub));
+    if (!user) {
+      res.status(404).json({ message: "Utilisateur non trouvé" });
+      return;
+    }
+    // Delete Coockie
+    await disconnectedUser(user.email);
+    res.clearCookie("auth_token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 0,
+    });
+    res.json({ message: "Déconnexion reussié,cookie supprimé" });
+  } catch (err) {
+    res.status(500).json({ message: "erreur pour supprimer le cookie" });
+  }
+};
+export default { add, read, profile, disconnected };
