@@ -15,13 +15,17 @@ import connexionActions from "./modules/connexion/connexionActions";
 import itemActions from "./modules/item/itemActions";
 // Autres modules protégés.
 import partyAction from "./modules/party/partyAction";
+import { tarifsActions } from "./modules/tarifs/tarifsActions";
 import userActions from "./modules/user/userActions";
 
 // Auth des routes.
 router.post("/api/connexion/register", hashPassword, connexionActions.add);
 router.post("/api/connexion/login", verifPassword, connexionActions.read);
 
+router.get("/api/tarifs", tarifsActions.browse);
+
 router.use(verifyToken);
+router.put("/api/tarifs/:id", tarifsActions.update, tarifsActions.update);
 router.post("/api/connexion/logout", connexionActions.disconnected);
 router.get("/api/connexion/profile", connexionActions.profile);
 
