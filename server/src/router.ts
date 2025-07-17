@@ -15,6 +15,7 @@ import connexionActions from "./modules/connexion/connexionActions";
 import itemActions from "./modules/item/itemActions";
 // Autres modules protégés.
 import partyAction from "./modules/party/partyAction";
+import userActions from "./modules/user/userActions";
 
 // Auth des routes.
 router.post("/api/connexion/register", hashPassword, connexionActions.add);
@@ -44,5 +45,8 @@ router.delete(
   verifyToken,
   favoriteActions.remove,
 );
+router.get("/api/users", userActions.read);
+
+/* ************************************************************************* */
 
 export default router;
