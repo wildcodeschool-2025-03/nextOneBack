@@ -64,3 +64,9 @@ export async function connectedUser(email: string) {
     [email],
   );
 }
+export async function disconnectedUser(email: string) {
+  return await client.query(
+    "UPDATE User SET registration = false WHERE email = ?",
+    [email],
+  );
+}

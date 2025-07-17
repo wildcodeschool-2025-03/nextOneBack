@@ -21,17 +21,3 @@ export const verifyCookie: RequestHandler = async (req, res, next) => {
     res.status(401).json({ message: err });
   }
 };
-
-// supprimer le cookie "token"
-export const deleteCookie: RequestHandler = (req, res) => {
-  try {
-    res.clearCookie("auth_token", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 0,
-    });
-    res.json({ message: "cookie supprimé" });
-  } catch (err) {
-    res.status(500).json({ message: "erreur pour supprimer le cookie" });
-  }
-};
