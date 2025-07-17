@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import type { MyPayload } from "../../middlewares/verifyToken";
 import {
   type Connexion,
+  connectedUser,
   userById,
   userCreate,
   userEmail,
@@ -29,6 +30,8 @@ const add: RequestHandler = async (req, res, next) => {
       expiresIn: "7d",
     });
 
+    await connectedUser(user.email);
+
     res
       .cookie("auth_token", token, {
         secure: false,
@@ -53,6 +56,8 @@ const read: RequestHandler = async (req, res, next) => {
       return;
     }
     const { password, ...userWithoutPassword } = user;
+
+    await connectedUser(user.email);
 
     const myPayload: MyPayload = {
       sub: user.id.toString(),
