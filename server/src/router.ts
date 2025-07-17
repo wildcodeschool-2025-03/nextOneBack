@@ -19,19 +19,23 @@ router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
 import { hashPassword, verifPassword } from "./middlewares/argonMiddleware";
-import { deleteCookie } from "./middlewares/cookie";
+
 import verifyToken from "./middlewares/verifyToken";
 import connexionActions from "./modules/connexion/connexionActions";
 import { tarifsActions } from "./modules/tarifs/tarifsActions";
+import userActions from "./modules/user/userActions";
 
 router.post("/api/connexion/register", hashPassword, connexionActions.add);
 router.post("/api/connexion/login", verifPassword, connexionActions.read);
-router.post("/api/connexion/logout", deleteCookie);
+
 router.get("/api/tarifs", tarifsActions.browse);
 
 router.use(verifyToken);
 router.put("/api/tarifs/:id", tarifsActions.update, tarifsActions.update);
+router.post("/api/connexion/logout", connexionActions.disconnected);
 router.get("/api/connexion/profile", connexionActions.profile);
+
+router.get("/api/users", userActions.read);
 
 /* ************************************************************************* */
 

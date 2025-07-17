@@ -48,7 +48,7 @@ export async function userCreate(
   password: string,
 ): Promise<Connexion> {
   const [result] = await client.query<Result>(
-    "INSERT INTO User (firstname, name, pseudo, email, password, id_role) VALUES (?, ?, ?, ?, ?, 1)",
+    "INSERT INTO User (firstname, name, pseudo, email, password, id_role) VALUES (?, ?, ?, ?, ?,?, 1)",
     [firstname, name, pseudo, email, password],
   );
 
@@ -56,4 +56,17 @@ export async function userCreate(
     result.insertId,
   ]);
   return (rows as Connexion[])[0];
+}
+
+export async function connectedUser(email: string) {
+  return await client.query(
+    "UPDATE User SET registration = true WHERE email = ?",
+    [email],
+  );
+}
+export async function disconnectedUser(email: string) {
+  return await client.query(
+    "UPDATE User SET registration = false WHERE email = ?",
+    [email],
+  );
 }
