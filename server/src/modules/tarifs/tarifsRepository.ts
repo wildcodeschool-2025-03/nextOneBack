@@ -16,21 +16,13 @@ export async function getTarifs(): Promise<Tarif[]> {
 export async function updateTarif(
   id: number,
   newPrice: number,
-): Promise<Tarif | null> {
+): Promise<boolean> {
   try {
     const [result] = await client.query<ResultSetHeader>(
       "UPDATE Tarifs SET price = ? WHERE id = ?",
       [newPrice, id],
     );
-    if (result.affectedRows === 0) {
-      return null;
-    }
-
-    const [rows] = await client.query<RowDataPacket[]>(
-      "SELECT * FROM Tarifs WHERE id = ?",
-      [id],
-    );
-    return rows[0] as Tarif;
+    return result.affectedRows > 0;
   } catch (err) {
     throw new Error("erreur lors de la mise a jour du tarif");
   }

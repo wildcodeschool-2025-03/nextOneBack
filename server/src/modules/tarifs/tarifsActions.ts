@@ -22,7 +22,7 @@ export const tarifsActions: { browse: RequestHandler; update: RequestHandler } =
       try {
         const updatedTarif = await updateTarif(
           Number.parseInt(tarifId),
-          newPrice,
+          Number(newPrice),
         );
         if (!updatedTarif) {
           res.status(404).json({ message: "tarif non trouvé" });

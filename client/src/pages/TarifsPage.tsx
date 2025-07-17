@@ -1,60 +1,12 @@
-import axios from "axios";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { LoginContext } from "../Auth/LoginContext";
-import type { Tarif } from "../types/tarifs";
+import useTarifs from "../components/Tarifs/Tarifs";
 import "../styles/tarifsPage.css";
 
 export default function TarifsPage() {
   const loginContext = useContext(LoginContext);
   const isAdmin = loginContext?.isAdmin ?? false;
-  const [tarif, setTarif] = useState<Tarif[]>([]);
-
-  // recupere les tarifs
-  const fetchTarifs = useCallback(async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/tarifs`,
-      );
-      setTarif(response.data);
-    } catch (error) {
-      console.error("erreur lors de la récupération des tarifs");
-    }
-  }, []);
-
-  // met a jour les tarsifs dans la bdd
-  const updateTarif = async (index: number, newPrice: number) => {
-    try {
-      await axios.put(
-        `${import.meta.env.VITE_API_URL}/api/tarifs/${tarif[index].id}`,
-        {
-          price: newPrice,
-        },
-        {
-          withCredentials: true,
-        },
-      );
-    } catch (error) {
-      console.error("erreur lors de la mise a jour des tarifs");
-      fetchTarifs();
-    }
-  };
-
-  // modification du tarif
-  const changeTarif = async (index: number, value: string) => {
-    const updatePrice = Number.parseFloat(value);
-    if (!Number.isNaN(updatePrice) && updatePrice >= 0) {
-      const update = [...tarif];
-      update[index].price = updatePrice;
-      setTarif(update);
-      await updateTarif(index, updatePrice);
-    } else {
-      console.log("prix invalide");
-    }
-  };
-
-  useEffect(() => {
-    fetchTarifs();
-  }, [fetchTarifs]);
+  const { tarif, changeTarif } = useTarifs();
 
   return (
     <>
