@@ -2,7 +2,7 @@ import type { Request, RequestHandler, Response } from "express";
 import favoriteRepository from "./favoriteRepository";
 
 const getAllByUser: RequestHandler = async (req, res) => {
-  const userId = Number.parseInt(req.params.userId, 10);
+  const userId = Number.parseInt(req.auth.sub, 10);
   if (Number.isNaN(userId)) {
     res.status(400).json({ error: "ID utilisateur invalide" });
     return;
@@ -24,7 +24,9 @@ const add: RequestHandler = async (req, res) => {
     res.status(400).json({ error: "Champs manquants" });
     return;
   }
-
+  if (id_user !== +req.auth.sub) {
+    res.sendStatus(401);
+  }
   try {
     await favoriteRepository.add(id_user, id_game);
     res.sendStatus(201);
