@@ -50,7 +50,7 @@ export default function LesArcadesPage() {
         .then((res) => setFavorites(res.data))
         .catch((err) => console.error("Erreur fetch favoris:", err));
     } else {
-      setFavorites([]); // Important pour éviter incohérences si user se déconnecte
+      setFavorites([]);
     }
   }, [user?.id]);
 
