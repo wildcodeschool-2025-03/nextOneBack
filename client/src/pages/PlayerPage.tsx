@@ -19,7 +19,8 @@ export default function PlayerPage() {
         <h1 className="h1-admin-page">TABLEAU DE BORD</h1>
         <section className="grid-box">
           <section className="box-admin">
-            <h2 className="h2-admin-page">Bonjour,</h2>
+            <h2 className="h2-admin-page">Bonjour, </h2>
+            <h2 className="h2-admin-page">{user?.pseudo}</h2>
             <span className="barre" />
             <span className="barre" />
             <button
