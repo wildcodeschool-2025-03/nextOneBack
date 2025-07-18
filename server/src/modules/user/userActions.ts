@@ -12,6 +12,7 @@ const read: RequestHandler = async (req, res, next) => {
       } else {
         res.status(200).json(userCount);
       }
+      return;
     }
     res.sendStatus(400);
   } catch (err) {
