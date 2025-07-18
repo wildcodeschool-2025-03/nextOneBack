@@ -57,7 +57,7 @@ function Connexion() {
 
       toast.success("connexion réussie !!");
       setTimeout(() => {
-        navigate("/homePage");
+        navigate("/accueil");
       }, 2000);
     } catch (error) {
       toast.error("connexion échouée, email ou mot de passe incorrect");
@@ -78,7 +78,7 @@ function Connexion() {
 
       toast.success("inscription réussie !!");
       setTimeout(() => {
-        navigate("/homePage");
+        navigate("/accueil");
       }, 2000);
     } catch (error) {
       toast.error("inscription échouée");
