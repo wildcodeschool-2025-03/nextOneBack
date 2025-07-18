@@ -19,25 +19,25 @@ export default function MiniGamesBlock() {
       id: 1,
       title: "BREAKOUT",
       image: breakoutImg,
-      route: "/games/breakout",
+      route: "/breakout",
     },
     {
       id: 2,
       title: "SNAKE",
       image: snakeImg,
-      route: "/games/snake",
+      route: "/snake",
     },
     {
       id: 3,
       title: "DINOSAURE",
       image: dinoImg,
-      route: "/games/dino",
+      route: "/dino",
     },
     {
       id: 4,
       title: "TIC-TAC-TOE",
       image: tttImg,
-      route: "/games/tic-tac-toe",
+      route: "/tic-tac-toe",
     },
   ];
 
