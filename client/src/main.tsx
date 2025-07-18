@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         element: <SnakePage />, // Renders the App component for the home page
       },
       {
-        path: "/player",
+        path: "/player/:pseudo",
         element: <PlayerPage />,
       },
     ],
