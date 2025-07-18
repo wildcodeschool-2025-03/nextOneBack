@@ -1,8 +1,18 @@
 import "../styles/adminPage.css";
+import { useContext } from "react";
+import { useNavigate } from "react-router";
+import { LoginContext } from "../Auth/LoginContext";
 import Bigboss from "../assets/icones/big boss pixel.png";
 import disconnected from "../assets/icones/disconnected.png";
 import PlayerCard from "../components/PlayerInfo/PlayerCard";
 export default function AdminPage() {
+  const context = useContext(LoginContext);
+  const navigate = useNavigate();
+
+  if (!context) {
+    return null;
+  }
+  const { user, logout } = context;
   return (
     <main className="admin-page">
       <section className="admin-section">
@@ -12,7 +22,18 @@ export default function AdminPage() {
             <h2 className="h2-admin-page">ADMIN</h2>
             <span className="barre" />
             <span className="barre" />
-            <button className="button-deconnexion" type="button">
+            <button
+              className="button-deconnexion"
+              type="button"
+              onClick={() => {
+                if (user) {
+                  logout();
+                  navigate("/");
+                } else {
+                  navigate("/");
+                }
+              }}
+            >
               <img
                 className="button-disconnected"
                 src={disconnected}
