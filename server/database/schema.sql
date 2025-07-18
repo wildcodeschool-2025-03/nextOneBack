@@ -98,9 +98,6 @@ date_enregistrement DATE NOT NULL,
 FOREIGN KEY (id_game) REFERENCES Game(id)
 );
 
-INSERT INTO Role(id, name)
-VALUES (1,"player"),(2,"admin");
-
 CREATE TABLE Tarifs (
 id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(100) NOT NULL,
