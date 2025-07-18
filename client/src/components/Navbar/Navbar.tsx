@@ -20,7 +20,7 @@ export default function Navbar() {
     if (user.id_role === 2) {
       navigation = "/admin";
     } else if (user.id_role === 1) {
-      navigation = `/user/${user.pseudo}`;
+      navigation = `/player/${user.pseudo}`;
     }
   }
 
