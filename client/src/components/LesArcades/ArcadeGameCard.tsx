@@ -22,6 +22,8 @@ interface RankingEntry {
   score: number;
 }
 
+const PLACE_ICONS = ["🥇", "🥈", "🥉"];
+
 export default function ArcadeGameCard({
   game,
   isFavorite,
@@ -86,15 +88,12 @@ export default function ArcadeGameCard({
         <strong>Classement</strong>
         <ul aria-label={`Classement du jeu ${game.name}`}>
           {ranking.length > 0 ? (
-            ranking.map((entry, idx) => {
-              const placeIcons = ["🥇", "🥈", "🥉"];
-              return (
-                <li key={`${entry.username}-${idx}`}>
-                  {placeIcons[idx] ?? `${idx + 1}.`} {entry.username} –{" "}
-                  {entry.score} pts
-                </li>
-              );
-            })
+            ranking.map((entry, idx) => (
+              <li key={`${entry.username}-${idx}`}>
+                {PLACE_ICONS[idx] ?? `${idx + 1}.`} {entry.username} –{" "}
+                {entry.score} pts
+              </li>
+            ))
           ) : (
             <li>Aucun score enregistré</li>
           )}

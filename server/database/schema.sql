@@ -97,11 +97,6 @@ score INT NOT NULL,
 date_enregistrement DATE NOT NULL,
 FOREIGN KEY (id_game) REFERENCES Game(id)
 );
-<<<<<<< HEAD
-=======
-
-INSERT INTO Role(id, name)
-VALUES (1,"player"),(2,"admin");
 
 CREATE TABLE Tarifs (
 id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -109,4 +104,3 @@ title VARCHAR(100) NOT NULL,
 subtitle VARCHAR(100),
 price INT UNSIGNED NOT NULL DEFAULT 0
 );
->>>>>>> 644e0ef08959501b970ce575a4a14530ae03df0d
