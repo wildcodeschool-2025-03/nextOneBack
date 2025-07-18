@@ -12,25 +12,25 @@ export default function ArcadeGamesBlock() {
       id: 1,
       title: "BREAKOUT",
       image: breakoutImg,
-      route: "/breakout",
+      route: "/arcades/breakout",
     },
     {
       id: 2,
       title: "SNAKE",
       image: snakeImg,
-      route: "/snake",
+      route: "/arcades/snake",
     },
     {
       id: 3,
       title: "DINOSAURE",
       image: dinoImg,
-      route: "/dino",
+      route: "/arcades/dino",
     },
     {
       id: 4,
       title: "TIC-TAC-TOE",
       image: tttImg,
-      route: "/tic-tac-toe",
+      route: "/arcades/tic-tac-toe",
     },
   ];
 
