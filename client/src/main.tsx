@@ -12,6 +12,7 @@ import AdminPage from "./pages/AdminPage.tsx";
 import Connexion from "./pages/Connexion";
 import HomePage from "./pages/HomePage.tsx";
 import LesArcadesPage from "./pages/LesArcadesPage.tsx";
+import PlayerPage from "./pages/PlayerPage.tsx";
 import SnakePage from "./pages/SnakePage.tsx";
 import TarifsPage from "./pages/TarifsPage.tsx";
 import TicTacToePage from "./pages/TicTacToePage.tsx";
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/snake", // The root path
         element: <SnakePage />, // Renders the App component for the home page
+      },
+      {
+        path: "/player",
+        element: <PlayerPage />,
       },
     ],
   },
