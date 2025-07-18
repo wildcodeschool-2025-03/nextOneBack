@@ -48,7 +48,7 @@ export async function userCreate(
   password: string,
 ): Promise<Connexion> {
   const [result] = await client.query<Result>(
-    "INSERT INTO User (firstname, name, pseudo, email, password, id_role) VALUES (?, ?, ?, ?, ?,?, 1)",
+    "INSERT INTO User (firstname, name, pseudo, email, password, id_role) VALUES (?, ?, ?, ?, ?, 1)",
     [firstname, name, pseudo, email, password],
   );
 
