@@ -1,7 +1,6 @@
 import "../../styles/navbar.css";
 import { useContext } from "react";
-import { useNavigate } from "react-router";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router-dom";
 import { LoginContext } from "../../Auth/LoginContext";
 import UserGamerIcone from "../../assets/icones/usergamer_icone.png";
 import NextOneLogo from "../../assets/images/next_one_logo.png";
@@ -16,13 +15,22 @@ export default function Navbar() {
   }
   const { user, logout } = context;
 
+  let navigation = "/";
+  if (user) {
+    if (user.id_role === 2) {
+      navigation = "/admin";
+    } else if (user.id_role === 1) {
+      navigation = `/user/${user.pseudo}`;
+    }
+  }
+
   return (
     <nav>
       <article className="burgermenumobile">
         <BurgerMenu />
       </article>
 
-      <NavLink to="/homepage" className="linkDesktop">
+      <NavLink to="/accueil" className="linkDesktop">
         <span>Ma Salle !</span>
       </NavLink>
 
@@ -53,7 +61,7 @@ export default function Navbar() {
         >
           {user ? "Déconnexion" : "Connexion"}
         </button>
-        <NavLink to="/admin" className="UserIcone">
+        <NavLink to={navigation} className="UserIcone">
           <article className="UserIcone">
             <img
               className="userGamerIcone"
