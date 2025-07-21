@@ -95,7 +95,8 @@
   .button-disconnected {
     height: 1.5rem;
   }
-  .button-deconnexion {
+  .button-deconnexion,
+  .button-delete-account {
     color: #ff0000;
     background: none;
     display: flex;
@@ -105,6 +106,11 @@
     cursor: pointer;
     font-size: 1.2rem;
   }
+  .delete-button {
+    display: flex;
+    justify-content: center;
+  }
+
   .grid-box {
     display: grid;
     grid-template-columns: 1fr;
@@ -231,7 +237,8 @@
   .button-disconnected {
     height: 2rem;
   }
-  .button-deconnexion {
+  .button-deconnexion,
+  .button-delete-account {
     color: #ff0000;
     background: none;
     display: flex;
@@ -240,6 +247,10 @@
     font-family: "inter", sans-serif;
     cursor: pointer;
     font-size: 1.6rem;
+  }
+  .delete-button {
+    display: flex;
+    justify-content: center;
   }
   .red-dragon {
     position: relative;
