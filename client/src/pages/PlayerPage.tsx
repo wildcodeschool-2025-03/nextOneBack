@@ -1,10 +1,11 @@
 import "../styles/playerPage.css";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import { LoginContext } from "../Auth/LoginContext";
 import disconnected from "../assets/icones/disconnected.png";
 import UserCard from "../components/PlayerInfo/UserCard";
-
+import { deleteAccount } from "../services/deleteAccount";
 export default function PlayerPage() {
   const context = useContext(LoginContext);
   const navigate = useNavigate();
@@ -13,6 +14,27 @@ export default function PlayerPage() {
     return null;
   }
   const { user, logout } = context;
+
+  const handleDeleteAccount = async () => {
+    if (window.confirm("Es-tu sûr de vouloir supprimer ton compte?")) {
+      try {
+        await deleteAccount();
+        toast.success("Compte supprimé avec succès !", {
+          position: "top-center",
+          autoClose: 3000,
+          pauseOnHover: true,
+        });
+        logout();
+        navigate("/");
+      } catch (err) {
+        toast.error("Erreur lors de l'envoi du score 🚫", {
+          position: "top-center",
+          autoClose: 3000,
+          pauseOnHover: true,
+        });
+      }
+    }
+  };
   return (
     <main className="admin-page">
       <section className="admin-section">
@@ -51,6 +73,15 @@ export default function PlayerPage() {
             <span className="barre" />
           </div>
         </section>
+        <article className="delete-button">
+          <button
+            className="button-delete-account"
+            type="button"
+            onClick={handleDeleteAccount}
+          >
+            Supprimer mon compte
+          </button>
+        </article>
       </section>
     </main>
   );

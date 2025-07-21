@@ -10,6 +10,7 @@ export type Connexion = {
   pseudo: string;
   password: string;
   id_role: number;
+  deleted_at: Date | null;
 };
 
 // recupére l'utilisateur par l'email
@@ -23,9 +24,10 @@ export async function userEmail(email: string): Promise<Connexion | null> {
 
 // recupére l'utilisateur par le pseudo
 export async function userPseudo(pseudo: string): Promise<Connexion | null> {
-  const [rows] = await client.query("SELECT * FROM User WHERE pseudo = ?", [
-    pseudo,
-  ]);
+  const [rows] = await client.query(
+    "SELECT * FROM User WHERE pseudo = ? AND deleted_at IS NULL",
+    [pseudo],
+  );
   const user = rows as Connexion[];
   return user.length ? user[0] : null;
 }
@@ -56,6 +58,13 @@ export async function userCreate(
     result.insertId,
   ]);
   return (rows as Connexion[])[0];
+}
+// suppression de l'utilisateur
+export async function deleteUser(userId: number) {
+  return await client.query(
+    "UPDATE User SET deleted_at = NOW(), registration = NULL WHERE id = ?",
+    [userId],
+  );
 }
 
 export async function connectedUser(email: string) {
