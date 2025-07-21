@@ -104,3 +104,21 @@ title VARCHAR(100) NOT NULL,
 subtitle VARCHAR(100),
 price INT UNSIGNED NOT NULL DEFAULT 0
 );
+
+CREATE TABLE Event (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(150) NOT NULL,
+  description TEXT,
+  date DATE NOT NULL,
+  id_user INT UNSIGNED NOT NULL,
+  participant_count INT UNSIGNED DEFAULT 0,
+  FOREIGN KEY (id_user) REFERENCES User(id)
+);
+
+CREATE TABLE Event_User (
+  id_event INT UNSIGNED NOT NULL,
+  id_user INT UNSIGNED NOT NULL,
+  PRIMARY KEY (id_event, id_user),
+  FOREIGN KEY (id_event) REFERENCES Event(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_user) REFERENCES User(id) ON DELETE CASCADE
+);
