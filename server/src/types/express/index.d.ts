@@ -1,5 +1,4 @@
-// to make the file a module and avoid the TypeScript error
-export type {};
+import type { MyPayload } from "../../middlewares/verifyToken";
 
 declare global {
   namespace Express {
@@ -8,6 +7,7 @@ declare global {
       // Add your custom properties here, for example:
       //
       // user?: { ... }
+      auth: MyPayload;
       /* ************************************************************************* */
     }
   }

@@ -1,0 +1,192 @@
+.registration {
+  color: white;
+  font-weight: 600;
+  height: 2em;
+  width: 8em;
+  font-size: 1.2em;
+  border: 2px solid;
+  border-color: #db29cc;
+  border-radius: 15px;
+  background-color: rgba(219, 41, 204, 0.36);
+  transition: 0.2s;
+  margin-top: 0.5em;
+}
+
+.registration:hover {
+  box-shadow: 0px 0px 10px #db29cc;
+}
+
+.input-mail {
+  border: 1px solid;
+  border-color: #00ccff;
+  width: 85%;
+  height: 2em;
+}
+
+@media screen and (max-width: 768px) {
+  .footer-mobile {
+    display: flex;
+    background-color: #0b0433;
+    min-height: 20em;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    position: relative;
+  }
+
+  .logo-desktop {
+    display: none;
+  }
+
+  .registration {
+    color: white;
+    font-weight: 600;
+    height: 2em;
+    width: 8em;
+    font-size: 1.2em;
+    border: 2px solid #db29cc;
+    border-radius: 15px;
+    background-color: rgba(219, 41, 204, 0.36);
+  }
+
+  .input-mail {
+    border: 1px solid #00ccff;
+    width: 85%;
+    height: 2em;
+  }
+
+  .nextOneLogoFooter {
+    width: 7em;
+    height: 7em;
+    margin-top: 1.5em;
+  }
+
+  .h1-footer {
+    color: white;
+    font-size: 1.5em;
+  }
+
+  .top-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 3em;
+    gap: 1em;
+    margin-top: 1em;
+  }
+
+  .bottom-footer {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1em;
+  }
+
+  .three-span {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+  }
+
+  .link-footer {
+    color: white;
+    font-size: 1.3em;
+  }
+
+  .icone_instagram {
+    width: 4em;
+    height: 4em;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .footer-mobile {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: #0b0433;
+    width: 100%;
+    min-height: 12em;
+  }
+
+  .top-footer {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-top: 1.5em;
+  }
+
+  .h1-footer {
+    color: white;
+    font-size: 1.5em;
+  }
+
+  .three-span {
+    grid-column: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 1.5em;
+    margin-left: 8em;
+  }
+
+  .logo-desktop {
+    grid-column: 1;
+    display: flex;
+    justify-content: center;
+    margin-top: 0.8em;
+  }
+
+  .nextOneLogoFooter {
+    display: none;
+  }
+
+  .nextOneLogoDesktop {
+    width: 9em;
+    height: 9em;
+  }
+
+  .link-footer {
+    color: white;
+    font-size: 1.3em;
+  }
+
+  .icone_instagram {
+    width: 4em;
+    height: 4em;
+    margin-left: -0.5em;
+  }
+
+  .registration {
+    color: white;
+    font-weight: 600;
+    height: 2em;
+    width: 8em;
+    font-size: 1.2em;
+    border: 2px solid #db29cc;
+    border-radius: 15px;
+    background-color: rgba(219, 41, 204, 0.36);
+  }
+
+  .input-mail {
+    border: 1px solid #00ccff;
+    width: 85%;
+    height: 2em;
+  }
+}
+
+.success-message {
+  color: #00ff88;
+  font-size: 0.9rem;
+}
+
+.error-message {
+  color: #ff4c4c;
+  font-size: 0.9rem;
+}
+
+.registration[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

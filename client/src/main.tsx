@@ -2,11 +2,21 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router";
+import { LoginProvider } from "./Auth/LoginContext.tsx";
 
 /* ************************************************************************* */
 
 // Import the main app component
 import App from "./App";
+import AdminPage from "./pages/AdminPage.tsx";
+import Connexion from "./pages/Connexion";
+import HomePage from "./pages/HomePage.tsx";
+import LesArcadesPage from "./pages/LesArcadesPage.tsx";
+import PlayerPage from "./pages/PlayerPage.tsx";
+import SnakePage from "./pages/SnakePage.tsx";
+import TarifsPage from "./pages/TarifsPage.tsx";
+import TicTacToePage from "./pages/TicTacToePage.tsx";
+import AdminProtected from "./pages/layout/AdminProtected.tsx";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -20,9 +30,49 @@ import App from "./App";
 // You can add more routes as you build out your app!
 const router = createBrowserRouter([
   {
-    path: "/", // The root path
     element: <App />, // Renders the App component for the home page
+    children: [
+      { path: "/", element: <Connexion /> },
+      {
+        path: "/accueil", // The root path
+        element: <HomePage />, // Renders the App component for the home page
+      },
+      {
+        path: "/admin", // The root path
+        element: <AdminProtected />,
+        children: [
+          {
+            path: "",
+            element: <AdminPage />,
+          },
+        ], // Renders the App component for the home page
+      },
+      {
+        path: "/arcades",
+        element: <LesArcadesPage />,
+      },
+      {
+        path: "/tarifs",
+        element: <TarifsPage />,
+      },
+      {
+        path: "/tic-tac-toe",
+        element: <TicTacToePage />,
+      },
+      {
+        path: "/snake", // The root path
+        element: <SnakePage />, // Renders the App component for the home page
+      },
+      {
+        path: "/player/:pseudo",
+        element: <PlayerPage />,
+      },
+    ],
   },
+
+  // The root path
+  // Renders the App component for the home page
+
   // Try adding a new route! For example, "/about" with an About component
 ]);
 
@@ -37,7 +87,9 @@ if (rootElement == null) {
 // Render the app inside the root element
 createRoot(rootElement).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <LoginProvider>
+      <RouterProvider router={router} />
+    </LoginProvider>
   </StrictMode>,
 );
 

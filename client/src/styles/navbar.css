@@ -1,0 +1,206 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+.button-icon {
+  display: flex;
+  align-items: center;
+}
+
+.button-login-logout {
+  background-color: transparent;
+  border-radius: 20px;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.button-login-logout.login {
+  border: solid 2px white;
+  color: white;
+}
+
+.button-login-logout.login:hover {
+  box-shadow: 0 0 25px #00ccff;
+  border: solid 2px #00ccff;
+  color: #00ccff;
+}
+
+.button-login-logout.logout {
+  border: solid 2px red;
+  color: red;
+}
+
+.button-login-logout.logout:hover {
+  box-shadow: 0 0 25px red;
+}
+
+@media screen and (max-width: 768px) {
+  /* NavBAR */
+  nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: #0b0433;
+    height: 7em;
+    width: 100%;
+  }
+
+  .nextOneLogo {
+    width: 10em;
+    height: 10em;
+    background-color: #0b0433;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    z-index: 11;
+  }
+  .userGamerIcone {
+    width: 5em;
+    height: 5em;
+    margin: 1em 1em 0em 0em;
+  }
+  .UserIcone {
+    z-index: 11;
+  }
+
+  /* Burger Menu */
+  .menuBurger {
+    height: 5em;
+    padding: 1em;
+    z-index: 11;
+  }
+  button {
+    border-style: none;
+  }
+  .burger-menu {
+    height: 90%;
+    width: 4em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    cursor: pointer;
+    background-color: #0b0433;
+  }
+  .align-burger {
+    display: flex;
+    align-items: center;
+  }
+  .burger-bar {
+    width: 4em;
+    height: 0.6em;
+    background-color: white;
+    border-radius: 0.5em;
+  }
+  .menu {
+    width: 110%;
+    height: 70%;
+    background-color: #0b0433;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    margin-left: -2.5em;
+  }
+  /* menu deroulant */
+  .hidden {
+    display: none;
+  }
+  .barre {
+    height: 0.1rem;
+    width: 100%;
+    background-color: #00ffff;
+  }
+
+  .visible {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10em;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 9;
+    gap: 1em;
+  }
+  .linkButton {
+    font-size: 2em;
+    color: white;
+    background-color: #0b0433;
+    text-decoration: none;
+  }
+  .burger-bar.clicked:nth-child(1) {
+    transform: rotate(45deg) translate(0.75em, 1.25em);
+    transition: ease-out 0.5s;
+  }
+  .burger-bar.clicked:nth-child(2) {
+    transform: scale(0);
+    transition: ease-out 0.5s;
+  }
+  .burger-bar.clicked:nth-child(3) {
+    transform: rotate(135deg) translate(-0.6em, 0.9em);
+    transition: ease-out 0.5s;
+  }
+  .burger-bar.unclicked {
+    transform: rotate(0) translate(0);
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+  }
+  .linkDesktop {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) {
+  .burger-menu {
+    display: none;
+  }
+  .burgermenumobile {
+    display: none;
+  }
+  .linkButton {
+    display: none;
+  }
+  /* NavBAR */
+  nav {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #0b0433;
+    height: 7em;
+    width: 100%;
+    z-index: 1;
+    position: relative;
+  }
+  button {
+    border-style: none;
+  }
+  .nextOneLogo {
+    width: auto;
+    height: 10em;
+    border-radius: 50%;
+    margin-top: 2rem;
+    padding: 0 2rem;
+    background-color: #0b0433;
+    z-index: 9999;
+  }
+  .userGamerIcone {
+    width: 5em;
+    height: 5em;
+  }
+  .UserIcone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 15vw;
+  }
+  .linkDesktop {
+    width: 15vw;
+    font-size: 1.4em;
+    font-weight: 600;
+    color: white;
+    background-color: #0b0433;
+    transition: 0.2s;
+    font-family: "inter", sans-serif;
+    text-decoration: none;
+  }
+  .linkDesktop:hover {
+    color: #4cdafd;
+    text-shadow: 0 0 5px #00ccff, 0 0 10px #00ccff, 0 0 20px #00ccff;
+  }
+}

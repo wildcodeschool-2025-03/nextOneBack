@@ -1,0 +1,180 @@
+.arcade-game-card {
+  display: flex;
+  flex-direction: row;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid #00ffff;
+  border-radius: 1rem;
+  box-shadow: 0 0 0.8rem #00ffff55;
+  padding: 1rem;
+  gap: 1.5rem;
+  max-width: 60rem;
+  width: 100%;
+  margin: 0 auto 2rem;
+  flex-wrap: wrap;
+}
+
+.game-image-block {
+  flex: 0 0 9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-image {
+  width: 9rem;
+  height: 9rem;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  background: #000;
+}
+
+.game-info-block {
+  flex: 1 1 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+  min-width: 15rem;
+  position: relative;
+}
+
+.status-wrapper {
+  position: absolute;
+  top: 0.6rem;
+  right: -6.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.status-indicator {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  border: 2px solid #000;
+  box-shadow: 0 0 0.4rem currentColor;
+}
+
+.status-indicator.green {
+  background: #00ff7b;
+  color: #00ff7b;
+}
+
+.status-indicator.orange {
+  background: #ff9c00;
+  color: #ff9c00;
+}
+
+.status-indicator.red {
+  background: #ff0044;
+  color: #ff0044;
+}
+
+.status-label {
+  font-size: 0.85rem;
+  font-family: "Orbitron", sans-serif;
+  color: #00ffff;
+  text-shadow: 0 0 0.3rem #00ffff;
+}
+
+.game-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.4rem;
+  color: #00ffff;
+  text-shadow: 0 0 0.3rem #00ffff;
+  margin: 0;
+}
+
+.game-desc {
+  font-size: 0.95rem;
+  color: #ffffff;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.favorite-btn {
+  align-self: flex-start;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  font-family: "Orbitron", sans-serif;
+  border: 2px solid #00ffff;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  background: transparent;
+  color: #00ffff;
+  text-shadow: 0 0 0.3rem #00ffff;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.favorite-btn.add:hover {
+  background-color: #00ffff;
+  color: #000;
+}
+
+.favorite-btn.remove {
+  border-color: #ff4d6d;
+  color: #ff4d6d;
+  text-shadow: 0 0 0.2rem #ff4d6d;
+}
+
+.favorite-btn.remove:hover {
+  background-color: #ff4d6d;
+  color: #000;
+}
+
+.game-ranking-block {
+  flex: 0 0 12rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 2.6rem;
+}
+
+.game-ranking-block strong {
+  font-family: "Orbitron", sans-serif;
+  color: #00ffff;
+  text-shadow: 0 0 0.3rem #00ffff;
+  margin-bottom: 0.4rem;
+}
+
+.game-ranking-block ul {
+  list-style: decimal;
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+  color: #fff;
+  margin: 0;
+}
+
+.game-ranking-block li {
+  margin-bottom: 0.3rem;
+}
+
+@media (max-width: 768px) {
+  .arcade-game-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .game-info-block,
+  .game-ranking-block {
+    align-items: center;
+    text-align: center;
+  }
+
+  .favorite-btn {
+    align-self: center;
+  }
+
+  .game-ranking-block {
+    padding-top: 1.4rem;
+    margin-top: 1rem;
+  }
+
+  .status-wrapper {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-bottom: 0.4rem;
+  }
+}

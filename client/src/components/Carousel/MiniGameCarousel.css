@@ -1,0 +1,149 @@
+.mini-game-carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-block: 2vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.mini-game-arrow {
+  background: none;
+  border: none;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  color: #00ffff;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  z-index: 2;
+  padding: 0 1vw;
+  margin: 0 0.5vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.mini-game-arrow:hover {
+  transform: scale(1.2);
+}
+
+.mini-game-carousel-viewport {
+  width: 672px;
+  max-width: 95vw;
+  margin: 0 1vw;
+  overflow: hidden;
+  position: relative;
+  display: block;
+  background: transparent !important;
+}
+
+.mini-game-carousel-track {
+  display: flex;
+  gap: 24px;
+  width: max-content !important;
+  min-width: unset !important;
+  max-width: none !important;
+  flex: none !important;
+  transition: transform 0.3s ease;
+}
+
+.mini-game-carousel-card {
+  flex: 0 0 200px !important;
+  width: 200px !important;
+  min-width: 200px !important;
+  max-width: 200px !important;
+  aspect-ratio: 1 / 1.08;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  scroll-snap-align: start;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.mini-game-card-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+}
+
+.mini-game-carousel-card.flipped .mini-game-card-inner {
+  transform: rotateY(180deg);
+}
+
+.mini-game-card-front,
+.mini-game-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border: none;
+  border-radius: 1vw;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.mini-game-card-front img {
+  width: 100%;
+  height: 90%;
+  object-fit: contain;
+  margin-top: 0;
+  background: transparent;
+  border-radius: 1vw;
+}
+
+.mini-game-card-title {
+  margin: 0;
+  padding: 0;
+  font-family: "pixelify", sans-serif;
+  margin-top: 0.1rem;
+  font-size: 1.4rem;
+  color: #00ffff;
+  text-align: center;
+  width: 100%;
+  background: transparent !important;
+  position: relative;
+  z-index: 1;
+  line-height: 1.2;
+}
+
+.mini-game-card-back {
+  transform: rotateY(180deg);
+  font-size: 0.9rem;
+  font-family: "Press Start 2P", monospace;
+  color: #00ffff;
+  text-align: center;
+  padding: 0 1vw;
+  background: rgba(10, 13, 40, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.3;
+}
+
+@media (max-width: 900px) {
+  .mini-game-carousel-viewport {
+    width: 90vw;
+    max-width: 90vw;
+  }
+  .mini-game-carousel-card {
+    flex: 0 0 90vw;
+    max-width: 90vw;
+    min-width: 90vw;
+  }
+  .mini-game-carousel-track {
+    gap: 4vw;
+  }
+  .mini-game-card-back {
+    font-size: 1rem;
+  }
+}

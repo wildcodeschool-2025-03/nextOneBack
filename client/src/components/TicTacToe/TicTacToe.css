@@ -1,0 +1,110 @@
+:root {
+  --base-scale: 1;
+  --container-size: 24rem;
+  --cell-size: 6rem;
+  --title-size: 1.8rem;
+  --status-size: 1.13rem;
+  --cell-font-size: 2.2rem;
+  --button-font-size: 1.04rem;
+}
+
+@media (min-width: 1920px) and (max-width: 2559px) {
+  :root {
+    --base-scale: 0.8;
+  }
+}
+
+@media (min-width: 2560px) {
+  :root {
+    --base-scale: 1.2;
+  }
+}
+
+.ttt-arcade-bg {
+  width: calc(var(--container-size));
+  margin: 0 auto;
+  padding: calc(2.5rem * var(--base-scale));
+  background: linear-gradient(145deg, #191437 85%, #2d1850 100%);
+  border-radius: 2rem;
+  box-shadow: 0 0 2rem #5b2fff66, 0 0 0.2rem #00f6ff55;
+  border: 0.15625rem solid #a300ff;
+  text-align: center;
+  transform: scale(var(--base-scale));
+  transform-origin: center;
+}
+
+.ttt-title {
+  font-family: "Press Start 2P", "Orbitron", Arial, sans-serif;
+  color: #ff00cc;
+  font-size: var(--title-size);
+  margin-bottom: 1rem;
+  text-shadow: 0 0 0.5rem #0ff, 0 0 1rem #a300ff;
+}
+
+.ttt-status {
+  color: #ffeb3b;
+  font-size: var(--status-size);
+  margin-bottom: 1rem;
+  text-shadow: 0 0 0.5rem #ff00cc99, 0 0 0.6rem #0ff;
+}
+
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, var(--cell-size));
+  grid-template-rows: repeat(3, var(--cell-size));
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.ttt-cell {
+  background: linear-gradient(145deg, #22184a 90%, #31214a 100%);
+  border: 2px solid #00fff7;
+  border-radius: 0.6rem;
+  font-family: "Press Start 2P", monospace;
+  font-size: var(--cell-font-size);
+  color: #ff00cc;
+  cursor: pointer;
+  box-shadow: 0 0 0.6rem #00fff7bb, 0 0 0.2rem #a300ff99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ttt-cell:focus-visible {
+  outline: 2px dashed #ffeb3b;
+  outline-offset: 0.2rem;
+  box-shadow: 0 0 0.5rem #ffeb3b88;
+}
+
+.ttt-cell-filled {
+  cursor: not-allowed;
+  background: linear-gradient(145deg, #302147 90%, #2e1948 100%);
+  color: #fff;
+  text-shadow: 0 0 0.6rem #a300ff, 0 0 0.1rem #fff;
+}
+
+.ttt-restart-btn {
+  background: linear-gradient(90deg, #ff00cc 25%, #00fff7 85%);
+  border: none;
+  color: #191437;
+  padding: 0.6rem 2.2rem;
+  border-radius: 1rem;
+  font-family: "Orbitron", Arial, sans-serif;
+  font-size: var(--button-font-size);
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 0.6rem #00fff7bb, 0 0 0.2rem #ff00cc99;
+  transition: transform 0.12s;
+}
+
+.ttt-restart-btn:hover {
+  transform: scale(1.06);
+  background: linear-gradient(90deg, #ff00cc 55%, #00fff7 85%);
+}
+
+.ttt-restart-btn:focus-visible {
+  outline: 2px dashed #ffeb3b;
+  outline-offset: 0.2rem;
+  box-shadow: 0 0 0.5rem #ffeb3b88;
+}
