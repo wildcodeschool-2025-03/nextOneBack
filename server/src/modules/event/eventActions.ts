@@ -3,13 +3,17 @@ import {
   cancelParticipate,
   createEvent,
   deleteEvent,
+  getEventById,
+  getEventWithParticipants,
   getEvents,
   participate,
   updateEvent,
+  userRegister,
 } from "./eventRepository";
 
 export const eventActions: {
   browse: RequestHandler;
+  read: RequestHandler;
   add: RequestHandler;
   update: RequestHandler;
   remove: RequestHandler;
@@ -30,7 +34,33 @@ export const eventActions: {
     }
   },
 
-  // creer un nouvel event
+  // recupere un event
+  async read(req, res) {
+    try {
+      const eventId = Number(req.params.id);
+      const event = await getEventById(eventId);
+      if (!event) {
+        res.status(404).json({
+          message: "evenement non trouvé",
+        });
+        return;
+      }
+
+      if (req.auth?.isAdmin) {
+        const eventWithParticipants = await getEventWithParticipants(eventId);
+        res.status(200).json(eventWithParticipants);
+      } else {
+        res.status(200).json(event);
+      }
+    } catch (err) {
+      res
+        .status(500)
+        .json({ err: "erreur lors de la recuperation de l'evenement" });
+      return;
+    }
+  },
+
+  // creer un nouvel event (admin seulement)
   async add(req, res) {
     try {
       const { title, description, date } = req.body;
@@ -45,7 +75,7 @@ export const eventActions: {
       // creer l'event dans la bdd
       const create = await createEvent(
         title,
-        description,
+        description || null,
         date,
         Number(req.auth.sub),
       );
@@ -127,9 +157,14 @@ export const eventActions: {
   async register(req, res) {
     try {
       const eventId = req.params.id;
-
-      // vérifier que l'utilisateur est connecté
       const userId = Number(req.auth.sub);
+      const register = await userRegister(userId, Number(eventId));
+      if (register) {
+        res.status(400).json({
+          message: "vous êtes inscrit à cet événement",
+        });
+        return;
+      }
 
       // ajouter un utilisateur
       await participate(userId, Number(eventId));
@@ -147,8 +182,14 @@ export const eventActions: {
   async cancel(req, res) {
     try {
       const eventId = req.params.id;
-      // verification que l'utilisateur est connecté
       const userId = Number(req.auth.sub);
+      const register = await userRegister(userId, Number(eventId));
+      if (!register) {
+        res.status(400).json({
+          message: "vous n'êtes pas inscrit à cet événement",
+        });
+        return;
+      }
 
       // annule la participation
       await cancelParticipate(userId, Number(eventId));
