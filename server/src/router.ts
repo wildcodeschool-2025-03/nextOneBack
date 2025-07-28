@@ -34,6 +34,8 @@ router.use(verifyToken);
 // Auth (profil / logout)
 router.get("/api/connexion/profile", connexionActions.profile);
 router.post("/api/connexion/logout", connexionActions.disconnected);
+router.delete("/api/connexion/profile", connexionActions.remove);
+router.get("/api/connexion/profile", connexionActions.profile);
 
 // Jeux (CRUD Admin)
 router.post("/api/games", uploadGameImage, gameActions.add);
@@ -54,11 +56,17 @@ router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
 // Favoris
-router.get("/api/favorites/:userId", favoriteActions.getAllByUser);
-router.post("/api/favorites", favoriteActions.add);
-router.delete("/api/favorites/:userId/:gameId", favoriteActions.remove);
+router.get("/api/favorites/:userId", verifyToken, favoriteActions.getAllByUser);
+router.post("/api/favorites", verifyToken, favoriteActions.add);
+router.delete(
+  "/api/favorites/:userId/:gameId",
+  verifyToken,
+  favoriteActions.remove,
+);
 
 // Utilisateurs
 router.get("/api/users", userActions.read);
+
+/* ************************************************************************* */
 
 export default router;

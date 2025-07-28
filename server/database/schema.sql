@@ -65,7 +65,7 @@ id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 id_user INT UNSIGNED NOT NULL,
 id_price_lot INT UNSIGNED NOT NULL,
 FOREIGN KEY (id_user) REFERENCES User(id),
-FOREIGN KEY (id_price_lot) REFERENCES Price_Lot(id)
+FOREIGN KEY (id_price_lot) REFERENCES Price_lot(id)
 );
 
 CREATE TABLE Echange (
