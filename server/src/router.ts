@@ -28,6 +28,7 @@ router.get("/api/events", eventActions.browse);
 router.use(verifyToken);
 router.put("/api/tarifs/:id", tarifsActions.update);
 router.post("/api/connexion/logout", connexionActions.disconnected);
+router.delete("/api/connexion/profile", connexionActions.remove);
 router.get("/api/connexion/profile", connexionActions.profile);
 
 // Routes protégées (favoris, parties, items, etc.)
