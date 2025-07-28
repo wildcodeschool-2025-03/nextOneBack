@@ -1,0 +1,66 @@
+.toast-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+
+.toast-box {
+  background: #1a1a2e;
+  border: 2px solid #0ff;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  max-width: 30rem;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 1rem #0ff;
+}
+
+.toast-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #ff0;
+  text-shadow: 0 0 5px #ff0;
+}
+
+.toast-text {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+
+.toast-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.btn {
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn.cancel {
+  background-color: #444;
+  color: #ccc;
+}
+
+.btn.cancel:hover {
+  background-color: #666;
+}
+
+.btn.confirm {
+  background-color: #f00;
+  color: #fff;
+  box-shadow: 0 0 0.5rem #f00;
+}
+
+.btn.confirm:hover {
+  background-color: #d00;
+}

@@ -1,54 +1,64 @@
 import express from "express";
 const router = express.Router();
 
-// Import des modules.
-import gameActions from "./modules/game/gameAction";
-
-// Route publique : visible par tout le monde.
-router.get("/api/games", gameActions.browse);
-router.get("/api/games/:id/ranking", gameActions.readRanking);
-
+// MIDDLEWARES
 import { hashPassword, verifPassword } from "./middlewares/argonMiddleware";
-
+import { uploadGameImage } from "./middlewares/uploadMiddleware";
 import verifyToken from "./middlewares/verifyToken";
+
+// MODULES (ACTIONS)
 import connexionActions from "./modules/connexion/connexionActions";
+import favoriteActions from "./modules/favorite/favoriteActions";
+import gameActions from "./modules/game/gameAction";
 import itemActions from "./modules/item/itemActions";
-// Autres modules protégés.
-import partyAction from "./modules/party/partyAction";
+import partyActions from "./modules/party/partyAction";
 import { tarifsActions } from "./modules/tarifs/tarifsActions";
 import userActions from "./modules/user/userActions";
 
-// Auth des routes.
+// ROUTES PUBLIQUES
+
+// Auth (inscription/connexion)
 router.post("/api/connexion/register", hashPassword, connexionActions.add);
 router.post("/api/connexion/login", verifPassword, connexionActions.read);
 
+// Jeux : consultation
+router.get("/api/games", gameActions.browse);
+router.get("/api/games/:id/ranking", gameActions.readRanking);
+
+// Tarifs
 router.get("/api/tarifs", tarifsActions.browse);
 
+// ROUTES PROTÉGÉES (Authentification requise)
 router.use(verifyToken);
-router.put("/api/tarifs/:id", tarifsActions.update, tarifsActions.update);
-router.post("/api/connexion/logout", connexionActions.disconnected);
+
+// Auth (profil / logout)
 router.get("/api/connexion/profile", connexionActions.profile);
+router.post("/api/connexion/logout", connexionActions.disconnected);
 
-// Routes protégées (favoris, parties, items, etc.)
-router.get("/api/partys", partyAction.browse);
-router.get("/api/partys/:id", partyAction.read);
-router.post("/api/partys", partyAction.add);
+// Jeux (CRUD Admin)
+router.post("/api/games", uploadGameImage, gameActions.add);
+router.put("/api/games/:id", uploadGameImage, gameActions.update);
+router.delete("/api/games/:id", gameActions.destroy);
 
+// Tarifs (Admin)
+router.put("/api/tarifs/:id", tarifsActions.update);
+
+// Parties
+router.get("/api/partys", partyActions.browse);
+router.get("/api/partys/:id", partyActions.read);
+router.post("/api/partys", partyActions.add);
+
+// Items
 router.get("/api/items", itemActions.browse);
 router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
-import favoriteActions from "./modules/favorite/favoriteActions";
+// Favoris
+router.get("/api/favorites/:userId", favoriteActions.getAllByUser);
+router.post("/api/favorites", favoriteActions.add);
+router.delete("/api/favorites/:userId/:gameId", favoriteActions.remove);
 
-router.get("/api/favorites/:userId", verifyToken, favoriteActions.getAllByUser);
-router.post("/api/favorites", verifyToken, favoriteActions.add);
-router.delete(
-  "/api/favorites/:userId/:gameId",
-  verifyToken,
-  favoriteActions.remove,
-);
+// Utilisateurs
 router.get("/api/users", userActions.read);
-
-/* ************************************************************************* */
 
 export default router;

@@ -1,3 +1,4 @@
+import type React from "react";
 import { createContext, useCallback, useEffect, useState } from "react";
 import client from "../services/client";
 import type { User } from "../types/auth";
@@ -6,24 +7,25 @@ type ChildrenType = {
   children: React.ReactNode;
 };
 
-type LoginContextType = {
+type AuthContextType = {
   user: User | null | undefined;
   setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
   logout: () => void;
   isAdmin: boolean;
 };
 
-export const LoginContext = createContext<LoginContextType | null>(null);
+// Contexte renommé pour éviter le conflit avec Vite
+export const AuthContext = createContext<AuthContextType | null>(null);
 
-export function LoginProvider({ children }: ChildrenType) {
+const LoginProvider = ({ children }: ChildrenType) => {
   const [user, setUser] = useState<User | null | undefined>(null);
-
   const isAdmin = user?.id_role === 2;
 
   const login = useCallback(() => {
     client
-      .get("/connexion/profile")
+      .get("/connexion/profile", { withCredentials: true })
       .then((res) => {
+        console.log("PROFILE:", res.data);
         setUser({
           id: res.data.userId,
           email: res.data.email,
@@ -44,14 +46,16 @@ export function LoginProvider({ children }: ChildrenType) {
 
   const logout = useCallback(() => {
     client
-      .post("/connexion/logout")
+      .post("/connexion/logout", {}, { withCredentials: true })
       .then(() => setUser(null))
-      .catch(() => console.error("erreur de déconnexion"));
+      .catch(() => console.error("Erreur de déconnexion"));
   }, []);
 
   return (
-    <LoginContext.Provider value={{ user, setUser, logout, isAdmin }}>
+    <AuthContext.Provider value={{ user, setUser, logout, isAdmin }}>
       {children}
-    </LoginContext.Provider>
+    </AuthContext.Provider>
   );
-}
+};
+
+export { LoginProvider };
