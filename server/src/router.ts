@@ -40,7 +40,8 @@ router.get("/api/items", itemActions.browse);
 router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
-import { admin, eventExist, userAuth } from "./middlewares/events";
+import { adminAuth, userAuth } from "./middlewares/authMiddleware";
+import { valideDataEvent, valideEventId } from "./middlewares/event";
 import { eventActions } from "./modules/event/eventActions";
 import favoriteActions from "./modules/favorite/favoriteActions";
 
@@ -56,20 +57,20 @@ router.get("/api/users", userActions.read);
 router.post(
   "/api/events/:id/register",
   userAuth,
-  eventExist,
+  valideEventId,
   eventActions.register,
 );
 router.delete(
   "/api/events/:id/register",
   userAuth,
-  eventExist,
+  valideEventId,
   eventActions.cancel,
 );
 
-router.get("/api/events/:id", eventExist, eventActions.read);
-router.post("/api/events", admin, eventActions.add);
-router.put("/api/events/:id", admin, eventExist, eventActions.update);
-router.delete("/api/events/:id", admin, eventExist, eventActions.remove);
+router.get("/api/events/:id", valideEventId, eventActions.read);
+router.post("/api/events", adminAuth, valideDataEvent, eventActions.add);
+router.put("/api/events/:id", adminAuth, valideDataEvent, eventActions.update);
+router.delete("/api/events/:id", adminAuth, valideEventId, eventActions.remove);
 
 /* ************************************************************************* */
 

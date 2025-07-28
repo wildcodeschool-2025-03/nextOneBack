@@ -27,9 +27,7 @@ export const eventActions: {
       res.status(200).json(events);
       return;
     } catch (err) {
-      res
-        .status(500)
-        .json({ err: "erreur lors de la recuperation des evenements" });
+      res.sendStatus(500);
       return;
     }
   },
@@ -40,9 +38,7 @@ export const eventActions: {
       const eventId = Number(req.params.id);
       const event = await getEventById(eventId);
       if (!event) {
-        res.status(404).json({
-          message: "evenement non trouvé",
-        });
+        res.sendStatus(404);
         return;
       }
 
@@ -53,9 +49,7 @@ export const eventActions: {
         res.status(200).json(event);
       }
     } catch (err) {
-      res
-        .status(500)
-        .json({ err: "erreur lors de la recuperation de l'evenement" });
+      res.sendStatus(500);
       return;
     }
   },
@@ -65,13 +59,6 @@ export const eventActions: {
     try {
       const { title, description, date } = req.body;
 
-      // si user est !admin
-      if (!req.auth.isAdmin) {
-        res.status(500).json({
-          message: "Accès refusé seul un admin peut créer un nouvel evenement",
-        });
-        return;
-      }
       // creer l'event dans la bdd
       const create = await createEvent(
         title,
@@ -80,17 +67,13 @@ export const eventActions: {
         Number(req.auth.sub),
       );
       if (!create) {
-        res
-          .status(500)
-          .json({ message: "erreur lors de la création de l'événement" });
+        res.sendStatus(500);
         return;
       }
-      res.status(201).json({ message: "événement créé avec succès !" });
+      res.sendStatus(201);
       return;
     } catch {
-      res
-        .status(500)
-        .json({ message: "erreur lors de la création de l'événement" });
+      res.sendStatus(500);
       return;
     }
   },
@@ -98,17 +81,15 @@ export const eventActions: {
   // modifier les events (seulement l'admin)
   async update(req, res) {
     try {
-      const eventId = req.params.id;
+      const eventId = Number(req.params.id);
       const { title, description, date } = req.body;
 
-      // si user est !admin
-      if (!req.auth.isAdmin) {
-        res.status(500).json({
-          message:
-            "Accès refusé seul un admin peut modifier un nouvel evenement",
-        });
+      const existEvent = await getEventById(eventId);
+      if (!existEvent) {
+        res.sendStatus(404);
         return;
       }
+
       const updated = await updateEvent(
         Number(eventId),
         title,
@@ -116,13 +97,13 @@ export const eventActions: {
         date,
       );
       if (!updated) {
-        res.status(404).json({ message: "événément non trouvé" });
+        res.sendStatus(404);
         return;
       }
-      res.status(200).json({ message: "événément modifié avec succès" });
+      res.sendStatus(200);
       return;
     } catch (err) {
-      res.status(500).json({ message: "erreur lors de la mise a jour" });
+      res.sendStatus(500);
       return;
     }
   },
@@ -130,25 +111,22 @@ export const eventActions: {
   // supprimer un evenement
   async remove(req, res) {
     try {
-      const eventId = req.params.id;
+      const eventId = Number(req.params.id);
 
-      // si user est !admin
-      if (!req.auth.isAdmin) {
-        res.status(500).json({
-          message:
-            "Accès refusé seul un admin peut supprimer un nouvel evenement",
-        });
+      const existEvent = await getEventById(eventId);
+      if (!existEvent) {
+        res.sendStatus(404);
         return;
       }
       const deleted = await deleteEvent(Number(eventId));
       if (!deleted) {
-        res.status(404).json({ message: "événément non trouvé" });
+        res.sendStatus(404);
         return;
       }
-      res.status(200).json({ message: "evenement supprimé" });
+      res.sendStatus(200);
       return;
     } catch (err) {
-      res.status(500).json({ message: "erreur lors de la suppression" });
+      res.sendStatus(500);
       return;
     }
   },
@@ -156,24 +134,26 @@ export const eventActions: {
   // inscription d'un utilisateur à un événément
   async register(req, res) {
     try {
-      const eventId = req.params.id;
+      const eventId = Number(req.params.id);
       const userId = Number(req.auth.sub);
+
+      const existEvent = await getEventById(eventId);
+      if (!existEvent) {
+        res.sendStatus(404);
+        return;
+      }
       const register = await userRegister(userId, Number(eventId));
       if (register) {
-        res.status(400).json({
-          message: "vous êtes inscrit à cet événement",
-        });
+        res.sendStatus(400);
         return;
       }
 
       // ajouter un utilisateur
       await participate(userId, Number(eventId));
-      res.status(200).json({ message: "inscription réussie à l'événement" });
+      res.sendStatus(200);
       return;
     } catch (err) {
-      res
-        .status(500)
-        .json({ message: "erreur lors de l'inscription à l'évenement" });
+      res.sendStatus(500);
       return;
     }
   },
@@ -181,24 +161,27 @@ export const eventActions: {
   // annuler la participation
   async cancel(req, res) {
     try {
-      const eventId = req.params.id;
+      const eventId = Number(req.params.id);
       const userId = Number(req.auth.sub);
+
+      const existEvent = await getEventById(eventId);
+      if (!existEvent) {
+        res.sendStatus(404);
+        return;
+      }
+
       const register = await userRegister(userId, Number(eventId));
       if (!register) {
-        res.status(400).json({
-          message: "vous n'êtes pas inscrit à cet événement",
-        });
+        res.sendStatus(400);
         return;
       }
 
       // annule la participation
       await cancelParticipate(userId, Number(eventId));
-      res.status(200).json({ message: "désinscription réussie à l'événement" });
+      res.sendStatus(200);
       return;
     } catch (err) {
-      res
-        .status(500)
-        .json({ message: "erreur lors de la désinscription à l'évenement" });
+      res.sendStatus(500);
       return;
     }
   },
