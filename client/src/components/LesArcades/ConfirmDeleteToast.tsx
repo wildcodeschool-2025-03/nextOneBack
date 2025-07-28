@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import "./ConfirmDeleteToast.css";
 
 interface ConfirmDeleteToastProps {
@@ -10,25 +10,17 @@ export default function ConfirmDeleteToast({
   onConfirm,
   onCancel,
 }: ConfirmDeleteToastProps) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onCancel();
     };
 
     window.addEventListener("keydown", handleEsc);
-    dialogRef.current?.showModal();
-
-    return () => {
-      window.removeEventListener("keydown", handleEsc);
-      dialogRef.current?.close();
-    };
+    return () => window.removeEventListener("keydown", handleEsc);
   }, [onCancel]);
 
   return (
-    <dialog
-      ref={dialogRef}
+    <div
       className="toast-overlay"
       aria-modal="true"
       aria-labelledby="toast-title"
@@ -47,6 +39,6 @@ export default function ConfirmDeleteToast({
           </button>
         </div>
       </div>
-    </dialog>
+    </div>
   );
 }
