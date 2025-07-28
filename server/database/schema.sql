@@ -27,7 +27,9 @@ name VARCHAR(150) NOT NULL,
 description TEXT NULL,
 category VARCHAR(100) NOT NULL,
 available_online BOOLEAN,
-available_maintenance BOOLEAN
+available_maintenance BOOLEAN,
+images VARCHAR(255),
+alt VARCHAR(255)
 );
 
 CREATE TABLE Contact (
