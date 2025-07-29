@@ -43,17 +43,21 @@
     align-items: center;
     gap: 1rem;
   }
-  .text-player {
+  .text-players {
     font-family: "inter", sans-serif;
     color: white;
-    font-size: 1em;
+    font-size: 1.1em;
   }
   .player-text {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-items: center;
   }
-
+  .icone-player {
+    display: flex;
+    flex-direction: column;
+  }
   .icone-game {
     width: 4.5em;
   }
@@ -82,16 +86,13 @@
     width: 10rem;
     cursor: pointer;
   }
-  .box-player {
+  .box-joueur {
     background: rgba(0, 0, 0, 0.6);
     border: 2px solid #00ffff;
     box-shadow: 0 0 12px #00ffff55;
     padding: 1.5rem;
     border-radius: 20px;
     display: flex;
-
-    grid-row-start: 2;
-    grid-row-end: 2;
   }
   .button-disconnected {
     height: 1.5rem;
@@ -167,7 +168,7 @@
     margin-left: 3rem;
   }
 
-  .box-player {
+  .box-joueur {
     background: rgba(0, 0, 0, 0.6);
     border: 2px solid #00ffff;
     box-shadow: 0 0 12px #00ffff55;
@@ -184,6 +185,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-items: center;
   }
   .text-player {
     font-family: "inter", sans-serif;

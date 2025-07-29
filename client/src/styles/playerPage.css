@@ -74,6 +74,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-items: center;
   }
 
   .icone-game {
@@ -125,7 +126,6 @@
   li {
     list-style: none;
   }
-
   .box-historical {
     text-align: left;
   }
