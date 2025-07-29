@@ -103,7 +103,8 @@
     width: 10rem;
     cursor: pointer;
   }
-  .box-players {
+  .box-players,
+  .box-game-favoris {
     background: rgba(0, 0, 0, 0.6);
     border: 2px solid #00ffff;
     box-shadow: 0 0 12px #00ffff55;
@@ -144,7 +145,23 @@
     font-size: 1.2rem;
     margin-top: 2em;
   }
-
+  .ul-favorite {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+  .card-favorite {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #00ccff;
+    font-size: 1.2em;
+    font-family: "inter", sans-serif;
+  }
+  .image-favorite {
+    width: 5em;
+  }
   .red-dragon {
     display: none;
   }
@@ -189,8 +206,7 @@
     box-shadow: 0 0 12px #00ffff55;
     padding: 1.5rem;
     border-radius: 20px;
-    grid-row-start: 1;
-    grid-row-end: 2;
+    grid-row-end: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -213,6 +229,7 @@
     border-radius: 20px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     color: #00ccff;
     gap: 1em;
   }
@@ -226,7 +243,11 @@
     display: flex;
     flex-direction: column;
   }
-
+  .ul-scored {
+    color: #00ccff;
+    font-size: 1.4em;
+    font-family: "inter", sans-serif;
+  }
   .player-text {
     font-family: "inter", sans-serif;
     color: white;
@@ -245,14 +266,14 @@
     display: flex;
     align-items: center;
   }
-  .box-game {
+  .box-game-favoris {
     background: rgba(0, 0, 0, 0.6);
     border: 2px solid #00ffff;
     box-shadow: 0 0 12px #00ffff55;
     padding: 1.5rem;
     border-radius: 20px;
-    grid-row-start: 2;
-    grid-row-end: 5;
+    grid-column-start: 1;
+    grid-column-end: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -275,12 +296,27 @@
   .grid-box {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr;
     gap: 5rem;
     padding: 2rem;
   }
   .button-disconnected {
     height: 2rem;
+  }
+  .ul-favorite {
+    display: flex;
+    flex-direction: column;
+  }
+  .card-favorite {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #00ccff;
+    font-size: 1.2em;
+    font-family: "inter", sans-serif;
+  }
+  .image-favorite {
+    width: 5em;
   }
   .button-deconnexion,
   .button-delete-account {
