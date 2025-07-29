@@ -21,6 +21,12 @@
   .bigboss-img {
     width: 19em;
     padding-top: 1rem;
+    display: flex;
+  }
+  .admin-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .box-user {
     background: rgba(0, 0, 0, 0.6);
@@ -56,6 +62,7 @@
     border-radius: 20px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
   }
   .text-player {
@@ -156,6 +163,10 @@
     max-width: 1280px;
     margin: 0 auto;
   }
+  .box-admin {
+    display: flex;
+    align-items: center;
+  }
   .h1-admin-page {
     font-family: "inter", sans-serif;
     color: #00ffff;
@@ -172,18 +183,6 @@
     background-color: #00ffff;
   }
 
-  .box-admin {
-    background: rgba(0, 0, 0, 0.6);
-    border: 2px solid #00ffff;
-    box-shadow: 0 0 12px #00ffff55;
-    padding: 1.5rem;
-    border-radius: 20px;
-    grid-row-start: 1;
-    grid-row-end: 3;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
   .box-user {
     background: rgba(0, 0, 0, 0.6);
     border: 2px solid #00ffff;
@@ -200,9 +199,10 @@
 
   .bigboss-img {
     width: 17em;
-    grid-row-start: 4;
-    grid-row-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
     margin-left: 3rem;
+    margin-top: 6rem;
   }
 
   .box-players {
@@ -275,7 +275,7 @@
   .grid-box {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     gap: 5rem;
     padding: 2rem;
   }
