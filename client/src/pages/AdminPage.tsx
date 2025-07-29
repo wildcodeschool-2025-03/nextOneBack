@@ -23,13 +23,10 @@ export default function AdminPage() {
     <main className="admin-page">
       <section className="admin-section">
         <h1 className="h1-admin-page">TABLEAU DE BORD</h1>
-
         <section className="grid-box">
           <section className="box-admin">
             <h2 className="h2-admin-page">ADMIN</h2>
             <span className="barre" />
-            <span className="barre" />
-
             <button
               className="button-deconnexion"
               type="button"
@@ -43,17 +40,14 @@ export default function AdminPage() {
               <span className="text-disconnexion">Déconnexion</span>
             </button>
           </section>
-
           <img
             className="bigboss-img"
             src={Bigboss}
             alt="un chef à son bureau"
           />
-
           <section>
             <PlayerCard />
           </section>
-
           <div className="box-game">
             <h2 className="h2-admin-page">Gestion des jeux</h2>
             <span className="barre" />

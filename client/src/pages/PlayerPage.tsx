@@ -43,14 +43,11 @@ export default function PlayerPage() {
     <main className="admin-page">
       <section className="admin-section">
         <h1 className="h1-admin-page">TABLEAU DE BORD</h1>
-
         <section className="grid-box">
-          <section className="box-admin">
-            <h2 className="h2-admin-page">Bonjour,</h2>
+          <section className="box-user">
+            <h2 className="h2-admin-page">Bonjour, </h2>
             <h2 className="h2-admin-page">{user?.pseudo}</h2>
             <span className="barre" />
-            <span className="barre" />
-
             <button
               className="button-deconnexion"
               type="button"
@@ -64,11 +61,9 @@ export default function PlayerPage() {
               <span className="text-disconnexion">Déconnexion</span>
             </button>
           </section>
-
           <section>
             <UserCard />
           </section>
-
           <div className="box-game">
             <h2 className="h2-admin-page">Mes favoris</h2>
             <span className="barre" />
