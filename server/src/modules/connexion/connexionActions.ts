@@ -4,6 +4,7 @@ import type { MyPayload } from "../../middlewares/verifyToken";
 import {
   type Connexion,
   connectedUser,
+  deleteUser,
   disconnectedUser,
   userById,
   userCreate,
@@ -95,6 +96,12 @@ const profile: RequestHandler = async (req, res, next) => {
       res.sendStatus(401);
       return;
     }
+
+    if (user.deleted_at !== null) {
+      res.status(403).json({ message: "Compte désactivé" });
+      return;
+    }
+
     const { password, ...userWithoutPassword } = user;
     res.json({
       userId: userWithoutPassword.id,
@@ -114,7 +121,12 @@ const disconnected: RequestHandler = async (req, res) => {
     }
     const user = await userById(Number(req.auth.sub));
     if (!user) {
-      res.status(404).json({ message: "Utilisateur non trouvé" });
+      res.status(404).json({ message: "Utilisateur introuvable" });
+      return;
+    }
+
+    if (user.deleted_at !== null) {
+      res.status(403).json({ message: "Compte supprimé" });
       return;
     }
     // Delete Coockie
@@ -129,4 +141,17 @@ const disconnected: RequestHandler = async (req, res) => {
     res.status(500).json({ message: "erreur pour supprimer le cookie" });
   }
 };
-export default { add, read, profile, disconnected };
+const remove: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.auth?.sub);
+    if (!userId) {
+      res.sendStatus(401);
+      return;
+    }
+    await deleteUser(userId);
+    res.status(200).json({ message: "Compte supprimé avec succès." });
+  } catch (err) {
+    next(err);
+  }
+};
+export default { add, read, profile, disconnected, remove };

@@ -125,7 +125,8 @@
   .button-disconnected {
     height: 1.5rem;
   }
-  .button-deconnexion {
+  .button-deconnexion,
+  .button-delete-account {
     color: #ff0000;
     background: none;
     display: flex;
@@ -281,7 +282,8 @@
   .button-disconnected {
     height: 2rem;
   }
-  .button-deconnexion {
+  .button-deconnexion,
+  .button-delete-account {
     color: #ff0000;
     background: none;
     display: flex;
@@ -291,6 +293,10 @@
     cursor: pointer;
     font-size: 1.6rem;
     margin-top: 2em;
+  }
+  .delete-button {
+    display: flex;
+    justify-content: center;
   }
   .red-dragon {
     position: relative;

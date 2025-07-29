@@ -23,10 +23,12 @@ router.post("/api/connexion/register", hashPassword, connexionActions.add);
 router.post("/api/connexion/login", verifPassword, connexionActions.read);
 
 router.get("/api/tarifs", tarifsActions.browse);
+router.get("/api/events", eventActions.browse);
 
 router.use(verifyToken);
-router.put("/api/tarifs/:id", tarifsActions.update, tarifsActions.update);
+router.put("/api/tarifs/:id", tarifsActions.update);
 router.post("/api/connexion/logout", connexionActions.disconnected);
+router.delete("/api/connexion/profile", connexionActions.remove);
 router.get("/api/connexion/profile", connexionActions.profile);
 
 // Routes protégées (favoris, parties, items, etc.)
@@ -38,6 +40,9 @@ router.get("/api/items", itemActions.browse);
 router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
+import { adminAuth, userAuth } from "./middlewares/authMiddleware";
+import { valideDataEvent, valideEventId } from "./middlewares/event";
+import { eventActions } from "./modules/event/eventActions";
 import favoriteActions from "./modules/favorite/favoriteActions";
 import playerScoreAction from "./modules/playerScore/playerScoreAction";
 router.get("/api/playerScored", playerScoreAction.read);
@@ -50,6 +55,24 @@ router.delete(
   favoriteActions.remove,
 );
 router.get("/api/users", userActions.read);
+
+router.post(
+  "/api/events/:id/register",
+  userAuth,
+  valideEventId,
+  eventActions.register,
+);
+router.delete(
+  "/api/events/:id/register",
+  userAuth,
+  valideEventId,
+  eventActions.cancel,
+);
+
+router.get("/api/events/:id", valideEventId, eventActions.read);
+router.post("/api/events", adminAuth, valideDataEvent, eventActions.add);
+router.put("/api/events/:id", adminAuth, valideDataEvent, eventActions.update);
+router.delete("/api/events/:id", adminAuth, valideEventId, eventActions.remove);
 
 /* ************************************************************************* */
 
