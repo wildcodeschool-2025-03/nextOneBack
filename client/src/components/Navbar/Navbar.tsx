@@ -30,46 +30,50 @@ export default function Navbar() {
         <BurgerMenu />
       </article>
 
-      <NavLink to="/accueil" className="linkDesktop">
-        <span>Ma Salle !</span>
-      </NavLink>
+      <div className="nav-left">
+        <NavLink to="/accueil" className="linkDesktop">
+          <span>Ma Salle !</span>
+        </NavLink>
 
-      <NavLink to="/arcades" className="linkDesktop">
-        <span>Les arcades</span>
-      </NavLink>
+        <NavLink to="/arcades" className="linkDesktop">
+          <span>Les arcades</span>
+        </NavLink>
+      </div>
       <img
         className="nextOneLogo"
         src={NextOneLogo}
         alt="Logo Next One, logo effet neon"
       />
-      <NavLink to="/tarifs" className="linkDesktop">
-        <span>Tarifs</span>
-      </NavLink>
-
-      <div className="button-icon">
-        <button
-          type="button"
-          onClick={() => {
-            if (user) {
-              logout();
-              navigate("/");
-            } else {
-              navigate("/");
-            }
-          }}
-          className={`button-login-logout ${user ? "logout" : "login"}`}
-        >
-          {user ? "Déconnexion" : "Connexion"}
-        </button>
-        <NavLink to={navigation} className="UserIcone">
-          <article className="UserIcone">
-            <img
-              className="userGamerIcone"
-              src={UserGamerIcone}
-              alt="icone representant un utilisateur avec une casque de  gamer et une manette"
-            />
-          </article>
+      <div className="nav-right">
+        <NavLink to="/tarifs" className="linkDesktop">
+          <span>Tarifs</span>
         </NavLink>
+
+        <div className="button-icon">
+          <button
+            type="button"
+            onClick={() => {
+              if (user) {
+                logout();
+                navigate("/");
+              } else {
+                navigate("/");
+              }
+            }}
+            className={`button-login-logout ${user ? "logout" : "login"}`}
+          >
+            {user ? "Déconnexion" : "Connexion"}
+          </button>
+          <NavLink to={navigation} className="UserIcone">
+            <article className="UserIcone">
+              <img
+                className="userGamerIcone"
+                src={UserGamerIcone}
+                alt="icone representant un utilisateur avec une casque de  gamer et une manette"
+              />
+            </article>
+          </NavLink>
+        </div>
       </div>
     </nav>
   );

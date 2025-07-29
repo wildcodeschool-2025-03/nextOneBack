@@ -1,8 +1,18 @@
 import { useState } from "react";
 import "../../styles/navbar.css";
-import { NavLink } from "react-router";
+import { useContext } from "react";
+import { NavLink, useNavigate } from "react-router";
+import { LoginContext } from "../../Auth/LoginContext";
 
 export default function BurgerMenu() {
+  const context = useContext(LoginContext);
+  const navigate = useNavigate();
+
+  if (!context) {
+    return null;
+  }
+  const { user, logout } = context;
+
   const [burgerClass, setBurgerClass] = useState("burger-bar unclicked");
   const [menuClass, setMenuClass] = useState("menu hidden");
   const [isMenuClicked, setIsMenuClicked] = useState(false);
@@ -43,6 +53,22 @@ export default function BurgerMenu() {
           <span>Tarifs</span>
         </NavLink>
         <span className="barre" />
+        <span>
+          <button
+            type="button"
+            onClick={() => {
+              if (user) {
+                logout();
+                navigate("/");
+              } else {
+                navigate("/");
+              }
+            }}
+            className={`button-login-logout ${user ? "logout" : "login"}`}
+          >
+            {user ? "Déconnexion" : "Connexion"}
+          </button>
+        </span>
       </div>
     </div>
   );
