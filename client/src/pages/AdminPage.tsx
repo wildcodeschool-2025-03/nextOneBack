@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { LoginContext } from "../Auth/LoginContext";
 import Bigboss from "../assets/icones/big boss pixel.png";
 import disconnected from "../assets/icones/disconnected.png";
+import dragon from "../assets/images/monstre.png";
 import PlayerCard from "../components/PlayerInfo/PlayerCard";
 export default function AdminPage() {
   const context = useContext(LoginContext);
@@ -15,6 +16,7 @@ export default function AdminPage() {
   const { user, logout } = context;
   return (
     <main className="admin-page">
+      <img src={dragon} alt="petit dragon" className="dragon" />
       <section className="admin-section">
         <h1 className="h1-admin-page">TABLEAU DE BORD</h1>
         <section className="grid-box">

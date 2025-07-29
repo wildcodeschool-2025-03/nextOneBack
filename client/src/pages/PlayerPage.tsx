@@ -4,6 +4,8 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { LoginContext } from "../Auth/LoginContext";
 import disconnected from "../assets/icones/disconnected.png";
+import dragon from "../assets/images/monstre.png";
+import FavoriteUserCard from "../components/PlayerInfo/FavoriteUserCard";
 import UserCard from "../components/PlayerInfo/UserCard";
 import { deleteAccount } from "../services/deleteAccount";
 export default function PlayerPage() {
@@ -37,6 +39,7 @@ export default function PlayerPage() {
   };
   return (
     <main className="admin-page">
+      <img src={dragon} alt="petit dragon" className="dragon" />
       <section className="admin-section">
         <h1 className="h1-admin-page">TABLEAU DE BORD</h1>
         <section className="grid-box">
@@ -67,9 +70,10 @@ export default function PlayerPage() {
           <section>
             <UserCard />
           </section>
-          <div className="box-game">
+          <div className="box-game-favoris">
             <h2 className="h2-admin-page">Mes favoris</h2>
             <span className="barre" />
+            <FavoriteUserCard />
           </div>
         </section>
         <article className="delete-button">

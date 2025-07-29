@@ -48,6 +48,7 @@ import playerScoreAction from "./modules/playerScore/playerScoreAction";
 router.get("/api/playerScored", playerScoreAction.read);
 
 router.get("/api/favorites/:userId", verifyToken, favoriteActions.getAllByUser);
+router.get("/api/myfavorites", favoriteActions.read);
 router.post("/api/favorites", verifyToken, favoriteActions.add);
 router.delete(
   "/api/favorites/:userId/:gameId",
