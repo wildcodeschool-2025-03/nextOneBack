@@ -87,6 +87,7 @@ export async function updateEvent(
     );
     return result.affectedRows > 0;
   } catch (err) {
+    console.log(err);
     throw new Error("erreur lors de la modification de l'evenement");
   }
 }

@@ -11,6 +11,8 @@ import {
   userRegister,
 } from "./eventRepository";
 
+import type { Event, EventWithParticipants } from "./eventRepository";
+
 export const eventActions: {
   browse: RequestHandler;
   read: RequestHandler;
@@ -35,19 +37,20 @@ export const eventActions: {
   // recupere un event
   async read(req, res) {
     try {
-      const eventId = Number(req.params.id);
-      const event = await getEventById(eventId);
+      let event: Event | null;
+
+      if (req.auth?.isAdmin) {
+        event = await getEventWithParticipants(+req.params.id);
+      } else {
+        event = await getEventById(+req.params.id);
+      }
+
       if (!event) {
-        res.sendStatus(404);
+        res.sendStatus(422);
         return;
       }
 
-      if (req.auth?.isAdmin) {
-        const eventWithParticipants = await getEventWithParticipants(eventId);
-        res.status(200).json(eventWithParticipants);
-      } else {
-        res.status(200).json(event);
-      }
+      res.status(200).json(event);
     } catch (err) {
       res.sendStatus(500);
       return;
@@ -81,21 +84,15 @@ export const eventActions: {
   // modifier les events (seulement l'admin)
   async update(req, res) {
     try {
-      const eventId = Number(req.params.id);
       const { title, description, date } = req.body;
 
-      const existEvent = await getEventById(eventId);
-      if (!existEvent) {
-        res.sendStatus(404);
-        return;
-      }
-
       const updated = await updateEvent(
-        Number(eventId),
+        Number(req.params.id),
         title,
         description,
         date,
       );
+
       if (!updated) {
         res.sendStatus(404);
         return;
@@ -112,12 +109,6 @@ export const eventActions: {
   async remove(req, res) {
     try {
       const eventId = Number(req.params.id);
-
-      const existEvent = await getEventById(eventId);
-      if (!existEvent) {
-        res.sendStatus(404);
-        return;
-      }
       const deleted = await deleteEvent(Number(eventId));
       if (!deleted) {
         res.sendStatus(404);
@@ -137,20 +128,15 @@ export const eventActions: {
       const eventId = Number(req.params.id);
       const userId = Number(req.auth.sub);
 
-      const existEvent = await getEventById(eventId);
-      if (!existEvent) {
-        res.sendStatus(404);
-        return;
-      }
       const register = await userRegister(userId, Number(eventId));
       if (register) {
-        res.sendStatus(400);
+        res.sendStatus(409);
         return;
       }
 
       // ajouter un utilisateur
       await participate(userId, Number(eventId));
-      res.sendStatus(200);
+      res.sendStatus(201);
       return;
     } catch (err) {
       res.sendStatus(500);
@@ -163,12 +149,6 @@ export const eventActions: {
     try {
       const eventId = Number(req.params.id);
       const userId = Number(req.auth.sub);
-
-      const existEvent = await getEventById(eventId);
-      if (!existEvent) {
-        res.sendStatus(404);
-        return;
-      }
 
       const register = await userRegister(userId, Number(eventId));
       if (!register) {
