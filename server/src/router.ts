@@ -1,12 +1,13 @@
 import express from "express";
 const router = express.Router();
 
-// MIDDLEWARES
+// Route publique : visible par tout le monde.
+router.get("/api/games", gameActions.browse);
+router.get("/api/games/:id/ranking", gameActions.readRanking);
+
 import { hashPassword, verifPassword } from "./middlewares/argonMiddleware";
 import { uploadGameImage } from "./middlewares/uploadMiddleware";
 import verifyToken from "./middlewares/verifyToken";
-
-// MODULES (ACTIONS)
 import connexionActions from "./modules/connexion/connexionActions";
 import favoriteActions from "./modules/favorite/favoriteActions";
 import gameActions from "./modules/game/gameAction";
@@ -27,12 +28,11 @@ router.get("/api/games/:id/ranking", gameActions.readRanking);
 
 // Tarifs
 router.get("/api/tarifs", tarifsActions.browse);
+router.get("/api/events", eventActions.browse);
 
 // ROUTES PROTÉGÉES (Authentification requise)
 router.use(verifyToken);
-
-// Auth (profil / logout)
-router.get("/api/connexion/profile", connexionActions.profile);
+router.put("/api/tarifs/:id", tarifsActions.update);
 router.post("/api/connexion/logout", connexionActions.disconnected);
 router.delete("/api/connexion/profile", connexionActions.remove);
 router.get("/api/connexion/profile", connexionActions.profile);
@@ -55,7 +55,10 @@ router.get("/api/items", itemActions.browse);
 router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
-// Favoris
+import { adminAuth, userAuth } from "./middlewares/authMiddleware";
+import { valideDataEvent, valideEventId } from "./middlewares/event";
+import { eventActions } from "./modules/event/eventActions";
+
 router.get("/api/favorites/:userId", verifyToken, favoriteActions.getAllByUser);
 router.post("/api/favorites", verifyToken, favoriteActions.add);
 router.delete(
@@ -66,6 +69,24 @@ router.delete(
 
 // Utilisateurs
 router.get("/api/users", userActions.read);
+
+router.post(
+  "/api/events/:id/register",
+  userAuth,
+  valideEventId,
+  eventActions.register,
+);
+router.delete(
+  "/api/events/:id/register",
+  userAuth,
+  valideEventId,
+  eventActions.cancel,
+);
+
+router.get("/api/events/:id", valideEventId, eventActions.read);
+router.post("/api/events", adminAuth, valideDataEvent, eventActions.add);
+router.put("/api/events/:id", adminAuth, valideDataEvent, eventActions.update);
+router.delete("/api/events/:id", adminAuth, valideEventId, eventActions.remove);
 
 /* ************************************************************************* */
 
