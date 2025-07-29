@@ -186,3 +186,38 @@
     padding: 0 0.5rem;
   }
 }
+
+.add-game-btn {
+  display: block;
+  margin: 2rem auto 1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-family: "Orbitron", sans-serif;
+  color: #00ffff;
+  background-color: transparent;
+  border: 2px solid #00ffff;
+  border-radius: 0.8rem;
+  text-shadow: 0 0 0.2rem #00ffff;
+  box-shadow: 0 0 0.8rem #00ffff55;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.add-game-btn:hover,
+.add-game-btn:focus {
+  background-color: #00ffff;
+  color: #000;
+  outline: none;
+}
+
+.add-game-btn:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  .add-game-btn {
+    font-size: 0.95rem;
+    padding: 0.65rem 1.2rem;
+  }
+}

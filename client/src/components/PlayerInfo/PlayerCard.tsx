@@ -5,7 +5,7 @@ import "../../styles/adminPage.css";
 
 export default function PlayerCard() {
   return (
-    <section className="box-player">
+    <section className="box-joueur">
       <div className="icone-player">
         <img className="icone-game" src={GameIcone} alt="icone de pièces" />
         <img
@@ -20,7 +20,7 @@ export default function PlayerCard() {
           options="?type=user&format=count"
         />
         <SimpleNumberStat
-          title="Joueur connectés :"
+          title="Joueurs connectés :"
           options="?type=connected&format=count"
         />
       </div>

@@ -2,20 +2,24 @@ import "../styles/playerPage.css";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { LoginContext } from "../Auth/LoginContext";
+import { AuthContext } from "../Auth/LoginContext";
 import disconnected from "../assets/icones/disconnected.png";
 import dragon from "../assets/images/monstre.png";
 import FavoriteUserCard from "../components/PlayerInfo/FavoriteUserCard";
 import UserCard from "../components/PlayerInfo/UserCard";
 import { deleteAccount } from "../services/deleteAccount";
 export default function PlayerPage() {
-  const context = useContext(LoginContext);
+  const context = useContext(AuthContext);
   const navigate = useNavigate();
 
-  if (!context) {
-    return null;
-  }
+  if (!context) return null;
+
   const { user, logout } = context;
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   const handleDeleteAccount = async () => {
     if (window.confirm("Es-tu sûr de vouloir supprimer ton compte?")) {
@@ -50,21 +54,14 @@ export default function PlayerPage() {
             <button
               className="button-deconnexion"
               type="button"
-              onClick={() => {
-                if (user) {
-                  logout();
-                  navigate("/");
-                } else {
-                  navigate("/");
-                }
-              }}
+              onClick={handleLogout}
             >
               <img
                 className="button-disconnected"
                 src={disconnected}
-                alt="disconnected button"
+                alt="déconnexion"
               />
-              <span className="text-disconnexion">Déconnnexion</span>
+              <span className="text-disconnexion">Déconnexion</span>
             </button>
           </section>
           <section>

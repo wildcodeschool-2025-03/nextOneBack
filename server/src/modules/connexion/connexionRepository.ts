@@ -61,21 +61,19 @@ export async function userCreate(
 }
 // suppression de l'utilisateur
 export async function deleteUser(userId: number) {
-  return await client.query(
+  return client.query(
     "UPDATE User SET deleted_at = NOW(), registration = NULL WHERE id = ?",
     [userId],
   );
 }
 
 export async function connectedUser(email: string) {
-  return await client.query(
-    "UPDATE User SET registration = true WHERE email = ?",
-    [email],
-  );
+  return client.query("UPDATE User SET registration = true WHERE email = ?", [
+    email,
+  ]);
 }
 export async function disconnectedUser(email: string) {
-  return await client.query(
-    "UPDATE User SET registration = false WHERE email = ?",
-    [email],
-  );
+  return client.query("UPDATE User SET registration = false WHERE email = ?", [
+    email,
+  ]);
 }
