@@ -1,18 +1,24 @@
 import "../styles/adminPage.css";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { LoginContext } from "../Auth/LoginContext";
+import { AuthContext } from "../Auth/LoginContext";
 import Bigboss from "../assets/icones/big boss pixel.png";
 import disconnected from "../assets/icones/disconnected.png";
 import PlayerCard from "../components/PlayerInfo/PlayerCard";
+
 export default function AdminPage() {
-  const context = useContext(LoginContext);
+  const context = useContext(AuthContext);
   const navigate = useNavigate();
 
-  if (!context) {
-    return null;
-  }
-  const { user, logout } = context;
+  if (!context) return null;
+
+  const { logout } = context;
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <main className="admin-page">
       <section className="admin-section">
@@ -24,27 +30,20 @@ export default function AdminPage() {
             <button
               className="button-deconnexion"
               type="button"
-              onClick={() => {
-                if (user) {
-                  logout();
-                  navigate("/");
-                } else {
-                  navigate("/");
-                }
-              }}
+              onClick={handleLogout}
             >
               <img
                 className="button-disconnected"
                 src={disconnected}
-                alt="disconnected button"
+                alt="déconnexion"
               />
-              <span className="text-disconnexion">Déconnnexion</span>
+              <span className="text-disconnexion">Déconnexion</span>
             </button>
           </section>
           <img
             className="bigboss-img"
             src={Bigboss}
-            alt="un chef a son bureau"
+            alt="un chef à son bureau"
           />
           <section>
             <PlayerCard />
