@@ -3,19 +3,7 @@ import path from "node:path";
 import type { Request } from "express";
 import multer, { type FileFilterCallback } from "multer";
 
-interface MulterFile {
-  fieldname: string;
-  originalname: string;
-  encoding: string;
-  mimetype: string;
-  size: number;
-  destination: string;
-  filename: string;
-  path: string;
-  buffer: Buffer;
-}
-
-// Crée le dossier s’il n’existe pas
+// Crée le dossier s'il n'existe pas
 const destination = path.resolve(__dirname, "../../public/assets/images/games");
 if (!fs.existsSync(destination)) {
   fs.mkdirSync(destination, { recursive: true });
