@@ -65,6 +65,11 @@ app.use(express.json());
 import router from "./router";
 
 // Mount the API router under the "/api" endpoint
+app.use(
+  "/assets",
+  express.static(path.join(__dirname, "../../server/public/assets")),
+);
+
 app.use(router);
 
 /* ************************************************************************* */
