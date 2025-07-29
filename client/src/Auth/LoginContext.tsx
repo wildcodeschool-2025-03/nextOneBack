@@ -25,7 +25,6 @@ const LoginProvider = ({ children }: ChildrenType) => {
     client
       .get("/connexion/profile", { withCredentials: true })
       .then((res) => {
-        console.log("PROFILE:", res.data);
         setUser({
           id: res.data.userId,
           email: res.data.email,
