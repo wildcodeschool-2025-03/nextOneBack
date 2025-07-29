@@ -21,7 +21,6 @@ export default function AdminPage() {
           <section className="box-admin">
             <h2 className="h2-admin-page">ADMIN</h2>
             <span className="barre" />
-            <span className="barre" />
             <button
               className="button-deconnexion"
               type="button"

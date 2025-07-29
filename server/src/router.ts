@@ -39,6 +39,8 @@ router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
 import favoriteActions from "./modules/favorite/favoriteActions";
+import playerScoreAction from "./modules/playerScore/playerScoreAction";
+router.get("/api/playerScored", playerScoreAction.read);
 
 router.get("/api/favorites/:userId", verifyToken, favoriteActions.getAllByUser);
 router.post("/api/favorites", verifyToken, favoriteActions.add);
