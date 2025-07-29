@@ -44,6 +44,8 @@ import { adminAuth, userAuth } from "./middlewares/authMiddleware";
 import { valideDataEvent, valideEventId } from "./middlewares/event";
 import { eventActions } from "./modules/event/eventActions";
 import favoriteActions from "./modules/favorite/favoriteActions";
+import playerScoreAction from "./modules/playerScore/playerScoreAction";
+router.get("/api/playerScored", playerScoreAction.read);
 
 router.get("/api/favorites/:userId", verifyToken, favoriteActions.getAllByUser);
 router.post("/api/favorites", verifyToken, favoriteActions.add);

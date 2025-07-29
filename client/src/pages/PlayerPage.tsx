@@ -40,10 +40,9 @@ export default function PlayerPage() {
       <section className="admin-section">
         <h1 className="h1-admin-page">TABLEAU DE BORD</h1>
         <section className="grid-box">
-          <section className="box-admin">
+          <section className="box-user">
             <h2 className="h2-admin-page">Bonjour, </h2>
             <h2 className="h2-admin-page">{user?.pseudo}</h2>
-            <span className="barre" />
             <span className="barre" />
             <button
               className="button-deconnexion"

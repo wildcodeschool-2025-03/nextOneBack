@@ -19,8 +19,8 @@ function SimpleNumberStat({ title, options }: SimpleNumberStatProps) {
 
   return (
     <>
-      <p className="text-player">{title}</p>
-      <p className="text-player">{count !== null ? count : "Chargement..."}</p>
+      <p className="text-players">{title}</p>
+      <p className="text-players">{count !== null ? count : "Chargement..."}</p>
     </>
   );
 }
