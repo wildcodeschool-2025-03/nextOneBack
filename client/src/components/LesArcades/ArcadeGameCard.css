@@ -1,16 +1,16 @@
 .arcade-game-card {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1rem;
+  margin: 0 auto 2rem;
+  max-width: 60rem;
+  width: 100%;
   background: rgba(0, 0, 0, 0.6);
   border: 2px solid #00ffff;
   border-radius: 1rem;
   box-shadow: 0 0 0.8rem #00ffff55;
-  padding: 1rem;
-  gap: 1.5rem;
-  max-width: 60rem;
-  width: 100%;
-  margin: 0 auto 2rem;
-  flex-wrap: wrap;
 }
 
 .game-image-block {
@@ -25,16 +25,15 @@
   height: 9rem;
   object-fit: contain;
   border-radius: 0.5rem;
-  background: #000;
 }
 
 .game-info-block {
   flex: 1 1 20rem;
+  min-width: 15rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 0.6rem;
-  min-width: 15rem;
   position: relative;
 }
 
@@ -93,18 +92,38 @@
   margin: 0;
 }
 
+.actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.left-actions,
+.right-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .favorite-btn {
-  align-self: flex-start;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.9rem;
   font-family: "Orbitron", sans-serif;
-  border: 2px solid #00ffff;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 0.6rem;
+  border: 2px solid;
   cursor: pointer;
   background: transparent;
+  transition: background 0.2s ease, color 0.2s ease;
+  text-shadow: 0 0 0.3rem;
+}
+
+.favorite-btn.add {
+  border-color: #00ffff;
   color: #00ffff;
   text-shadow: 0 0 0.3rem #00ffff;
-  transition: background 0.2s ease;
 }
 
 .favorite-btn.add:hover {
@@ -121,6 +140,56 @@
 .favorite-btn.remove:hover {
   background-color: #ff4d6d;
   color: #000;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-self: flex-end;
+  justify-content: flex-end;
+}
+
+.edit-btn,
+.delete-btn {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.6rem;
+  border: 2px solid;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.edit-btn {
+  border-color: #00bfff;
+  color: #00bfff;
+  text-shadow: 0 0 0.2rem #00bfff;
+}
+
+.edit-btn:hover,
+.edit-btn:focus {
+  background: #00bfff;
+  color: #000;
+}
+
+.delete-btn {
+  border-color: #ff4d6d;
+  color: #ff4d6d;
+  text-shadow: 0 0 0.2rem #ff4d6d;
+}
+
+.delete-btn:hover,
+.delete-btn:focus {
+  background: #ff4d6d;
+  color: #000;
+}
+
+.edit-btn:focus-visible,
+.delete-btn:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
 }
 
 .game-ranking-block {
@@ -162,19 +231,26 @@
     text-align: center;
   }
 
-  .favorite-btn {
-    align-self: center;
-  }
-
-  .game-ranking-block {
-    padding-top: 1.4rem;
-    margin-top: 1rem;
-  }
-
   .status-wrapper {
     position: relative;
     top: auto;
     right: auto;
     margin-bottom: 0.4rem;
+  }
+
+  .actions-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .left-actions,
+  .right-actions {
+    justify-content: center;
+  }
+
+  .admin-actions {
+    align-self: center;
+    justify-content: center;
   }
 }

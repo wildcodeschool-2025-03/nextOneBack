@@ -17,6 +17,19 @@ const getAllByUser: RequestHandler = async (req, res) => {
     res.sendStatus(500);
   }
 };
+const read: RequestHandler = async (req, res, next) => {
+  const id_user = Number(req.auth?.sub);
+  if (!id_user) {
+    res.status(401).json({ error: "Utilisateur non authentifié" });
+    return;
+  }
+  try {
+    const playerFavorite = await favoriteRepository.getFavorite(id_user);
+    res.status(200).json(playerFavorite);
+  } catch (err) {
+    next(err);
+  }
+};
 
 const add: RequestHandler = async (req, res) => {
   const { id_user, id_game } = req.body;
@@ -57,4 +70,5 @@ export default {
   getAllByUser,
   add,
   remove,
+  read,
 };

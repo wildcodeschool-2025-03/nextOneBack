@@ -1,28 +1,29 @@
 import "../../styles/navbar.css";
 import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { LoginContext } from "../../Auth/LoginContext";
+import { AuthContext } from "../../Auth/LoginContext";
 import UserGamerIcone from "../../assets/icones/usergamer_icone.png";
 import NextOneLogo from "../../assets/images/next_one_logo.png";
 import BurgerMenu from "./BurgerMenu";
 
 export default function Navbar() {
-  const context = useContext(LoginContext);
+  const context = useContext(AuthContext);
   const navigate = useNavigate();
 
-  if (!context) {
-    return null;
-  }
+  if (!context) return null;
+
   const { user, logout } = context;
 
-  let navigation = "/";
-  if (user) {
-    if (user.id_role === 2) {
-      navigation = "/admin";
-    } else if (user.id_role === 1) {
-      navigation = `/player/${user.pseudo}`;
-    }
-  }
+  const handleClick = () => {
+    logout();
+    navigate("/");
+  };
+
+  const targetRoute = user
+    ? user.id_role === 2
+      ? "/admin"
+      : `/player/${user.pseudo}`
+    : "/";
 
   return (
     <nav>
@@ -39,14 +40,34 @@ export default function Navbar() {
           <span>Les arcades</span>
         </NavLink>
       </div>
+
       <img
         className="nextOneLogo"
         src={NextOneLogo}
         alt="Logo Next One, logo effet neon"
       />
-      <div className="nav-right">
-        <NavLink to="/tarifs" className="linkDesktop">
-          <span>Tarifs</span>
+
+      <NavLink to="/tarifs" className="linkDesktop">
+        <span>Tarifs</span>
+      </NavLink>
+
+      <div className="button-icon">
+        <button
+          type="button"
+          onClick={user ? handleClick : () => navigate("/")}
+          className={`button-login-logout ${user ? "logout" : "login"}`}
+        >
+          {user ? "Déconnexion" : "Connexion"}
+        </button>
+
+        <NavLink to={targetRoute} className="UserIcone">
+          <article className="UserIcone">
+            <img
+              className="userGamerIcone"
+              src={UserGamerIcone}
+              alt="Icône représentant un utilisateur gamer"
+            />
+          </article>
         </NavLink>
 
         <div className="button-icon">
@@ -64,7 +85,7 @@ export default function Navbar() {
           >
             {user ? "Déconnexion" : "Connexion"}
           </button>
-          <NavLink to={navigation} className="UserIcone">
+          <NavLink to={targetRoute} className="UserIcone">
             <article className="UserIcone">
               <img
                 className="userGamerIcone"

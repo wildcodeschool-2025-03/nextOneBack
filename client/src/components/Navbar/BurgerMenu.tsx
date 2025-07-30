@@ -2,10 +2,10 @@ import { useState } from "react";
 import "../../styles/navbar.css";
 import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router";
-import { LoginContext } from "../../Auth/LoginContext";
+import { AuthContext } from "../../Auth/LoginContext";
 
 export default function BurgerMenu() {
-  const context = useContext(LoginContext);
+  const context = useContext(AuthContext);
   const navigate = useNavigate();
 
   if (!context) {

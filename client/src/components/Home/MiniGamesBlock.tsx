@@ -1,18 +1,15 @@
 import "./MiniGamesBlock.css";
 import { useContext } from "react";
-import { LoginContext } from "../../Auth/LoginContext.tsx";
+import { AuthContext } from "../../Auth/LoginContext";
 import breakoutImg from "../../assets/images/breakout.png";
 import dinoImg from "../../assets/images/dinosaure.png";
 import snakeImg from "../../assets/images/snake.png";
 import tttImg from "../../assets/images/tic-tac-toe.png";
-import Carousel from "../Carousel/MiniGameCarousel.tsx";
+import Carousel from "../Carousel/MiniGameCarousel";
 
 export default function MiniGamesBlock() {
-  const context = useContext(LoginContext);
-  if (!context) {
-    return null;
-  }
-  const { user } = context;
+  const context = useContext(AuthContext);
+  const user = context?.user;
 
   const games = [
     {

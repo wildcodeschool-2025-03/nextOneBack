@@ -25,8 +25,25 @@ const remove = async (userId: number, gameId: number) => {
   return result;
 };
 
+const getFavorite = async (userId: number) => {
+  const [rows] = await db.query(
+    `
+      SELECT 
+        g.id AS game_id,
+        g.name,
+        g.description,
+        g.images
+      FROM Favorite f
+      JOIN Game g ON f.id_game = g.id
+      WHERE f.id_user = ?
+      `,
+    [userId],
+  );
+  return rows;
+};
 export default {
   getAllByUser,
   add,
   remove,
+  getFavorite,
 };
