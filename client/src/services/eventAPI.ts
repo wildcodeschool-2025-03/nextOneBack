@@ -33,16 +33,4 @@ export const eventAPI = {
       withCredentials: true,
     });
   },
-
-  async participate(id: number): Promise<void> {
-    await axios.post(`${api}/api/events/${id}/register`, null, {
-      withCredentials: true,
-    });
-  },
-
-  async unparticipate(id: number): Promise<void> {
-    await axios.delete(`${api}/api/events/${id}/register`, {
-      withCredentials: true,
-    });
-  },
 };

@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { LoginContext } from "../Auth/LoginContext";
+import { AuthContext } from "../Auth/LoginContext";
 import { eventAPI } from "../services/eventAPI";
 import type { Event, EventFormData } from "../types/event";
 
 export const useEvent = () => {
-  const context = useContext(LoginContext);
+  const context = useContext(AuthContext);
   const user = context?.user;
   const isAdmin = context?.isAdmin || false;
 
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // les evenements au démarrage
+  // loading au démarrage
   useEffect(() => {
     loadEvents();
   }, []);
@@ -25,42 +25,6 @@ export const useEvent = () => {
       toast.error("erreur lors du chargement des événements");
     } finally {
       setLoading(false);
-    }
-  };
-
-  // s'inscrire ou se désinscrire
-  const handleParticipation = async (
-    eventId: number,
-    isParticipating: boolean,
-  ) => {
-    if (!user) {
-      toast.warn("Connectez-vous pour participer");
-      return;
-    }
-    try {
-      if (isParticipating) {
-        await eventAPI.unparticipate(eventId);
-        toast.success("Vous êtes désinscrit");
-      } else {
-        await eventAPI.participate(eventId);
-        toast.success("Inscription confirmée !");
-      }
-
-      setEvents(
-        events.map((event) =>
-          event.id === eventId
-            ? {
-                ...event,
-                isParticipating: !isParticipating,
-                participantCount: isParticipating
-                  ? (event.participantCount || 0) - 1
-                  : (event.participantCount || 0) + 1,
-              }
-            : event,
-        ),
-      );
-    } catch (error) {
-      toast.error("Erreur lors de la participation");
     }
   };
 
@@ -97,7 +61,6 @@ export const useEvent = () => {
     loading,
     user,
     isAdmin,
-    handleParticipation,
     saveEvent,
     deleteEvent,
   };
