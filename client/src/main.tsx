@@ -10,6 +10,7 @@ import { LoginProvider } from "./Auth/LoginContext";
 import App from "./App";
 import AdminPage from "./pages/AdminPage.tsx";
 import Connexion from "./pages/Connexion";
+import ContactPage from "./pages/ContactPage.tsx";
 import Error404Page from "./pages/Error404Page";
 import HomePage from "./pages/HomePage.tsx";
 import LesArcadesPage from "./pages/LesArcadesPage.tsx";
@@ -61,12 +62,16 @@ const router = createBrowserRouter([
         element: <TicTacToePage />,
       },
       {
-        path: "/snake", // The root path
-        element: <SnakePage />, // Renders the App component for the home page
+        path: "/snake",
+        element: <SnakePage />,
       },
       {
         path: "/player/:pseudo",
         element: <PlayerPage />,
+      },
+      {
+        path: "/contact",
+        element: <ContactPage />,
       },
     ],
   },
