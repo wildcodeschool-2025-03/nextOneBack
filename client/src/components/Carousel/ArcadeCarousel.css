@@ -127,30 +127,105 @@
   display: none;
 }
 
-@media (max-width: 900px) {
+/* Version Tablet */
+@media (max-width: 1024px) and (min-width: 769px) {
   .arcade-carousel-viewport {
-    width: calc(1 * 90vw);
-    max-width: 98vw;
+    width: 70vw;
+    margin: 0 2rem;
   }
 
   .arcade-carousel-card {
-    flex: 0 0 90vw !important;
-    width: 90vw !important;
-    min-width: 90vw !important;
-    max-width: 90vw !important;
-  }
-
-  .arcade-card-inner {
-    width: 50vw;
-    height: auto;
-  }
-
-  .arcade-carousel-track {
-    gap: 4vw !important;
+    flex: 0 0 140px !important;
+    width: 140px !important;
+    min-width: 140px !important;
+    max-width: 140px !important;
   }
 
   .arcade-card-title {
-    font-size: 0.9rem;
-    margin-top: 10px;
+    font-size: 1.2rem;
+  }
+}
+
+/* Version Mobile - Affichage 1 carte par écran */
+@media (max-width: 768px) {
+  .arcade-carousel-container {
+    padding-block: 1vh;
+  }
+
+  .arcade-arrow {
+    font-size: 1.8rem;
+    padding: 0 0.3rem;
+    margin: 0;
+    min-width: 40px;
+  }
+
+  .arcade-carousel-viewport {
+    width: calc(100vw - 100px); /* Réduit l'espace pour les flèches */
+    max-width: calc(100vw - 100px);
+    margin: 0 0.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .arcade-carousel-track {
+    gap: 20px; /* Gap réduit */
+  }
+
+  .arcade-carousel-card {
+    flex: 0 0 140px !important;
+    width: 140px !important;
+    min-width: 140px !important;
+    max-width: 140px !important;
+    gap: 12px;
+  }
+
+  .arcade-card-inner {
+    width: 100%;
+    height: auto;
+  }
+
+  .arcade-card-front {
+    width: 140px;
+    height: 140px;
+  }
+
+  .arcade-card-title {
+    font-size: 0.95rem;
+    margin-top: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+  }
+}
+
+/* Version Mobile petit écran */
+@media (max-width: 480px) {
+  .arcade-carousel-viewport {
+    width: calc(100vw - 80px);
+    max-width: calc(100vw - 80px);
+    margin: 0 0.25rem;
+  }
+
+  .arcade-carousel-card {
+    flex: 0 0 120px !important;
+    width: 120px !important;
+    min-width: 120px !important;
+    max-width: 120px !important;
+  }
+
+  .arcade-card-front {
+    width: 120px;
+    height: 120px;
+  }
+
+  .arcade-card-title {
+    font-size: 0.85rem;
+    max-width: 120px;
+  }
+
+  .arcade-arrow {
+    font-size: 1.5rem;
+    min-width: 35px;
   }
 }
