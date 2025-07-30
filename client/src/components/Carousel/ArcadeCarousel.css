@@ -127,7 +127,7 @@
   display: none;
 }
 
-/* Version Tablet */
+/* Version Tablette */
 @media (max-width: 1024px) and (min-width: 769px) {
   .arcade-carousel-viewport {
     width: 70vw;
@@ -146,7 +146,7 @@
   }
 }
 
-/* Version Mobile - Affichage 1 carte par écran */
+/* Version Mobile  */
 @media (max-width: 768px) {
   .arcade-carousel-container {
     padding-block: 1vh;
@@ -160,7 +160,7 @@
   }
 
   .arcade-carousel-viewport {
-    width: calc(100vw - 100px); /* Réduit l'espace pour les flèches */
+    width: calc(100vw - 100px);
     max-width: calc(100vw - 100px);
     margin: 0 0.5rem;
     display: flex;
