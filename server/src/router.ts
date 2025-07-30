@@ -49,6 +49,7 @@ router.put("/api/tarifs/:id", tarifsActions.update);
 router.get("/api/partys", partyActions.browse);
 router.get("/api/partys/:id", partyActions.read);
 router.post("/api/partys", partyActions.add);
+router.get("/api/highscore-snake", gameActions.readSnake);
 
 // Items
 router.get("/api/items", itemActions.browse);

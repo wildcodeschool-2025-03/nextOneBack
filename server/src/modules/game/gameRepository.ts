@@ -45,6 +45,23 @@ const findTopRankingByGameId = async (
   return rows as { username: string; score: number }[];
 };
 
+// READ – meilleur score pour le jeu snake
+const topScoreSnake = async (userId: number) => {
+  const [rows] = await db.query(
+    `
+            SELECT score
+FROM Party p
+WHERE id_game = ? AND id_user = ?
+ORDER BY p.score DESC
+LIMIT 1;
+
+        `,
+    [1, userId],
+  );
+
+  return rows as { username: string; score: number }[];
+};
+
 // ADD – Créer un nouveau jeu
 const create = async (game: GameInsert): Promise<GameRow> => {
   const {
@@ -160,4 +177,5 @@ export default {
   create,
   updateById,
   deleteById,
+  topScoreSnake,
 };

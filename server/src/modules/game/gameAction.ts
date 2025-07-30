@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { Request, Response } from "express";
+import type { Request, RequestHandler, Response } from "express";
 import db from "../../../database/client";
 import gameRepository from "./gameRepository";
 
@@ -180,6 +180,19 @@ const destroy = async (req: Request, res: Response): Promise<void> => {
     res.sendStatus(500);
   }
 };
+const readSnake: RequestHandler = async (req, res, next) => {
+  const id_user = Number(req.auth?.sub);
+  if (!id_user) {
+    res.status(401).json({ error: "Utilisateur non authentifié" });
+    return;
+  }
+  try {
+    const playerScored = await gameRepository.topScoreSnake(id_user);
+    res.status(200).json(playerScored);
+  } catch (err) {
+    next(err);
+  }
+};
 
 export default {
   browse,
@@ -187,4 +200,5 @@ export default {
   add,
   update,
   destroy,
+  readSnake,
 };

@@ -15,9 +15,6 @@ export default function SnakeBoard() {
   const [food, setFood] = useState<{ row: number; col: number } | null>(null);
   const [isGameOver, setIsGameOver] = useState(false);
   const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(
-    Number(localStorage.getItem("highScore")) || 0,
-  );
   const [speed, setSpeed] = useState(150);
   const [appleCount, setAppleCount] = useState(0);
 
@@ -93,11 +90,6 @@ export default function SnakeBoard() {
         setScore(updatedScore);
         setAppleCount((count) => count + 1);
 
-        if (updatedScore > highScore) {
-          setHighScore(updatedScore);
-          localStorage.setItem("highScore", String(updatedScore));
-        }
-
         const nextFood = getRandomCoord(gridSize, snake.getBody());
         setFood(nextFood);
       } else {
@@ -112,7 +104,7 @@ export default function SnakeBoard() {
     }, speed);
 
     return () => clearInterval(interval);
-  }, [canvasSize, isPaused, food, isGameOver, score, highScore, speed]);
+  }, [canvasSize, isPaused, food, isGameOver, score, speed]);
 
   useEffect(() => {
     // Going to the back
@@ -186,7 +178,7 @@ export default function SnakeBoard() {
 
   return (
     <div className="snake-board-container">
-      <ScoreBoard score={score} highScore={highScore} />
+      <ScoreBoard score={score} />
       <canvas id="snake-canvas" ref={canvasRef} />
       {isPaused && !isGameOver && <Paused />}
       {isGameOver && <GameOver onRestart={handleRestart} />}

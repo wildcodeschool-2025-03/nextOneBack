@@ -2,9 +2,12 @@
   font-family: monospace;
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 1rem;
   margin: 1rem 0;
-  color: white;
+  font-family: "inter", sans-serif;
+  color: #00ffff;
+  font-size: 0.8em;
+  padding-bottom: 1em;
 }
 
 .score,
@@ -16,4 +19,10 @@
 .game-status {
   margin: 0;
   padding: 0;
+}
+@media screen and (min-width: 768px) {
+  .score-board {
+    font-size: 1.2em;
+    gap: 2em;
+  }
 }
