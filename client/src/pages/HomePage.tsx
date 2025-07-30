@@ -2,8 +2,8 @@ import cloud2 from "../assets/images/cloud.png";
 import cloud from "../assets/images/clouds-png-23437.png";
 import dragon from "../assets/images/monstre.png";
 import retroPerso from "../assets/images/personnage-retro.png";
+import { Events } from "../components/Evenement/Events";
 import ArcadeGamesBlock from "../components/Home/ArcadeGamesBlock";
-import EventsBlock from "../components/Home/EventsBlock";
 import MiniGamesBlock from "../components/Home/MiniGamesBlock";
 
 import "../components/Home/HomePage.css";
@@ -29,7 +29,7 @@ export default function HomePage() {
         <ArcadeGamesBlock />
       </section>
       <section className="home-section">
-        <EventsBlock />
+        <Events />
       </section>
       <img
         src={retroPerso}
