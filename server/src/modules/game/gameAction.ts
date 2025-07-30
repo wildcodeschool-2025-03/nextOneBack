@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { Request, Response } from "express";
+import type { Request, RequestHandler, Response } from "express";
 import db from "../../../database/client";
 import gameRepository from "./gameRepository";
 
@@ -52,23 +52,6 @@ const browse = async (_req: Request, res: Response): Promise<void> => {
     res.status(200).json(games);
   } catch (error) {
     console.error("Erreur récupération jeux :", error);
-    res.sendStatus(500);
-  }
-};
-
-// READ classement
-const readRanking = async (req: Request, res: Response): Promise<void> => {
-  const gameId = Number(req.params.id);
-  if (Number.isNaN(gameId)) {
-    res.status(400).json({ error: "ID de jeu invalide" });
-    return;
-  }
-
-  try {
-    const ranking = await gameRepository.findTopRankingByGameId(gameId);
-    res.status(200).json(ranking);
-  } catch (error) {
-    console.error("Erreur récupération classement :", error);
     res.sendStatus(500);
   }
 };
@@ -183,7 +166,6 @@ const destroy = async (req: Request, res: Response): Promise<void> => {
 
 export default {
   browse,
-  readRanking,
   add,
   update,
   destroy,

@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Route publique : visible par tout le monde.
 router.get("/api/games", gameActions.browse);
-router.get("/api/games/:id/ranking", gameActions.readRanking);
+router.get("/api/games/:id/ranking", partyActions.readRanking);
 
 import { hashPassword, verifPassword } from "./middlewares/argonMiddleware";
 import { uploadGameImage } from "./middlewares/uploadMiddleware";
@@ -24,7 +24,7 @@ router.post("/api/connexion/login", verifPassword, connexionActions.read);
 
 // Jeux : consultation
 router.get("/api/games", gameActions.browse);
-router.get("/api/games/:id/ranking", gameActions.readRanking);
+router.get("/api/games/:id/ranking", partyActions.readRanking);
 
 // Tarifs
 router.get("/api/tarifs", tarifsActions.browse);
@@ -49,6 +49,7 @@ router.put("/api/tarifs/:id", tarifsActions.update);
 router.get("/api/partys", partyActions.browse);
 router.get("/api/partys/:id", partyActions.read);
 router.post("/api/partys", partyActions.add);
+router.get("/api/games/:id/party", partyActions.readScore);
 
 // Items
 router.get("/api/items", itemActions.browse);
