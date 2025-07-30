@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { postScore } from "../../services/postScore";
 
 export default function SnakeBoard() {
+  const gameId = 1;
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [canvasSize, setCanvasSize] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -110,7 +111,7 @@ export default function SnakeBoard() {
     // Going to the back
     if (isGameOver && score > 0) {
       const partyData = {
-        id_game: 1,
+        id_game: gameId,
         score: score,
         date_game: new Date().toISOString().split("T")[0],
       };
@@ -178,7 +179,7 @@ export default function SnakeBoard() {
 
   return (
     <div className="snake-board-container">
-      <ScoreBoard score={score} />
+      <ScoreBoard score={score} gameId={gameId} />
       <canvas id="snake-canvas" ref={canvasRef} />
       {isPaused && !isGameOver && <Paused />}
       {isGameOver && <GameOver onRestart={handleRestart} />}

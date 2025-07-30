@@ -56,23 +56,6 @@ const browse = async (_req: Request, res: Response): Promise<void> => {
   }
 };
 
-// READ classement
-const readRanking = async (req: Request, res: Response): Promise<void> => {
-  const gameId = Number(req.params.id);
-  if (Number.isNaN(gameId)) {
-    res.status(400).json({ error: "ID de jeu invalide" });
-    return;
-  }
-
-  try {
-    const ranking = await gameRepository.findTopRankingByGameId(gameId);
-    res.status(200).json(ranking);
-  } catch (error) {
-    console.error("Erreur récupération classement :", error);
-    res.sendStatus(500);
-  }
-};
-
 // ADD
 const add = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -180,25 +163,10 @@ const destroy = async (req: Request, res: Response): Promise<void> => {
     res.sendStatus(500);
   }
 };
-const readSnake: RequestHandler = async (req, res, next) => {
-  const id_user = Number(req.auth?.sub);
-  if (!id_user) {
-    res.status(401).json({ error: "Utilisateur non authentifié" });
-    return;
-  }
-  try {
-    const playerScored = await gameRepository.topScoreSnake(id_user);
-    res.status(200).json(playerScored);
-  } catch (err) {
-    next(err);
-  }
-};
 
 export default {
   browse,
-  readRanking,
   add,
   update,
   destroy,
-  readSnake,
 };

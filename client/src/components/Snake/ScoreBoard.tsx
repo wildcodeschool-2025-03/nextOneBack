@@ -1,33 +1,31 @@
 import { useEffect, useState } from "react";
 import "./styles/scoreBoard.css";
-import { highScoreSnake } from "../../services/highScoreSnake";
+import { gameScore } from "../../services/gameScore";
 
 interface ScoreBoardProps {
   score: number;
+  gameId: number;
 }
 type Score = {
-  party_id: number;
   score: number;
 };
-export default function ScoreBoard({ score }: ScoreBoardProps) {
-  const [highScore, setHighScore] = useState<Score[]>([]);
+export default function ScoreBoard({ score, gameId }: ScoreBoardProps) {
+  const [highScore, setHighScore] = useState<Score>();
 
   useEffect(() => {
-    highScoreSnake()
+    gameScore(gameId)
       .then(setHighScore)
       .catch((err) => {
         console.error("Impossible de charger les scores", err);
       });
-  }, []);
+  }, [gameId]);
   return (
     <div className="score-board">
       <div className="score">🎯 Score : {score}</div>
       <ul>
-        {highScore.map((s) => (
-          <li key={s.party_id}>
-            <div className="high-score">🏆 Meilleur : {s.score}</div>
-          </li>
-        ))}
+        {highScore && (
+          <li className="high-score">🏆 Meilleur : {highScore.score}</li>
+        )}
       </ul>
     </div>
   );
