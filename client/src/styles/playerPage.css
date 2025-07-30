@@ -158,6 +158,8 @@
     color: #00ccff;
     font-size: 1.2em;
     font-family: "inter", sans-serif;
+    text-align: center;
+    padding-bottom: 1em;
   }
   .image-favorite {
     width: 5em;
@@ -314,9 +316,15 @@
     color: #00ccff;
     font-size: 1.2em;
     font-family: "inter", sans-serif;
+    padding-bottom: 1em;
   }
   .image-favorite {
     width: 5em;
+    min-width: 5em;
+  }
+  .h3-favorite {
+    min-width: 10em;
+    text-align: center;
   }
   .button-deconnexion,
   .button-delete-account {
