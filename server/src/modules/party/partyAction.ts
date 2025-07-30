@@ -42,5 +42,34 @@ const add: RequestHandler = async (req, res, next) => {
     next(err);
   }
 };
+// READ classement
+const readRanking: RequestHandler = async (req, res, next) => {
+  const gameId = Number(req.params.id);
+  if (Number.isNaN(gameId)) {
+    res.status(400).json({ error: "ID de jeu invalide" });
+    return;
+  }
 
-export default { browse, read, add };
+  try {
+    const ranking = await partyRepository.findTopRankingByGameId(gameId);
+    res.status(200).json(ranking);
+  } catch (error) {
+    next(error);
+  }
+};
+const readScore: RequestHandler = async (req, res, next) => {
+  const gameId = Number(req.params.id);
+  const id_user = Number(req.auth?.sub);
+  if (!id_user) {
+    res.status(401).json({ error: "Utilisateur non authentifié" });
+    return;
+  }
+  try {
+    const playerScored = await partyRepository.topScore(gameId, id_user);
+    res.status(200).json(playerScored);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { browse, readRanking, readScore, read, add };
