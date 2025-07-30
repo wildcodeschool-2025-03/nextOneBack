@@ -10,6 +10,7 @@ import { LoginProvider } from "./Auth/LoginContext";
 import App from "./App";
 import AdminPage from "./pages/AdminPage.tsx";
 import Connexion from "./pages/Connexion";
+import Error404Page from "./pages/Error404Page";
 import HomePage from "./pages/HomePage.tsx";
 import LesArcadesPage from "./pages/LesArcadesPage.tsx";
 import PlayerPage from "./pages/PlayerPage.tsx";
@@ -69,7 +70,10 @@ const router = createBrowserRouter([
       },
     ],
   },
-
+  {
+    path: "*",
+    element: <Error404Page />,
+  },
   // The root path
   // Renders the App component for the home page
 
