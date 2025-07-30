@@ -1,14 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { AuthContext } from "../Auth/LoginContext";
 import { eventAPI } from "../services/eventAPI";
 import type { Event, EventFormData } from "../types/event";
 
 export const useEvent = () => {
-  const context = useContext(AuthContext);
-  const user = context?.user;
-  const isAdmin = context?.isAdmin || false;
-
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -59,8 +54,6 @@ export const useEvent = () => {
   return {
     events,
     loading,
-    user,
-    isAdmin,
     saveEvent,
     deleteEvent,
   };

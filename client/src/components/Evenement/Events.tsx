@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "react-modal";
+import { AuthContext } from "../../Auth/LoginContext";
 import { useEvent } from "../../hooks/useEvent";
-import type { Event, EventFormData } from "../../types/event";
+import type { EventFormData } from "../../types/event";
 import { EventCard } from "./EventCard";
 import { EventForm } from "./EventForm";
 
@@ -20,12 +21,18 @@ const modalStyles = {
 
 // fenetre modale
 export const Events = () => {
-  const { events, loading, user, isAdmin, saveEvent, deleteEvent } = useEvent();
-  const [modal, setModal] = useState(false);
-  const [eventEdit, setEventEdit] = useState<Event | undefined>();
+  const { events, loading, saveEvent, deleteEvent } = useEvent();
+  const context = useContext(AuthContext);
+  const user = context?.user;
+  const isAdmin = context?.isAdmin || false;
 
-  const openModal = (event?: Event) => {
-    setEventEdit(event);
+  const [modal, setModal] = useState(false);
+  const [eventEdit, setEventEdit] = useState<number>();
+
+  const eventToEdit = events.find((event) => event.id === eventEdit);
+
+  const openModal = (eventId?: number) => {
+    setEventEdit(eventId);
     setModal(true);
   };
 
@@ -35,7 +42,7 @@ export const Events = () => {
   };
 
   const handleSave = async (data: EventFormData) => {
-    await saveEvent(data, eventEdit?.id);
+    await saveEvent(data, eventEdit);
     closeModal();
   };
 
@@ -69,7 +76,7 @@ export const Events = () => {
               event={event}
               user={user}
               isAdmin={isAdmin}
-              edit={openModal}
+              edit={(event) => openModal(event.id)}
               deleteEvent={deleteEvent}
             />
           ))}
@@ -82,7 +89,11 @@ export const Events = () => {
         style={modalStyles}
         contentLabel={eventEdit ? "Modifier l'événement" : "Nouvel événement"}
       >
-        <EventForm event={eventEdit} save={handleSave} cancel={closeModal} />
+        <EventForm
+          event={eventToEdit}
+          eventSave={handleSave}
+          eventCancel={closeModal}
+        />
       </Modal>
     </div>
   );

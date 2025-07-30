@@ -6,10 +6,14 @@ import { toast } from "react-toastify";
 // creer/modifier un evenement
 type EventFormProps = {
   event?: Event;
-  save: (data: EventFormData) => void;
-  cancel: () => void;
+  eventSave: (data: EventFormData) => void;
+  eventCancel: () => void;
 };
-export const EventForm = ({ event, save, cancel }: EventFormProps) => {
+export const EventForm = ({
+  event,
+  eventSave,
+  eventCancel,
+}: EventFormProps) => {
   const [title, setTitle] = useState(event?.title || "");
   const [description, setDescription] = useState(event?.description || "");
   const [date, setDate] = useState(event?.date ? event.date.split("T")[0] : "");
@@ -24,14 +28,14 @@ export const EventForm = ({ event, save, cancel }: EventFormProps) => {
       return;
     }
 
-    save({ title, description, date: `${date} ${time}:00` });
+    eventSave({ title, description, date: `${date} ${time}:00` });
   };
 
   return (
     <div className="modal-content">
       <div className="modal-header">
         <h3>{event ? "Modifier l'événement" : "Nouvel événement"}</h3>
-        <button type="button" className="btn-close" onClick={cancel}>
+        <button type="button" className="btn-close" onClick={eventCancel}>
           x
         </button>
       </div>
@@ -86,7 +90,7 @@ export const EventForm = ({ event, save, cancel }: EventFormProps) => {
           />
         </div>
         <div className="form-actions">
-          <button className="btn-cancel" type="button" onClick={cancel}>
+          <button className="btn-cancel" type="button" onClick={eventCancel}>
             Annuler
           </button>
           <button
