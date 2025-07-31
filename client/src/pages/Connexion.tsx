@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import { AuthContext } from "../Auth/LoginContext";
+import cloud2 from "../assets/images/cloud.png";
+import cloud from "../assets/images/clouds-png-23437.png";
 import type { User } from "../types/auth";
 
 type LoginForm = {
@@ -78,6 +80,8 @@ export default function Connexion() {
 
   return (
     <>
+      <img src={cloud} alt="nuage flottant" className="cloud-home9" />
+      <img src={cloud2} alt="nuage flottant" className="cloud-home10" />
       <ToastContainer
         position="bottom-right"
         autoClose={1500}

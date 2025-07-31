@@ -6,6 +6,7 @@
   padding: 4.5rem;
   color: #00ffff;
   margin-top: 5rem;
+  z-index: 1;
 }
 
 .title-connexion {
@@ -98,6 +99,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .cloud-home9,
+  .cloud-home10 {
+    display: none;
+  }
   .connexion-page {
     flex-direction: column;
     padding: 4rem 0 0;
@@ -122,5 +127,26 @@
 
   .line-connexion {
     width: 60vw;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .cloud-home9 {
+    height: auto;
+    width: 40vw;
+    animation: float 7s ease-in-out infinite;
+    position: absolute;
+    top: 20rem;
+    left: 2rem;
+    z-index: 0;
+  }
+  .cloud-home10 {
+    height: auto;
+    width: 40vw;
+    animation: float 8s ease-in-out infinite;
+    position: absolute;
+    top: 12rem;
+    right: 2rem;
+    z-index: 0;
   }
 }
