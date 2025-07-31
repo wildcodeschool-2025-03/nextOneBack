@@ -1,9 +1,10 @@
 import TicTacToe from "../components/TicTacToe/TicTacToe";
+import "../components/Home/HomePage.css";
 
 function TicTacToePage() {
   return (
     <>
-      <section className="home-section">
+      <section className="home-section-tictactoe">
         <div className="mini-games-container">
           <div className="block-title">
             <span className="line" />

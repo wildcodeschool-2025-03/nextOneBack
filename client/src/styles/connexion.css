@@ -5,7 +5,7 @@
   justify-content: center;
   padding: 4.5rem;
   color: #00ffff;
-  margin-bottom: 6rem;
+  margin-top: 5rem;
 }
 
 .title-connexion {
@@ -101,6 +101,7 @@
   .connexion-page {
     flex-direction: column;
     padding: 4rem 0 0;
+    margin-top: 0rem;
   }
   .form-login-contener label {
     width: 100vw;
