@@ -168,7 +168,6 @@ const TicTacToe: FC = () => {
 
   return (
     <div className="ttt-arcade-bg">
-      <h2 className="ttt-title">Tic-Tac-Toe</h2>
       <div className="ttt-status">{getStatus()}</div>
       <div className="ttt-board">
         {board.map((cell, i) => (

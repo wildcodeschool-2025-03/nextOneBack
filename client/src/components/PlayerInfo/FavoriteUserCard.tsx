@@ -28,7 +28,8 @@ export default function FavoriteUserCard() {
             src={`${import.meta.env.VITE_API_URL}/assets/images/games/${favorite.images}`}
             alt={favorite.name}
           />
-          -<h3>{favorite.name}</h3>-<p>{favorite.description}</p>
+          <h3 className="h3-favorite">{favorite.name}</h3>
+          <p>{favorite.description}</p>
         </div>
       ))}
     </ul>

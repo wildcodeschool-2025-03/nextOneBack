@@ -31,10 +31,10 @@
   text-align: center;
   transform: scale(var(--base-scale));
   transform-origin: center;
+  min-height: 32em;
 }
 
 .ttt-title {
-  font-family: "Press Start 2P", "Orbitron", Arial, sans-serif;
   color: #ff00cc;
   font-size: var(--title-size);
   margin-bottom: 1rem;
@@ -43,7 +43,7 @@
 
 .ttt-status {
   color: #ffeb3b;
-  font-size: var(--status-size);
+  font-size: 1.6rem;
   margin-bottom: 1rem;
   text-shadow: 0 0 0.5rem #ff00cc99, 0 0 0.6rem #0ff;
 }
