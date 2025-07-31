@@ -40,10 +40,10 @@ export default function MiniGamesBlock() {
 
   return (
     <div className="mini-games-container">
-      <div className="block-title">
-        <span className="line" />
-        <h2>MINI - JEUX</h2>
-        <span className="line" />
+      <div className="block-title-mini">
+        <span className="line-mini" />
+        <h2 className="title-mini">MINI - JEUX</h2>
+        <span className="line-mini" />
       </div>
       <div className="mini-games-content">
         <Carousel data={games} isAuthenticated={!!user} />

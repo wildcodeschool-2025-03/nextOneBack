@@ -1,11 +1,4 @@
-.mini-games-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-}
-
-.block-title {
+.block-title-mini {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,45 +9,102 @@
   padding: 0 2rem;
 }
 
-.block-title h2 {
+.title-mini {
   color: #00ffff;
-  font-family: "inter", monospace;
-  font-size: 1.5rem;
-  text-shadow: 0 0 1.4em #00ffff, 0 0 0.6em #00ffff;
+  font-size: 1.6rem;
+  letter-spacing: 5px;
+  text-shadow: 0 0 1.4em #00ffff, 0 0 0.6em #00ffff, 0 0 2px #00ffff;
   margin: 0 3rem;
   white-space: nowrap;
+  font-weight: bold;
+  font-weight: 500;
 }
 
-.line {
+.line-mini {
   flex: 1;
   height: 0.2rem;
-  background: #00ffff;
+  background: linear-gradient(90deg, #00ffff);
   border-radius: 0.1rem;
-  box-shadow: 0 0 0.8rem #00ffff, 0 0 1rem #00ffff;
-  min-width: 2rem;
-  max-width: 10rem;
+  box-shadow: 0 0 8px #00ffff;
+  width: 10%;
+  position: relative;
+}
+
+.mini-games-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Animation pour le titre */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    text-shadow: 0 0 1.4em #00ffff, 0 0 0.6em #00ffff, 0 0 2px #00ffff;
+  }
+  50% {
+    text-shadow: 0 0 2em #00ffff, 0 0 1em #00ffff, 0 0 4px #00ffff;
+  }
+}
+
+.block-title-block h2:hover {
+  animation: glow-pulse 2s ease-in-out infinite;
 }
 
 @media screen and (max-width: 768px) {
-  .block-title {
-    max-width: 90%;
+  .mini-games-container {
+    margin-top: 1rem;
+    padding: 1rem 0.25rem;
+    gap: 1.5rem;
+  }
+
+  .title-mini {
+    max-width: 95%;
     margin: 0 auto;
     padding: 0;
     gap: 0.75rem;
   }
 
-  .block-title h2 {
-    font-size: 1rem;
-    margin: 0 1rem;
+  .title-mini {
+    margin: 10rem;
     text-align: center;
+    font-size: clamp(0.9rem, 5vw, 1.1rem);
   }
 
-  .line {
+  .line-mini {
     min-width: 1rem;
     max-width: 4rem;
+    height: 0.15rem;
   }
 
+  .line-mini::before {
+    width: 80%;
+  }
+
+  .mini-games-content {
+    margin-top: 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
   .mini-games-container {
-    gap: 1.5rem;
+    padding: 0.5rem 0.1rem;
+    gap: 1rem;
+  }
+
+  .block-title-mini {
+    gap: 0.5rem;
+    max-width: 100%;
+  }
+
+  .title-mini {
+    margin: 0 0.5rem;
+    font-size: clamp(0.8rem, 6vw, 1rem);
+  }
+
+  .line-mini {
+    min-width: 0.5rem;
+    max-width: 3rem;
   }
 }

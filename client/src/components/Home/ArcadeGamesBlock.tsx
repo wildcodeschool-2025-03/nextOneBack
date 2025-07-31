@@ -35,13 +35,13 @@ export default function ArcadeGamesBlock() {
   ];
 
   return (
-    <div className="arcade-games-container">
-      <div className="block-title">
-        <span className="line" />
-        <h2>LES ARCADES</h2>
-        <span className="line" />
+    <div className="arcade-games-container-block">
+      <div className="block-title-block ">
+        <span className="line-block" />
+        <h2 className="title-block">LES ARCADES</h2>
+        <span className="line-block" />
       </div>
-      <div className="arcade-games-content">
+      <div className="arcade-games-content-block">
         <ArcadeCarousel data={arcadeGames} />
       </div>
     </div>

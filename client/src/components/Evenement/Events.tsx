@@ -5,6 +5,8 @@ import { useEvent } from "../../hooks/useEvent";
 import type { EventFormData } from "../../types/event";
 import { EventCard } from "./EventCard";
 import { EventForm } from "./EventForm";
+import "../../styles/eventForm.css";
+import "../../styles/events.css";
 
 Modal.setAppElement("#root");
 
@@ -53,7 +55,11 @@ export const Events = () => {
   return (
     <div className="events-container">
       <div className="events-header">
-        <h2 className="events-title">Evénements</h2>
+        <div className="block-title-event">
+          <span className="line-event" />
+          <h2 className="events-title">EVENEMENTS</h2>
+          <span className="line-event" />
+        </div>
         {isAdmin && (
           <button
             type="button"
@@ -83,18 +89,20 @@ export const Events = () => {
         </div>
       )}
 
-      <Modal
-        isOpen={modal}
-        onRequestClose={closeModal}
-        style={modalStyles}
-        contentLabel={eventEdit ? "Modifier l'événement" : "Nouvel événement"}
-      >
-        <EventForm
-          event={eventToEdit}
-          eventSave={handleSave}
-          eventCancel={closeModal}
-        />
-      </Modal>
+      <div className="event-modal-container">
+        <Modal
+          isOpen={modal}
+          onRequestClose={closeModal}
+          style={modalStyles}
+          contentLabel={eventEdit ? "Modifier l'événement" : "Nouvel événement"}
+        >
+          <EventForm
+            event={eventToEdit}
+            eventSave={handleSave}
+            eventCancel={closeModal}
+          />
+        </Modal>
+      </div>
     </div>
   );
 };

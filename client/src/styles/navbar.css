@@ -171,8 +171,8 @@
     background-color: #0b0433;
     height: 7em;
     width: 100%;
-    z-index: 1;
-    position: relative;
+    z-index: 1000;
+    position: fixed;
     padding: 0 2em;
   }
   button {
