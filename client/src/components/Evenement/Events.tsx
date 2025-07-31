@@ -55,7 +55,11 @@ export const Events = () => {
   return (
     <div className="events-container">
       <div className="events-header">
-        <h2 className="events-title">Evénements</h2>
+        <div className="block-title-event">
+          <span className="line-event" />
+          <h2 className="events-title">EVENEMENTS</h2>
+          <span className="line-event" />
+        </div>
         {isAdmin && (
           <button
             type="button"

@@ -3,6 +3,8 @@ import type { AxiosError } from "axios";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../Auth/LoginContext";
+import cloud2 from "../assets/images/cloud.png";
+import cloud from "../assets/images/clouds-png-23437.png";
 import ArcadeGameCard from "../components/LesArcades/ArcadeGameCard";
 import ConfirmDeleteToast from "../components/LesArcades/ConfirmDeleteToast";
 import GameFormModal from "../components/LesArcades/GameFormModal";
@@ -172,109 +174,115 @@ export default function LesArcadesPage() {
 
   return (
     <main className="arcades-page">
-      <div className="block-title">
-        <span className="line" />
-        <h2>NOS JEUX</h2>
-        <span className="line" />
-      </div>
+      <img src={cloud} alt="nuage flottant" className="cloud-home7" />
+      <img src={cloud2} alt="nuage flottant" className="cloud-home8" />
+      <div className="arcade-page-index">
+        <div className="block-title">
+          <span className="line" />
+          <h2>NOS JEUX</h2>
+          <span className="line" />
+        </div>
 
-      <section className="filters" aria-label="Filtres de recherche">
-        <fieldset className="checkbox-group">
-          <label>
-            <input
-              type="checkbox"
-              checked={filterSolo}
-              onChange={() => setFilterSolo(!filterSolo)}
-            />
-            Solo
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={filterMulti}
-              onChange={() => setFilterMulti(!filterMulti)}
-            />
-            Multijoueur
-          </label>
-        </fieldset>
+        <section className="filters" aria-label="Filtres de recherche">
+          <fieldset className="checkbox-group">
+            <label>
+              <input
+                type="checkbox"
+                checked={filterSolo}
+                onChange={() => setFilterSolo(!filterSolo)}
+              />
+              Solo
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={filterMulti}
+                onChange={() => setFilterMulti(!filterMulti)}
+              />
+              Multijoueur
+            </label>
+          </fieldset>
 
-        <fieldset className="abc-bar">
-          {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => (
+          <fieldset className="abc-bar">
+            {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => (
+              <button
+                key={letter}
+                type="button"
+                className={abcLetter === letter ? "active" : ""}
+                onClick={() =>
+                  setAbcLetter(letter === abcLetter ? null : letter)
+                }
+                aria-pressed={abcLetter === letter}
+              >
+                {letter}
+              </button>
+            ))}
+          </fieldset>
+        </section>
+
+        <section className="games-grid" aria-label="Liste des jeux disponibles">
+          {visibleGames.length === 0 ? (
+            <p className="no-games">Aucun jeu trouvé.</p>
+          ) : (
+            visibleGames.map((game) => (
+              <ArcadeGameCard
+                key={game.id}
+                game={game}
+                isFavorite={user ? favorites.includes(game.id) : false}
+                onToggleFavorite={onToggleFavorite}
+                onEdit={() => setEditGame(game)}
+                onDelete={() => setDeleteGame(game)}
+              />
+            ))
+          )}
+        </section>
+
+        {isAdmin && (
+          <>
             <button
-              key={letter}
+              className="add-game-btn"
               type="button"
-              className={abcLetter === letter ? "active" : ""}
-              onClick={() => setAbcLetter(letter === abcLetter ? null : letter)}
-              aria-pressed={abcLetter === letter}
+              onClick={() => setShowAddModal(true)}
             >
-              {letter}
+              + Ajouter un jeu
             </button>
-          ))}
-        </fieldset>
-      </section>
 
-      <section className="games-grid" aria-label="Liste des jeux disponibles">
-        {visibleGames.length === 0 ? (
-          <p className="no-games">Aucun jeu trouvé.</p>
-        ) : (
-          visibleGames.map((game) => (
-            <ArcadeGameCard
-              key={game.id}
-              game={game}
-              isFavorite={user ? favorites.includes(game.id) : false}
-              onToggleFavorite={onToggleFavorite}
-              onEdit={() => setEditGame(game)}
-              onDelete={() => setDeleteGame(game)}
-            />
-          ))
+            {showAddModal && (
+              <GameFormModal
+                mode="add"
+                onClose={() => setShowAddModal(false)}
+                onSubmit={handleAddGame}
+              />
+            )}
+
+            {editGame && (
+              <GameFormModal
+                mode="edit"
+                onClose={() => setEditGame(null)}
+                onSubmit={handleEditGame}
+                initialData={{
+                  id: editGame.id,
+                  name: editGame.name,
+                  description: editGame.description,
+                  images: editGame.images,
+                  available_online: editGame.available_online,
+                  available_maintenance: editGame.available_maintenance,
+                  category: editGame.category,
+                }}
+              />
+            )}
+
+            {deleteGame && (
+              <ConfirmDeleteToast
+                onCancel={() => setDeleteGame(null)}
+                onConfirm={handleDeleteGame}
+              />
+            )}
+          </>
         )}
-      </section>
 
-      {isAdmin && (
-        <>
-          <button
-            className="add-game-btn"
-            type="button"
-            onClick={() => setShowAddModal(true)}
-          >
-            + Ajouter un jeu
-          </button>
-
-          {showAddModal && (
-            <GameFormModal
-              mode="add"
-              onClose={() => setShowAddModal(false)}
-              onSubmit={handleAddGame}
-            />
-          )}
-
-          {editGame && (
-            <GameFormModal
-              mode="edit"
-              onClose={() => setEditGame(null)}
-              onSubmit={handleEditGame}
-              initialData={{
-                id: editGame.id,
-                name: editGame.name,
-                description: editGame.description,
-                images: editGame.images,
-                available_online: editGame.available_online,
-                available_maintenance: editGame.available_maintenance,
-                category: editGame.category,
-              }}
-            />
-          )}
-
-          {deleteGame && (
-            <ConfirmDeleteToast
-              onCancel={() => setDeleteGame(null)}
-              onConfirm={handleDeleteGame}
-            />
-          )}
-        </>
-      )}
-
-      <div ref={observerRef} style={{ height: "1px" }} aria-hidden="true" />
+        <div ref={observerRef} style={{ height: "1px" }} aria-hidden="true" />
+      </div>
     </main>
   );
 }

@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../Auth/LoginContext";
+import cloud2 from "../assets/images/cloud.png";
+import cloud from "../assets/images/clouds-png-23437.png";
 import useTarifs from "../components/Tarifs/Tarifs";
 import "../styles/tarifsPage.css";
 
@@ -9,12 +11,14 @@ export default function TarifsPage() {
   const { tarif, changeTarif } = useTarifs();
 
   return (
-    <div>
+    <div className="price-page">
+      <img src={cloud} alt="nuage flottant" className="cloud-home5" />
+      <img src={cloud2} alt="nuage flottant" className="cloud-home6" />
       <section className="tarifs-section">
         <div className="tarifs-header">
-          <span className="line" />
+          <span className="line-tarif" />
           <h2 className="tarifs-title">TARIFS</h2>
-          <span className="line" />
+          <span className="line-tarif" />
         </div>
 
         <div className="tarifs-grid">
