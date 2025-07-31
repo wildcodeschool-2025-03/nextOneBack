@@ -1,5 +1,6 @@
 import type { User } from "../../types/auth";
 import type { Event } from "../../types/event";
+import "../../styles/eventForm.css";
 
 import { CiCalendar } from "react-icons/ci";
 import { FaRegPenToSquare } from "react-icons/fa6";

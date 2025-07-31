@@ -4,5 +4,7 @@ export async function favoriteGame() {
   try {
     const response = await client.get("/myfavorites");
     return response.data;
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 }

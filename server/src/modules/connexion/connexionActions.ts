@@ -40,7 +40,7 @@ const registerUser: RequestHandler = async (req, res, next) => {
         secure: process.env.NODE_ENV === "production",
         httpOnly: true,
         sameSite: "strict",
-        maxAge: 3600000,
+        maxAge: 3600000 * 24,
       })
       .status(200)
       .json({ user: userWithoutPassword });

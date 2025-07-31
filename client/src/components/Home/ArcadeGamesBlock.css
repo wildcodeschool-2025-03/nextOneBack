@@ -1,15 +1,4 @@
-.arcade-games-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
-.block-title {
+.block-title-block {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,41 +9,28 @@
   padding: 0 2rem;
 }
 
-.block-title h2 {
+.title-block {
   color: #00ffff;
-  font-size: clamp(1.2rem, 4vw, 1.5rem);
-  font-family: "pixelify", sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 5px;
   text-shadow: 0 0 1.4em #00ffff, 0 0 0.6em #00ffff, 0 0 2px #00ffff;
   margin: 0 3rem;
   white-space: nowrap;
-  letter-spacing: 0.1em;
   font-weight: bold;
+  font-weight: 500;
 }
 
-.line {
+.line-block {
   flex: 1;
   height: 0.2rem;
-  background: linear-gradient(90deg, transparent, #00ffff, transparent);
+  background: linear-gradient(90deg, #00ffff);
   border-radius: 0.1rem;
-  box-shadow: 0 0 0.5rem #00ffff88, 0 0 1rem #00ffff55, 0 0 2rem #00ffff22;
-  min-width: 2rem;
-  max-width: 10rem;
+  box-shadow: 0 0 8px #00ffff;
+  width: 10%;
   position: relative;
 }
 
-.line::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  height: 1px;
-  background: #ffffff;
-  opacity: 0.8;
-}
-
-.arcade-games-content {
+.arcade-games-content-block {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -72,77 +48,62 @@
   }
 }
 
-.block-title h2:hover {
+.block-title-block h2:hover {
   animation: glow-pulse 2s ease-in-out infinite;
 }
 
-/* Responsive amélioré */
-@media screen and (max-width: 1024px) {
-  .arcade-games-container {
-    padding: 1.5rem 0.5rem;
-  }
-
-  .block-title {
-    gap: 0.8rem;
-    padding: 0 1rem;
-  }
-
-  .block-title h2 {
-    margin: 0 2rem;
-  }
-
-  .line {
-    max-width: 8rem;
-  }
-}
-
 @media screen and (max-width: 768px) {
-  .arcade-games-container {
+  .arcade-games-container-block {
+    margin-top: 1rem;
     padding: 1rem 0.25rem;
     gap: 1.5rem;
   }
 
-  .block-title {
+  .block-title-block {
     max-width: 95%;
     margin: 0 auto;
     padding: 0;
     gap: 0.75rem;
   }
 
-  .block-title h2 {
-    margin: 0 1rem;
+  .title-block {
+    margin: 10rem;
     text-align: center;
     font-size: clamp(0.9rem, 5vw, 1.1rem);
   }
 
-  .line {
+  .line-block {
     min-width: 1rem;
     max-width: 4rem;
     height: 0.15rem;
   }
 
-  .line::before {
+  .line-block::before {
     width: 80%;
+  }
+
+  .arcade-games-content-block {
+    margin-top: 2rem;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .arcade-games-container {
+  .arcade-games-container-block {
     padding: 0.5rem 0.1rem;
     gap: 1rem;
   }
 
-  .block-title {
+  .block-title-block {
     gap: 0.5rem;
     max-width: 100%;
   }
 
-  .block-title h2 {
+  .block-title-block h2 {
     margin: 0 0.5rem;
     font-size: clamp(0.8rem, 6vw, 1rem);
   }
 
-  .line {
+  .line-block {
     min-width: 0.5rem;
     max-width: 3rem;
   }

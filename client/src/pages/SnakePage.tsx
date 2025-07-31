@@ -5,7 +5,7 @@ import "../components/Home/HomePage.css";
 function SnakePage() {
   return (
     <>
-      <section className="home-section">
+      <section className="home-section-snake">
         <div className="mini-games-container">
           <div className="block-title">
             <span className="line" />

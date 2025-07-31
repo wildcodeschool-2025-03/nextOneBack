@@ -10,5 +10,7 @@ export async function postScore(dataParty: DataParty) {
   try {
     const response = await client.post("/partys", dataParty);
     return response.data;
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 }

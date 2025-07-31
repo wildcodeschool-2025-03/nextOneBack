@@ -4,5 +4,7 @@ export async function playerScore() {
   try {
     const response = await client.get("/playerScored");
     return response.data;
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 }

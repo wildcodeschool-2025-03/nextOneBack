@@ -4,5 +4,7 @@ export async function gameScore(gameId: number) {
   try {
     const response = await client.get(`/games/${gameId}/party`);
     return response.data;
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 }
