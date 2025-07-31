@@ -1,0 +1,131 @@
+.contact-page {
+  width: 100%;
+  padding: 3rem 1rem;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  justify-content: center;
+  align-items: start;
+  gap: 4rem 30rem;
+  background: transparent;
+}
+
+.bloc-vendetta {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.vendetta-img {
+  max-width: 100%;
+  width: clamp(250px, 30vw, 500px);
+  object-fit: contain;
+}
+
+.bloc-carte {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.carte-img {
+  width: clamp(300px, 40vw, 600px);
+  border-radius: 0.5rem;
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 1rem #00ffff88;
+}
+
+.adresse-text {
+  font-family: "Orbitron", sans-serif;
+  color: #fff;
+  font-size: clamp(1rem, 1.2vw, 1.3rem);
+  margin-top: 0.8rem;
+  margin-left: 12rem;
+  text-align: left;
+}
+
+.adresse-title {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #ffffff;
+  text-shadow: 0 0 0.3rem #00ffff;
+  margin-bottom: 0.3rem;
+}
+
+.adresse-descript {
+  padding-left: 3rem;
+}
+
+.bloc-horaires {
+  grid-column: 1 / 3;
+  grid-row: 2;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.horaire-box {
+  border: 2px solid #00ffff;
+  border-radius: 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 1.6rem 2rem;
+  color: #fff;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(1rem, 1.4vw, 1.8rem);
+  text-align: left;
+  box-shadow: 0 0 0.6rem #00ffff88;
+  max-width: 850px;
+  width: 100%;
+}
+
+.horaire-jours:first-of-type {
+  margin-top: 3rem;
+}
+
+.horaire-jours {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .contact-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .bloc-vendetta {
+    display: none;
+  }
+
+  .bloc-carte {
+    align-items: center;
+    text-align: center;
+  }
+
+  .carte-img,
+  .horaire-box {
+    width: 90vw;
+  }
+
+  .horaire-jours {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .adresse-text {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .adresse-descript {
+    padding-left: 0;
+  }
+}
