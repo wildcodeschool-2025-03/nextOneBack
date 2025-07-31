@@ -38,20 +38,27 @@
 }
 
 @media screen and (max-width: 768px) {
+  .nav-right .button-login-logout {
+    display: none;
+  }
+  .button-login-logout {
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+  }
   /* NavBAR */
   nav {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     background-color: #0b0433;
     height: 7em;
-    width: 100%;
+    width: 100vw;
   }
 
   .nextOneLogo {
-    width: 10em;
-    height: 10em;
+    width: 9em;
+    height: 9em;
     background-color: #0b0433;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    border-radius: 150% / 70%;
     z-index: 11;
   }
   .userGamerIcone {
@@ -74,7 +81,7 @@
   }
   .burger-menu {
     height: 90%;
-    width: 4em;
+    width: 3em;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -121,7 +128,7 @@
     gap: 1em;
   }
   .linkButton {
-    font-size: 2em;
+    font-size: 1.7rem;
     color: white;
     background-color: #0b0433;
     text-decoration: none;
@@ -159,24 +166,35 @@
   /* NavBAR */
   nav {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     background-color: #0b0433;
     height: 7em;
     width: 100%;
     z-index: 1;
     position: relative;
+    padding: 0 2em;
   }
   button {
     border-style: none;
+    background-color: transparent;
   }
+
+  .nav-left,
+  .nav-right {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 2rem;
+    justify-content: space-around;
+  }
+
   .nextOneLogo {
-    width: auto;
     height: 10em;
     border-radius: 50%;
     margin-top: 2rem;
-    padding: 0 2rem;
     background-color: #0b0433;
+    padding: 0 2rem;
     z-index: 9999;
   }
   .userGamerIcone {
@@ -187,10 +205,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 15vw;
   }
   .linkDesktop {
-    width: 15vw;
     font-size: 1.4em;
     font-weight: 600;
     color: white;
@@ -202,5 +218,9 @@
   .linkDesktop:hover {
     color: #4cdafd;
     text-shadow: 0 0 5px #00ccff, 0 0 10px #00ccff, 0 0 20px #00ccff;
+  }
+
+  .button-icon {
+    gap: 7rem;
   }
 }

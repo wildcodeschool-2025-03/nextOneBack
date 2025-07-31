@@ -26,25 +26,6 @@ const findAll = async (): Promise<GameRow[]> => {
   return rows as GameRow[];
 };
 
-// READ – Top 3 des scores pour un jeu
-const findTopRankingByGameId = async (
-  gameId: number,
-): Promise<{ username: string; score: number }[]> => {
-  const [rows] = await db.query<RowDataPacket[]>(
-    `
-            SELECT u.pseudo AS username, p.score
-            FROM Party p
-                     INNER JOIN User u ON p.id_user = u.id
-            WHERE p.id_game = ?
-            ORDER BY p.score DESC
-            LIMIT 3
-        `,
-    [gameId],
-  );
-
-  return rows as { username: string; score: number }[];
-};
-
 // ADD – Créer un nouveau jeu
 const create = async (game: GameInsert): Promise<GameRow> => {
   const {
@@ -156,7 +137,6 @@ const deleteById = async (gameId: number): Promise<string | null> => {
 
 export default {
   findAll,
-  findTopRankingByGameId,
   create,
   updateById,
   deleteById,
