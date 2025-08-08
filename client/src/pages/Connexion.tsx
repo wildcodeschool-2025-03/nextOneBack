@@ -1,10 +1,12 @@
-import axios from "axios";
 import "../styles/connexion.css";
+import axios from "axios";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { Slide, ToastContainer, toast } from "react-toastify";
-import { LoginContext } from "../Auth/LoginContext";
+import { AuthContext } from "../Auth/LoginContext";
+import cloud2 from "../assets/images/cloud.png";
+import cloud from "../assets/images/clouds-png-23437.png";
 import type { User } from "../types/auth";
 
 type LoginForm = {
@@ -21,7 +23,7 @@ type RegisterForm = {
   confirm_password?: string;
 };
 
-function Connexion() {
+export default function Connexion() {
   const {
     register: registerLogin,
     handleSubmit: handleSubmitLogin,
@@ -35,32 +37,27 @@ function Connexion() {
     formState: { errors: errorsRegister },
   } = useForm<RegisterForm>();
 
-  const context = useContext(LoginContext);
-  if (!context) {
-    return null;
-  }
+  const context = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  if (!context) return null;
+
   const { setUser } = context;
 
-  const navigate = useNavigate();
   const login = async (data: LoginForm) => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/connexion/login`,
         data,
-        {
-          withCredentials: true,
-        },
+        { withCredentials: true },
       );
       const { user }: { user: User } = response.data;
 
       setUser(user);
-
-      toast.success("connexion réussie !!");
-      setTimeout(() => {
-        navigate("/accueil");
-      }, 2000);
-    } catch (error) {
-      toast.error("connexion échouée, email ou mot de passe incorrect");
+      toast.success("Connexion réussie !");
+      setTimeout(() => navigate("/accueil"), 2000);
+    } catch {
+      toast.error("Connexion échouée, email ou mot de passe incorrect.");
     }
   };
 
@@ -69,39 +66,34 @@ function Connexion() {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/connexion/register`,
         data,
-        {
-          withCredentials: true,
-        },
+        { withCredentials: true },
       );
       const { user }: { user: User } = response.data;
-      setUser(user);
 
-      toast.success("inscription réussie !!");
-      setTimeout(() => {
-        navigate("/accueil");
-      }, 2000);
-    } catch (error) {
-      toast.error("inscription échouée");
+      setUser(user);
+      toast.success("Inscription réussie !");
+      setTimeout(() => navigate("/accueil"), 2000);
+    } catch {
+      toast.error("Inscription échouée.");
     }
   };
 
   return (
     <>
+      <img src={cloud} alt="nuage flottant" className="cloud-home9" />
+      <img src={cloud2} alt="nuage flottant" className="cloud-home10" />
       <ToastContainer
         position="bottom-right"
         autoClose={1500}
         hideProgressBar={false}
-        newestOnTop={false}
         closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
         draggable
         pauseOnHover
         theme="dark"
         transition={Slide}
       />
       <main className="connexion-page">
-        {/* connexion */}
+        {/* Connexion */}
         <section className="login-contener">
           <h2 className="title-connexion">Connexion</h2>
           <form
@@ -114,7 +106,7 @@ function Connexion() {
                 type="email"
                 id="email-login"
                 {...registerLogin("email", {
-                  required: "email requis",
+                  required: "Email requis",
                   pattern: {
                     value: /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/,
                     message: "L'email saisi n'a pas un format valide",
@@ -126,6 +118,7 @@ function Connexion() {
             {errorsLogin.email && (
               <p className="error-message">{errorsLogin.email.message}</p>
             )}
+
             <div className="input-row">
               <label htmlFor="password-login">Mot de passe</label>
               <input
@@ -136,18 +129,18 @@ function Connexion() {
                 })}
               />
             </div>
-
             <span className="line-connexion" />
             {errorsLogin.password && (
               <p className="error-message">{errorsLogin.password.message}</p>
             )}
+
             <button type="submit" className="button-connexion">
               Se connecter
             </button>
-
-            {/* inscription */}
           </form>
         </section>
+
+        {/* Inscription */}
         <section className="login-contener">
           <h2 className="title-connexion">Créer un compte</h2>
           <form
@@ -193,6 +186,7 @@ function Connexion() {
               <p className="error-message">{errorsRegister.name.message}</p>
             )}
             <span className="line-connexion" />
+
             <div className="input-row">
               <label htmlFor="pseudo">Pseudo</label>
               <input
@@ -210,13 +204,14 @@ function Connexion() {
             {errorsRegister.pseudo && (
               <p className="error-message">{errorsRegister.pseudo.message}</p>
             )}
+
             <div className="input-row">
               <label htmlFor="email-register">Email</label>
               <input
                 type="email"
                 id="email-register"
                 {...registerRegister("email", {
-                  required: "email requis",
+                  required: "Email requis",
                   pattern: {
                     value: /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/,
                     message: "L'email saisi n'a pas un format valide",
@@ -228,6 +223,7 @@ function Connexion() {
             {errorsRegister.email && (
               <p className="error-message">{errorsRegister.email.message}</p>
             )}
+
             <div className="input-row">
               <label htmlFor="password-register">Mot de passe</label>
               <input
@@ -280,5 +276,3 @@ function Connexion() {
     </>
   );
 }
-
-export default Connexion;

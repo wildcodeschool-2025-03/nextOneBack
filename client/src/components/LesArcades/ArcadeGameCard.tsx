@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../Auth/LoginContext";
 import "./ArcadeGameCard.css";
 
 interface Game {
@@ -8,13 +9,15 @@ interface Game {
   category: string;
   available_online: number;
   available_maintenance: number;
-  image: string;
+  images: string;
 }
 
 interface Props {
   game: Game;
   isFavorite: boolean;
   onToggleFavorite: (gameId: number) => void;
+  onEdit?: (game: Game) => void;
+  onDelete?: (game: Game) => void;
 }
 
 interface RankingEntry {
@@ -28,22 +31,36 @@ export default function ArcadeGameCard({
   game,
   isFavorite,
   onToggleFavorite,
+  onEdit,
+  onDelete,
 }: Props) {
+  const { isAdmin } = useContext(AuthContext) ?? {};
+
   const [ranking, setRanking] = useState<RankingEntry[]>([]);
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
+    const controller = new AbortController();
+
     fetch(`${apiUrl}/api/games/${game.id}/ranking`, {
       credentials: "include",
+      signal: controller.signal,
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`Erreur HTTP ${res.status}`);
+        return res.json();
+      })
       .then((data) => setRanking(data))
-      .catch((err) =>
-        console.error(`Erreur récupération classement du jeu ${game.id}:`, err),
-      );
+      .catch((err) => {
+        if (err.name === "AbortError") return;
+        if (err.message.includes("404")) return;
+        console.error(`Erreur classement jeu ${game.id} :`, err);
+      });
+
+    return () => controller.abort();
   }, [game.id]);
 
-  const getStatusColor = () => {
+  const getStatus = () => {
     if (game.available_online === 1 && game.available_maintenance === 0)
       return { class: "green", label: "Disponible" };
     if (game.available_online === 0 && game.available_maintenance === 1)
@@ -51,13 +68,14 @@ export default function ArcadeGameCard({
     return { class: "red", label: "Indisponible" };
   };
 
-  const status = getStatusColor();
+  const status = getStatus();
+  const imageSrc = `${apiUrl}/assets/images/games/${game.images}`;
 
   return (
     <article className="arcade-game-card">
       <div className="game-image-block">
         <img
-          src={game.image}
+          src={imageSrc}
           alt={`Illustration du jeu ${game.name}`}
           className="card-image"
         />
@@ -72,16 +90,41 @@ export default function ArcadeGameCard({
         <h3 className="game-title">{game.name}</h3>
         <p className="game-desc">{game.description}</p>
 
-        <button
-          type="button"
-          className={`favorite-btn ${isFavorite ? "remove" : "add"}`}
-          onClick={() => onToggleFavorite(game.id)}
-          aria-label={
-            isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"
-          }
-        >
-          {isFavorite ? "✩ Supprimer aux favoris" : "✩ Ajouter aux favoris"}
-        </button>
+        <div className="actions-row">
+          <div className="left-actions">
+            <button
+              type="button"
+              className={`favorite-btn ${isFavorite ? "remove" : "add"}`}
+              onClick={() => onToggleFavorite(game.id)}
+              aria-label={
+                isFavorite ? "Retirer des favoris" : "Ajouter aux favoris"
+              }
+            >
+              {isFavorite ? "✩ Supprimer des favoris" : "✩ Ajouter aux favoris"}
+            </button>
+          </div>
+
+          {isAdmin && (
+            <div className="right-actions admin-actions">
+              <button
+                type="button"
+                className="edit-btn"
+                onClick={() => onEdit?.(game)}
+                aria-label="Modifier ce jeu"
+              >
+                ✏️ Modifier
+              </button>
+              <button
+                type="button"
+                className="delete-btn"
+                onClick={() => onDelete?.(game)}
+                aria-label="Supprimer ce jeu"
+              >
+                🗑️ Supprimer
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="game-ranking-block">

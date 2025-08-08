@@ -27,7 +27,9 @@ name VARCHAR(150) NOT NULL,
 description TEXT NULL,
 category VARCHAR(100) NOT NULL,
 available_online BOOLEAN,
-available_maintenance BOOLEAN
+available_maintenance BOOLEAN,
+images VARCHAR(255),
+alt VARCHAR(255)
 );
 
 CREATE TABLE Contact (
@@ -103,4 +105,22 @@ id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(100) NOT NULL,
 subtitle VARCHAR(100),
 price INT UNSIGNED NOT NULL DEFAULT 0
+);
+
+CREATE TABLE Event (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(150) NOT NULL,
+  description TEXT,
+  date DATETIME NOT NULL,
+  id_user INT UNSIGNED NOT NULL,
+  participant_count INT UNSIGNED DEFAULT 0,
+  FOREIGN KEY (id_user) REFERENCES User(id)
+);
+
+CREATE TABLE Event_User (
+  id_event INT UNSIGNED NOT NULL,
+  id_user INT UNSIGNED NOT NULL,
+  PRIMARY KEY (id_event, id_user),
+  FOREIGN KEY (id_event) REFERENCES Event(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_user) REFERENCES User(id) ON DELETE CASCADE
 );

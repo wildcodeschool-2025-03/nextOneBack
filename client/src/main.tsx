@@ -2,7 +2,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router";
-import { LoginProvider } from "./Auth/LoginContext.tsx";
+import { LoginProvider } from "./Auth/LoginContext";
 
 /* ************************************************************************* */
 
@@ -10,6 +10,8 @@ import { LoginProvider } from "./Auth/LoginContext.tsx";
 import App from "./App";
 import AdminPage from "./pages/AdminPage.tsx";
 import Connexion from "./pages/Connexion";
+import ContactPage from "./pages/ContactPage.tsx";
+import Error404Page from "./pages/Error404Page";
 import HomePage from "./pages/HomePage.tsx";
 import LesArcadesPage from "./pages/LesArcadesPage.tsx";
 import PlayerPage from "./pages/PlayerPage.tsx";
@@ -60,16 +62,23 @@ const router = createBrowserRouter([
         element: <TicTacToePage />,
       },
       {
-        path: "/snake", // The root path
-        element: <SnakePage />, // Renders the App component for the home page
+        path: "/snake",
+        element: <SnakePage />,
       },
       {
         path: "/player/:pseudo",
         element: <PlayerPage />,
       },
+      {
+        path: "/contact",
+        element: <ContactPage />,
+      },
     ],
   },
-
+  {
+    path: "*",
+    element: <Error404Page />,
+  },
   // The root path
   // Renders the App component for the home page
 

@@ -8,13 +8,13 @@ import {
   disconnectedUser,
   userById,
   userCreate,
-  userEmail,
 } from "./connexionRepository";
 
-// inscription/register
-const add: RequestHandler = async (req, res, next) => {
+// Inscription (register)
+const registerUser: RequestHandler = async (req, res, next) => {
   try {
     const { firstname, name, pseudo, email, password } = req.body;
+
     const user: Connexion = await userCreate(
       firstname,
       name,
@@ -28,7 +28,8 @@ const add: RequestHandler = async (req, res, next) => {
       sub: user.id.toString(),
       isAdmin: user.id_role === 2,
     };
-    const token = await jwt.sign(myPayload, process.env.APP_SECRET as string, {
+
+    const token = jwt.sign(myPayload, process.env.APP_SECRET as string, {
       expiresIn: "7d",
     });
 
@@ -36,62 +37,63 @@ const add: RequestHandler = async (req, res, next) => {
 
     res
       .cookie("auth_token", token, {
-        secure: false,
+        secure: process.env.NODE_ENV === "production",
         httpOnly: true,
+        sameSite: "strict",
         maxAge: 3600000,
       })
       .status(200)
-      .json({
-        user: userWithoutPassword,
-      });
+      .json({ user: userWithoutPassword });
   } catch (err) {
     next(err);
   }
 };
 
-// connexion/login
-const read: RequestHandler = async (req, res, next) => {
+// Connexion (login)
+const loginUser: RequestHandler = async (req, res, next) => {
   try {
     const { user } = req.body;
     if (!user) {
       res.sendStatus(422);
       return;
     }
-    const { password, ...userWithoutPassword } = user;
 
-    await connectedUser(user.email);
+    const { password, ...userWithoutPassword } = user;
 
     const myPayload: MyPayload = {
       sub: user.id.toString(),
       isAdmin: user.id_role === 2,
     };
-    const token = await jwt.sign(myPayload, process.env.APP_SECRET as string, {
+
+    const token = jwt.sign(myPayload, process.env.APP_SECRET as string, {
       expiresIn: "7d",
     });
 
+    await connectedUser(user.email);
+
     res
       .cookie("auth_token", token, {
-        secure: false,
+        secure: process.env.NODE_ENV === "production",
         httpOnly: true,
+        sameSite: "strict",
         maxAge: 3600000,
       })
       .status(200)
-      .json({
-        user: userWithoutPassword,
-      });
+      .json({ user: userWithoutPassword });
   } catch (err) {
     next(err);
   }
 };
 
-// profil utilisateur connecté
-const profile: RequestHandler = async (req, res, next) => {
+//  Profil utilisateur connecté
+const getUserProfile: RequestHandler = async (req, res, next) => {
   try {
     if (!req.auth?.sub) {
       res.sendStatus(401);
       return;
     }
-    const user = await userById(Number.parseInt(req.auth.sub));
+
+    const user = await userById(Number(req.auth.sub));
     if (!user) {
       res.sendStatus(401);
       return;
@@ -103,22 +105,28 @@ const profile: RequestHandler = async (req, res, next) => {
     }
 
     const { password, ...userWithoutPassword } = user;
-    res.json({
+
+    res.status(200).json({
       userId: userWithoutPassword.id,
       email: userWithoutPassword.email,
       pseudo: userWithoutPassword.pseudo,
+      firstname: userWithoutPassword.firstname,
+      name: userWithoutPassword.name,
+      id_role: userWithoutPassword.id_role,
     });
   } catch (err) {
     next(err);
   }
 };
-// Déconnexion"
-const disconnected: RequestHandler = async (req, res) => {
+
+//  Déconnexion (logout)
+const logoutUser: RequestHandler = async (req, res) => {
   try {
     if (!req.auth?.sub) {
       res.status(401).json({ message: "Non authentifié" });
       return;
     }
+
     const user = await userById(Number(req.auth.sub));
     if (!user) {
       res.status(404).json({ message: "Utilisateur introuvable" });
@@ -129,16 +137,19 @@ const disconnected: RequestHandler = async (req, res) => {
       res.status(403).json({ message: "Compte supprimé" });
       return;
     }
-    // Delete Coockie
+
     await disconnectedUser(user.email);
+
     res.clearCookie("auth_token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
       maxAge: 0,
     });
-    res.json({ message: "Déconnexion reussié,cookie supprimé" });
+
+    res.json({ message: "Déconnexion réussie, cookie supprimé" });
   } catch (err) {
-    res.status(500).json({ message: "erreur pour supprimer le cookie" });
+    res.status(500).json({ message: "Erreur lors de la déconnexion" });
   }
 };
 const remove: RequestHandler = async (req, res, next) => {
@@ -154,4 +165,11 @@ const remove: RequestHandler = async (req, res, next) => {
     next(err);
   }
 };
-export default { add, read, profile, disconnected, remove };
+
+export default {
+  add: registerUser,
+  read: loginUser,
+  profile: getUserProfile,
+  disconnected: logoutUser,
+  remove,
+};

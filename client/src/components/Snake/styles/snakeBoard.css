@@ -9,7 +9,7 @@
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
-  max-width: 55vmin; /* limite max en fonction de l'écran */
+  max-width: 65vmin; /* limite max en fonction de l'écran */
   background-image: url("../../../assets/images/background-snake.png");
   background-size: cover;
   background-position: center;
@@ -22,4 +22,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-bottom: 1em;
+  gap: 0;
 }

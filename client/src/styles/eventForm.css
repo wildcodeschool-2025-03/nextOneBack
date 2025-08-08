@@ -1,0 +1,156 @@
+.ReactModal__Overlay {
+  z-index: 999 !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.ReactModal__Content {
+  background-color: #111827;
+  border: 2px solid #00f0ff;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #00f0ff;
+  color: #ffffff;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  z-index: 1000 !important;
+}
+
+.event-form-container {
+  background-color: #1d1d1d;
+  padding: 3rem;
+}
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.9;
+}
+
+/* HEADER */
+.event-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #00f0ff;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.event-modal-title {
+  font-size: 1.5rem;
+  color: #00f0ff;
+  margin: 0;
+}
+
+.event-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  color: #f3041c;
+  cursor: pointer;
+}
+
+.event-form-groupe {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.event-form-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #00f0ff;
+}
+
+.event-form-input,
+.event-form-textarea {
+  width: 100%;
+  padding: 10px;
+  background-color: #1d1d1d;
+  color: #ffffff;
+  border: 1px solid #00f0ff;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.event-form-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.event-datetime-groupe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.event-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.event-btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.event-btn-cancel {
+  background-color: #374151;
+  color: #fff;
+}
+
+.event-btn-cancel:hover {
+  background-color: #4b5563;
+}
+
+.event-btn-submit {
+  background-color: #00f0ff;
+  color: #000;
+}
+
+.event-btn-submit:disabled {
+  background-color: #4b5563;
+  cursor: not-allowed;
+}
+
+.event-btn-submit:hover:enabled {
+  background-color: #00cfe5;
+}
+
+@media (max-width: 768px) {
+  .ReactModal__Content {
+    padding: 15px;
+    width: 95%;
+  }
+
+  .event-form-container {
+    background-color: #1d1d1d;
+    padding: 2rem;
+  }
+}
+
+.event-modal-title {
+  font-size: 1.3rem;
+}
+
+.event-datetime-groupe {
+  flex-direction: column;
+}
+
+.event-btn {
+  width: 100%;
+}
+
+.event-modal-footer {
+  flex-direction: column;
+  align-items: stretch;
+}

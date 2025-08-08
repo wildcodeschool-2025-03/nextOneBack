@@ -1,0 +1,147 @@
+.error404-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.error404-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/404error.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  z-index: -1;
+}
+
+.loader-container {
+  position: absolute;
+  left: 48%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: auto;
+  top: 55%;
+}
+
+.loader {
+  background: linear-gradient(90deg, #000 0%, #00ffff 50%, #000 100%);
+  background-size: 400% 100%;
+  animation: neonLoader 8s linear infinite;
+  border-radius: 12px;
+  box-shadow: 0 0 8px #00ffff88, 0 0 15px #00ffff55, 0 0 25px #00ffff33;
+  border: 1px solid #00ffff44;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  width: 380px;
+  height: 30px;
+}
+
+.loader-text {
+  margin: 0;
+  padding: 0;
+  font-family: "Arial", "Helvetica", sans-serif;
+  color: white;
+  text-align: center;
+  text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff88;
+  font-weight: 500;
+  white-space: nowrap;
+  font-size: 18px;
+  letter-spacing: 3px;
+}
+
+@keyframes neonLoader {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .error404-container::before {
+    background-image: url("/images/404tel.png");
+    background-size: cover;
+  }
+
+  .loader-container {
+    top: 50%;
+  }
+
+  .loader {
+    width: 280px;
+    height: 40px;
+    border-radius: 10px;
+    padding: 0 15px;
+  }
+
+  .loader-text {
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .loader-container {
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .loader {
+    width: 250px;
+    height: 36px;
+    border-radius: 8px;
+    padding: 0 12px;
+  }
+
+  .loader-text {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .loader-container {
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .loader {
+    width: 220px;
+    height: 32px;
+    border-radius: 6px;
+    padding: 0 10px;
+  }
+
+  .loader-text {
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .loader-container {
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .loader {
+    width: 200px;
+    height: 30px;
+    padding: 0 8px;
+  }
+
+  .loader-text {
+    font-size: 9px;
+    letter-spacing: 0.8px;
+  }
+}

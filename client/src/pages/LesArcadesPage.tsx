@@ -1,7 +1,14 @@
 import axios from "axios";
+import type { AxiosError } from "axios";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { LoginContext } from "../Auth/LoginContext";
+import { toast } from "react-toastify";
+import { AuthContext } from "../Auth/LoginContext";
+import cloud2 from "../assets/images/cloud.png";
+import cloud from "../assets/images/clouds-png-23437.png";
 import ArcadeGameCard from "../components/LesArcades/ArcadeGameCard";
+import ConfirmDeleteToast from "../components/LesArcades/ConfirmDeleteToast";
+import GameFormModal from "../components/LesArcades/GameFormModal";
+
 import "../components/LesArcades/ArcadeGameCard.css";
 import "../styles/LesArcadesPage.css";
 
@@ -12,12 +19,12 @@ interface Game {
   category: string;
   available_online: number;
   available_maintenance: number;
-  image: string;
+  images: string;
 }
 
 export default function LesArcadesPage() {
-  const context = useContext(LoginContext);
-  const user = context?.user;
+  const { user, isAdmin } = useContext(AuthContext) ?? {};
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const [games, setGames] = useState<Game[]>([]);
   const [favorites, setFavorites] = useState<number[]>([]);
@@ -26,39 +33,38 @@ export default function LesArcadesPage() {
   const [abcLetter, setAbcLetter] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(9);
 
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [editGame, setEditGame] = useState<Game | null>(null);
+  const [deleteGame, setDeleteGame] = useState<Game | null>(null);
+
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  const apiUrl = import.meta.env.VITE_API_URL;
-
+  // Fetch jeux + favoris
   useEffect(() => {
-    axios
-      .get(`${apiUrl}/api/games`)
-      .then((res) => {
-        if (Array.isArray(res.data)) {
-          setGames(res.data);
-        } else {
-          console.error("Réponse inattendue pour /api/games", res.data);
-        }
-      })
-      .catch((err) => {
-        console.error("Erreur fetch jeux:", err);
-      });
+    const fetchGamesAndFavorites = async () => {
+      try {
+        const { data } = await axios.get(`${apiUrl}/api/games`);
+        if (Array.isArray(data)) setGames(data);
+        else console.error("Réponse inattendue pour /api/games :", data);
 
-    if (user?.id) {
-      axios
-        .get(`${apiUrl}/api/favorites/${user.id}`, { withCredentials: true })
-        .then((res) => setFavorites(res.data))
-        .catch((err) => console.error("Erreur fetch favoris:", err));
-    } else {
-      setFavorites([]);
-    }
+        if (user?.id) {
+          const favRes = await axios.get(`${apiUrl}/api/favorites/${user.id}`, {
+            withCredentials: true,
+          });
+          setFavorites(favRes.data);
+        } else {
+          setFavorites([]);
+        }
+      } catch (err) {
+        console.error("Erreur lors du chargement initial :", err);
+      }
+    };
+
+    fetchGamesAndFavorites();
   }, [user?.id]);
 
   const onToggleFavorite = async (gameId: number) => {
-    if (!user) {
-      alert("Vous devez être connecté pour gérer vos favoris.");
-      return;
-    }
+    if (!user) return alert("Vous devez être connecté pour gérer vos favoris.");
 
     const isFav = favorites.includes(gameId);
     try {
@@ -66,17 +72,72 @@ export default function LesArcadesPage() {
         await axios.delete(`${apiUrl}/api/favorites/${user.id}/${gameId}`, {
           withCredentials: true,
         });
-        setFavorites(favorites.filter((id) => id !== gameId));
+        setFavorites((prev) => prev.filter((id) => id !== gameId));
       } else {
         await axios.post(
           `${apiUrl}/api/favorites`,
           { id_user: user.id, id_game: gameId },
           { withCredentials: true },
         );
-        setFavorites([...favorites, gameId]);
+        setFavorites((prev) => [...prev, gameId]);
       }
     } catch (err) {
-      console.error("Erreur gestion favori:", err);
+      console.error("Erreur lors de la gestion du favori :", err);
+    }
+  };
+
+  const handleAddGame = async (formData: FormData) => {
+    try {
+      const { data } = await axios.post(`${apiUrl}/api/games`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      });
+      setGames((prev) => [...prev, data]);
+      toast.success("Jeu ajouté avec succès !");
+      setShowAddModal(false);
+    } catch (err) {
+      console.error("Erreur lors de l'ajout du jeu :", err);
+      toast.error("Erreur lors de l'ajout du jeu.");
+    }
+  };
+
+  const handleEditGame = async (formData: FormData) => {
+    try {
+      const id = formData.get("id");
+      const { data } = await axios.put(`${apiUrl}/api/games/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      });
+      setGames((prev) => prev.map((g) => (g.id === data.id ? data : g)));
+      toast.success("Jeu modifié avec succès !");
+      setEditGame(null);
+    } catch (err) {
+      console.error("Erreur lors de la modification du jeu :", err);
+      toast.error("Erreur lors de la modification.");
+    }
+  };
+
+  const handleDeleteGame = async () => {
+    if (!deleteGame) return;
+
+    try {
+      await axios.delete(`${apiUrl}/api/games/${deleteGame.id}`, {
+        withCredentials: true,
+      });
+
+      toast.success("Jeu supprimé avec succès !");
+    } catch (err: unknown) {
+      const axiosErr = err as AxiosError;
+
+      if (axiosErr.response?.status === 404) {
+        toast.info("Le jeu était déjà supprimé.");
+      } else {
+        toast.error("Erreur lors de la suppression.");
+        console.error("Erreur lors de la suppression :", err);
+      }
+    } finally {
+      setGames((prev) => prev.filter((g) => g.id !== deleteGame.id));
+      setDeleteGame(null);
     }
   };
 
@@ -89,10 +150,11 @@ export default function LesArcadesPage() {
       if (!filterSolo && filterMulti) return isMulti;
       return isSolo || isMulti;
     })
-    .filter((g) => {
-      if (!abcLetter) return true;
-      return g.name.toLowerCase().startsWith(abcLetter.toLowerCase());
-    });
+    .filter((g) =>
+      abcLetter
+        ? g.name.toLowerCase().startsWith(abcLetter.toLowerCase())
+        : true,
+    );
 
   const visibleGames = filteredGames.slice(0, visibleCount);
 
@@ -112,63 +174,115 @@ export default function LesArcadesPage() {
 
   return (
     <main className="arcades-page">
-      <div className="block-title">
-        <span className="line" />
-        <h2>NOS JEUX</h2>
-        <span className="line" />
-      </div>
+      <img src={cloud} alt="nuage flottant" className="cloud-home7" />
+      <img src={cloud2} alt="nuage flottant" className="cloud-home8" />
+      <div className="arcade-page-index">
+        <div className="block-title">
+          <span className="line" />
+          <h2>NOS JEUX</h2>
+          <span className="line" />
+        </div>
 
-      <section className="filters" aria-label="Filtres de recherche">
-        <fieldset className="checkbox-group">
-          <label>
-            <input
-              type="checkbox"
-              checked={filterSolo}
-              onChange={() => setFilterSolo(!filterSolo)}
-            />
-            Solo
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={filterMulti}
-              onChange={() => setFilterMulti(!filterMulti)}
-            />
-            Multijoueur
-          </label>
-        </fieldset>
+        <section className="filters" aria-label="Filtres de recherche">
+          <fieldset className="checkbox-group">
+            <label>
+              <input
+                type="checkbox"
+                checked={filterSolo}
+                onChange={() => setFilterSolo(!filterSolo)}
+              />
+              Solo
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={filterMulti}
+                onChange={() => setFilterMulti(!filterMulti)}
+              />
+              Multijoueur
+            </label>
+          </fieldset>
 
-        <fieldset className="abc-bar">
-          {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => (
+          <fieldset className="abc-bar">
+            {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => (
+              <button
+                key={letter}
+                type="button"
+                className={abcLetter === letter ? "active" : ""}
+                onClick={() =>
+                  setAbcLetter(letter === abcLetter ? null : letter)
+                }
+                aria-pressed={abcLetter === letter}
+              >
+                {letter}
+              </button>
+            ))}
+          </fieldset>
+        </section>
+
+        <section className="games-grid" aria-label="Liste des jeux disponibles">
+          {visibleGames.length === 0 ? (
+            <p className="no-games">Aucun jeu trouvé.</p>
+          ) : (
+            visibleGames.map((game) => (
+              <ArcadeGameCard
+                key={game.id}
+                game={game}
+                isFavorite={user ? favorites.includes(game.id) : false}
+                onToggleFavorite={onToggleFavorite}
+                onEdit={() => setEditGame(game)}
+                onDelete={() => setDeleteGame(game)}
+              />
+            ))
+          )}
+        </section>
+
+        {isAdmin && (
+          <>
             <button
-              key={letter}
+              className="add-game-btn"
               type="button"
-              className={abcLetter === letter ? "active" : ""}
-              onClick={() => setAbcLetter(letter === abcLetter ? null : letter)}
-              aria-pressed={abcLetter === letter}
+              onClick={() => setShowAddModal(true)}
             >
-              {letter}
+              + Ajouter un jeu
             </button>
-          ))}
-        </fieldset>
-      </section>
 
-      <section className="games-grid" aria-label="Liste des jeux disponibles">
-        {visibleGames.length === 0 ? (
-          <p className="no-games">Aucun jeu trouvé.</p>
-        ) : (
-          visibleGames.map((game) => (
-            <ArcadeGameCard
-              key={game.id}
-              game={game}
-              isFavorite={user ? favorites.includes(game.id) : false}
-              onToggleFavorite={onToggleFavorite}
-            />
-          ))
+            {showAddModal && (
+              <GameFormModal
+                mode="add"
+                onClose={() => setShowAddModal(false)}
+                onSubmit={handleAddGame}
+              />
+            )}
+
+            {editGame && (
+              <GameFormModal
+                mode="edit"
+                onClose={() => setEditGame(null)}
+                onSubmit={handleEditGame}
+                initialData={{
+                  id: editGame.id,
+                  name: editGame.name,
+                  description: editGame.description,
+                  images: editGame.images,
+                  available_online: editGame.available_online,
+                  available_maintenance: editGame.available_maintenance,
+                  category: editGame.category,
+                }}
+              />
+            )}
+
+            {deleteGame && (
+              <ConfirmDeleteToast
+                onCancel={() => setDeleteGame(null)}
+                onConfirm={handleDeleteGame}
+              />
+            )}
+          </>
         )}
-      </section>
 
-      <div ref={observerRef} style={{ height: "1px" }} aria-hidden="true" />
+        <div ref={observerRef} style={{ height: "1px" }} aria-hidden="true" />
+      </div>
     </main>
   );
 }
